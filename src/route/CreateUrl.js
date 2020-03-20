@@ -9,6 +9,8 @@ const text = fs.readFileSync(
 );
 const wordBank = text.trim("\n").split(",");
 
+const contentLimit = 10000;
+
 export const createUrl = async (ctx, next) => {
   try {
     const wordArray = [0, 0, 0, 0].map(
@@ -18,17 +20,25 @@ export const createUrl = async (ctx, next) => {
     const content = ctx.request.body.content;
     const user = ctx.request.body.user;
 
-    const instance = new Url({
-      url: url,
-      content: content,
-      user: user
-    });
+    if (content.length > contentLimit) {
+      ctx.status = 400;
+      ctx.body = {
+        msg: `Content is longer than the ${contentLimit} limit`,
+        url: ""
+      };
+    } else {
+      const instance = new Url({
+        url: url,
+        content: content,
+        user: user
+      });
 
-    const saved = await instance.save();
-    ctx.status = 200;
-    ctx.body = {
-      url: url
-    };
+      const saved = await instance.save();
+      ctx.status = 200;
+      ctx.body = {
+        url: url
+      };
+    }
   } catch (err) {
     console.error("CreateUrl error");
     console.error(err);
