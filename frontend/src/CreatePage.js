@@ -23,7 +23,12 @@ const CreatePage = ({
       />
     </Box>
     <Box width={0.5} py={3}>
-      <Label htmlFor="content">Content</Label>
+      <Flex width={1} justifyContent="space-between">
+        <Label htmlFor="content">
+          Content
+        </Label>
+        <span>{`${content.length}/10000`}</span>
+      </Flex>
       <Textarea
         id="content"
         name="content"
