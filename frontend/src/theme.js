@@ -10,7 +10,6 @@ const preset = {
     transparent: "rgba(0,0,0,0)"
   },
   fonts: {
-    primary: "Source Code Pro",
     body: "system-ui, sans-serif",
     heading: "inherit",
     monospace: "Menlo, monospace"

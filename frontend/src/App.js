@@ -62,15 +62,15 @@ const App = props => {
     }
   }, [pathname]);
   return (
-      <AppDisplay
-        pathname={pathname}
-        notFoundPage={notFoundPage}
-        handleUserChange={handleUserChange}
-        handleContentChange={handleContentChange}
-        handleSubmit={handleSubmit}
-        user={user}
-        content={content}
-      />
+    <AppDisplay
+      pathname={pathname}
+      notFoundPage={notFoundPage}
+      handleUserChange={handleUserChange}
+      handleContentChange={handleContentChange}
+      handleSubmit={handleSubmit}
+      user={user}
+      content={content}
+    />
   );
 };
 

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import copy from "copy-to-clipboard";
 import styled from "styled-components";
 import { Box, Flex, Heading, Button, Text } from "rebass";
-import { Label, Input, Textarea } from "@rebass/forms";
+import { Label } from "@rebass/forms";
 import { FaRegClipboard } from "react-icons/fa";
 
 import theme from "./theme";
+import Input from "./components/Input";
+import Textarea from "./components/Textarea";
 
 const AppContainer = styled.div`
   display: flex;
