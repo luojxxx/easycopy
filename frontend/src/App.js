@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-import { Box, Flex } from "rebass";
+import dayjs from 'dayjs'
 
 import AppDisplay from "./AppDisplay";
 import constants from "./constants";
@@ -13,6 +12,7 @@ const App = props => {
   const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
+  const [date, setDate] = useState("");
   const [zeroContentFlag, setZeroContentFlag] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const handleUserChange = e => {
@@ -61,6 +61,7 @@ const App = props => {
       setNotFoundPage(false);
       setUser(response.data.user);
       setContent(response.data.content);
+      setDate(response.data, date);
     } catch (err) {
       if (err.response.status === 404) {
         setNotFoundPage(true);
@@ -75,6 +76,11 @@ const App = props => {
       handleGet();
     }
   }, [pathname]);
+  useEffect(() => {
+    setInterval(() => {
+      setDate(dayjs.valueOf())
+    }, 1000)
+  }, [])
   return (
     <AppDisplay
       pathname={pathname}

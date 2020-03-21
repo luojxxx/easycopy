@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
 import styled from "styled-components";
 import { Box, Flex, Heading, Button, Text } from "rebass";
@@ -75,6 +76,16 @@ const AppDisplay = ({
       <Heading color="primary" pb={3}>
         EasyCopy
       </Heading>
+      <Box width={0.4} style={{ textAlign: "center" }}>
+        <Text color="primary" pb={3}>
+          Copy text to human readable urls
+        </Text>
+      </Box>
+      <Box width={0.5} pb={3}>
+        <Text color="primary">
+          {`Date: ${isViewPage ? "" : dayjs().format("YYYY-MM-DD HH:mm:ss A")}`}
+        </Text>
+      </Box>
       <Box width={0.5} pb={3}>
         <Label htmlFor="user">User (optional)</Label>
         <Input
