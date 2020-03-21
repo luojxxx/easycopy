@@ -69,7 +69,7 @@ const AppDisplay = ({
         EasyCopy
       </Heading>
       <Box width={0.5} pb={3}>
-        <Label htmlFor="user">User</Label>
+        <Label htmlFor="user">User (optional)</Label>
         <Input
           id="user"
           name="user"
