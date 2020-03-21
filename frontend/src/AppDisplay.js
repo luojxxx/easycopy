@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
 import styled from "styled-components";
-import { Box, Flex, Heading, Button, Text } from "rebass";
+import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
@@ -11,6 +11,7 @@ import theme from "./theme";
 import Template from "./components/Template";
 import Input from "./components/Input";
 import Textarea from "./components/Textarea";
+import Button from './components/Button';
 import Clock from "./components/Clock";
 
 const CopiedText = ({ pathname, copied }) => {
