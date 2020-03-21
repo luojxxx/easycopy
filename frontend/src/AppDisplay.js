@@ -44,19 +44,19 @@ const AppDisplay = ({
         background: theme.colors.background
       }}
     >
-      <Heading color="primary">EasyCopy</Heading>
-      <Box width={0.5} py={3}>
+      <Heading color="primary" pb={3}>EasyCopy</Heading>
+      <Box width={0.5} pb={3}>
         <Label htmlFor="user">User</Label>
         <Input
           id="user"
           name="user"
           type="text"
           placeholder="johnDoe"
-          onChange={!isViewPage && handleUserChange}
+          onChange={isViewPage ? () => {} : handleUserChange}
           value={user}
         />
       </Box>
-      <Box width={0.5} py={3}>
+      <Box width={0.5} pb={3}>
         <Flex width={1} justifyContent="space-between">
           <Label htmlFor="content">Content</Label>
           <span>{`${content.length}/10000`}</span>
@@ -65,7 +65,7 @@ const AppDisplay = ({
           id="content"
           name="content"
           type="text"
-          onChange={!isViewPage && handleContentChange}
+          onChange={isViewPage ? () => {} : handleContentChange}
           value={content}
           style={{
             minHeight: "25vh"
