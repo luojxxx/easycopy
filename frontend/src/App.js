@@ -9,7 +9,6 @@ import constants from "./constants";
 const { api, contentLimit } = constants;
 
 const App = props => {
-  console.log(props);
   const { history, location } = props;
   const { pathname } = location;
   const [user, setUser] = useState("");
