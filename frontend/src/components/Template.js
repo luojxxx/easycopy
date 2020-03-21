@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Box, Flex, Heading, Button, Text } from "rebass";
+import { Box, Flex, Heading, Text } from "rebass";
 
 import theme from "../theme";
 

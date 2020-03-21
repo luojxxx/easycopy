@@ -1,5 +1,4 @@
 import React from "react";
-import { Text } from "rebass";
 
 import Template from "./components/Template";
 import Textarea from "./components/Textarea";

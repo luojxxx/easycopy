@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import dayjs from 'dayjs'
 
 import AppDisplay from "./AppDisplay";
 import constants from "./constants";

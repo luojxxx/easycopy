@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
-import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
