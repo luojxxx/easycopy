@@ -3,7 +3,7 @@ import copy from "copy-to-clipboard";
 import styled from "styled-components";
 import { Box, Flex, Heading, Button, Text } from "rebass";
 import { Label } from "@rebass/forms";
-import { FaRegClipboard } from "react-icons/fa";
+import { FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
 import theme from "./theme";
 import Input from "./components/Input";
@@ -49,19 +49,24 @@ const AppDisplay = ({
   notFoundPage,
   handleUserChange,
   handleContentChange,
+  handleBack,
   handleSubmit,
   user,
   content
 }) => {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false)
   const copyPathToClipboard = () => {
     copy(window.location.href);
     document.getElementById("pathField").focus();
     setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 5000);
   };
+  const handleSelect = () => {
+    document.getElementById("pathField").select()
+  }
+  const handleClickBack = () => {
+    setCopied(false)
+    handleBack()
+  }
   const isViewPage = pathname !== "/";
   return (
     <AppContainer>
@@ -100,27 +105,38 @@ const AppDisplay = ({
       </Box>
       {pathname === "/" && !notFoundPage && (
         <Button variant="primary" mb={1} onClick={handleSubmit}>
-          Submit
+            Submit
         </Button>
       )}
       {pathname !== "/" && !notFoundPage && (
         <Flex width={0.5} flexDirection="column">
           <Flex width={1} pb={1} flexDirection="row" alignItems="center">
+            <FiCornerUpLeft
+              onClick={handleClickBack}
+              size={32}
+              style={{
+                cursor: "pointer",
+                color: theme.colors.primary
+              }}
+              title="Go back"
+            />
             <Input
               id="pathField"
               width={1}
-              mr={2}
+              mx={2}
               type="text"
+              onClick={handleSelect}
               value={window.location.href}
               readOnly
             />
-            <FaRegClipboard
+            <FiCopy
               onClick={copyPathToClipboard}
               size={32}
               style={{
                 cursor: "pointer",
                 color: theme.colors.primary
               }}
+              title="Copy to clipboard"
             />
           </Flex>
         </Flex>

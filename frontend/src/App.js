@@ -21,6 +21,11 @@ const App = props => {
     const content = e.target.value.slice(0, contentLimit);
     setContent(content);
   };
+  const handleBack = () => {
+    setUser('')
+    setContent('')
+    history.push('/')
+  }
   const handleSubmit = async () => {
     try {
       const response = await axios({
@@ -67,6 +72,7 @@ const App = props => {
       notFoundPage={notFoundPage}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
+      handleBack={handleBack}
       handleSubmit={handleSubmit}
       user={user}
       content={content}
