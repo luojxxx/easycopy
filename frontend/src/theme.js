@@ -84,7 +84,8 @@ const preset = {
       fontWeight: "bold",
       color: "background",
       bg: "primary",
-      borderRadius: "default"
+      borderRadius: "default",
+      height: '36px'
     },
     outline: {
       variant: "buttons.primary",

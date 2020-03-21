@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import copy from "copy-to-clipboard";
-import { Box, Flex, Heading, Button } from "rebass";
+import { Box, Flex, Heading, Button, Text } from "rebass";
 import { Label, Input, Textarea } from "@rebass/forms";
 import { FaRegClipboard } from "react-icons/fa";
 
 import theme from "./theme";
+
+const CopiedText = ({ pathname, copied }) => {
+  if (pathname !== "/" && copied) {
+    return <Text>copied url</Text>;
+  } else {
+    return <Text>&nbsp;</Text>;
+  }
+};
 
 const AppDisplay = ({
   pathname,
@@ -15,9 +23,16 @@ const AppDisplay = ({
   user,
   content
 }) => {
+  const [copied, setCopied] = useState(false);
   const copyPathToClipboard = () => {
-    copy(window.location.href)
-  }
+    copy(window.location.href);
+    document.getElementById("pathField").focus();
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 5000);
+  };
+  const isViewPage = pathname !== "/";
   return (
     <Flex
       flexDirection="column"
@@ -37,7 +52,7 @@ const AppDisplay = ({
           name="user"
           type="text"
           placeholder="johnDoe"
-          onChange={handleUserChange}
+          onChange={!isViewPage && handleUserChange}
           value={user}
         />
       </Box>
@@ -50,7 +65,7 @@ const AppDisplay = ({
           id="content"
           name="content"
           type="text"
-          onChange={handleContentChange}
+          onChange={!isViewPage && handleContentChange}
           value={content}
           style={{
             minHeight: "25vh"
@@ -58,21 +73,36 @@ const AppDisplay = ({
         />
       </Box>
       {pathname === "/" && !notFoundPage && (
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button variant="primary" mb={1} onClick={handleSubmit}>
+          Submit
+        </Button>
       )}
       {pathname !== "/" && !notFoundPage && (
-        <Flex width={0.5} py={3} flexDirection="row" alignItems="center">
-          <Input width={1} type="text" value={window.location.href} />
-          <FaRegClipboard
-            onClick={copyPathToClipboard}
-            size={32}
-            style={{
-              cursor: "pointer"
-            }}
-          />
+        <Flex width={0.5} flexDirection="column">
+          <Flex width={1} pb={1} flexDirection="row" alignItems="center">
+            <Input
+              id="pathField"
+              width={1}
+              mr={2}
+              type="text"
+              value={window.location.href}
+            />
+            <FaRegClipboard
+              onClick={copyPathToClipboard}
+              size={32}
+              style={{
+                cursor: "pointer"
+              }}
+            />
+          </Flex>
         </Flex>
       )}
-      {pathname !== "/" && notFoundPage && <Heading>Not Found</Heading>}
+      {pathname !== "/" && notFoundPage && (
+        <Box mb={1} style={{ height: '36px'}}>
+          <Heading>Not Found</Heading>
+        </Box>
+      )}
+      <CopiedText pathname={pathname} copied={copied} />
     </Flex>
   );
 };
