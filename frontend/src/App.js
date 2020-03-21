@@ -12,6 +12,7 @@ const App = props => {
   const { pathname } = location
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
+  const [notFoundPage, setNotFoundPage] = useState(false)
   const handleUserChange = e => {
     setUser(e.target.value);
   };
@@ -42,11 +43,16 @@ const App = props => {
         method: "get",
         url: api+pathname 
       });
+      setNotFoundPage(false)
       setUser(response.data.user)
       setContent(response.data.content)
     } catch (err) {
-      console.error("GetUrl error");
-      console.error(err);
+      if (err.response.status === 404) {
+        setNotFoundPage(true)
+      } else {
+        console.error("GetUrl error");
+        console.error(err);
+      }
     }
   };
   useEffect(() => {
@@ -56,17 +62,22 @@ const App = props => {
   }, []);
   return (
     <div>
-      {pathname === "/" && (
+      {pathname === "/" && !notFoundPage && (
         <React.Fragment>
           <input type="text" onChange={handleUserChange} value={user} />
           <TextareaAutosize onChange={handleContentChange} value={content} />
           <button onClick={handleSubmit}>Submit</button>
         </React.Fragment>
       )}
-      {pathname !== "/" && (
+      {pathname !== "/" && !notFoundPage && (
         <React.Fragment>
           {`User:${user}`}
           {`Content:${content}`}
+        </React.Fragment>
+      )}
+      {pathname !== '/' && notFoundPage && (
+        <React.Fragment>
+          Not found
         </React.Fragment>
       )}
     </div>
