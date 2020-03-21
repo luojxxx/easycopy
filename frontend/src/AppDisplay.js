@@ -3,7 +3,7 @@ import copy from "copy-to-clipboard";
 import styled from "styled-components";
 import { Box, Flex, Heading, Button, Text } from "rebass";
 import { Label } from "@rebass/forms";
-import { FiCornerUpLeft, FiCopy } from "react-icons/fi";
+import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
 import theme from "./theme";
 import Input from "./components/Input";
@@ -50,6 +50,7 @@ const AppDisplay = ({
   notFoundPage,
   handleUserChange,
   handleContentChange,
+  handleClear,
   handleBack,
   handleSubmit,
   user,
@@ -96,7 +97,7 @@ const AppDisplay = ({
           id="content"
           name="content"
           type="text"
-          placeholder={!zeroContentFlag ? "" : 'Must have content'}
+          placeholder={!zeroContentFlag ? "" : "Must have content"}
           onChange={handleContentChange}
           value={content}
           readOnly={isViewPage}
@@ -106,14 +107,39 @@ const AppDisplay = ({
         />
       </Box>
       {pathname === "/" && !notFoundPage && (
-        <Button
-          variant="primary"
-          mb={1}
-          onClick={handleSubmit}
-          style={{ cursor: "pointer" }}
+        <Flex
+          width={0.5}
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
         >
-          Submit
-        </Button>
+          {/* <FiXSquare
+            onClick={handleClear}
+            size={32}
+            style={{
+              cursor: "pointer",
+              color: theme.colors.primary
+            }}
+            title="Go back"
+          /> */}
+          <Button
+            variant="primary"
+            width={1}
+            // ml={2}
+            mb={1}
+            onClick={handleSubmit}
+            style={{ cursor: "pointer" }}
+          >
+            <Flex
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text pr={2}>Submit</Text>
+              <FiStar />
+            </Flex>
+          </Button>
+        </Flex>
       )}
       {pathname !== "/" && !notFoundPage && (
         <Flex width={0.5} flexDirection="column">

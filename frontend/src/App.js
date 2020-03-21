@@ -22,9 +22,13 @@ const App = props => {
     const content = e.target.value.slice(0, contentLimit);
     setContent(content);
   };
-  const handleBack = () => {
+  const handleClear = () => {
     setUser("");
     setContent("");
+  };
+  const handleBack = () => {
+    // setUser("");
+    // setContent("");
     setZeroContentFlag(false);
     history.push("/");
   };
@@ -78,6 +82,7 @@ const App = props => {
       notFoundPage={notFoundPage}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
+      handleClear={handleClear}
       handleBack={handleBack}
       handleSubmit={handleSubmit}
       user={user}
