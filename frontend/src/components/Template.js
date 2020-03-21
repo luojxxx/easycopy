@@ -38,6 +38,7 @@ const Footer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 
   width: 100%;
   position: absolute;
@@ -63,7 +64,7 @@ const Template = ({ subheading, children }) => (
     <Heading color="primary" pb={3}>
       EasyCopy
     </Heading>
-    <Box width={0.5}>
+    <Box width={[0.95, .7, .5]}>
       <Flex width={1} justifyContent="center">
         <Box width={0.8} style={{ textAlign: "center" }}>
           <Text color="primary" pb={3}>

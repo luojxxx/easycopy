@@ -107,7 +107,7 @@ const AppDisplay = ({
               cursor: "pointer",
               color: theme.colors.primary
             }}
-            title="Go back"
+            title="Clear"
           /> */}
           <Button
             variant="primary"

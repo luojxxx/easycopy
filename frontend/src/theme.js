@@ -1,4 +1,5 @@
 const preset = {
+  breakpoints: [ '32em', '44em', '56em' ],
   colors: {
     text: "#000",
     background: "#fff",
