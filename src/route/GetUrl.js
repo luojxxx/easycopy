@@ -17,7 +17,8 @@ export const getUrl = async (ctx, next) => {
       ctx.status = 200;
       ctx.body = {
         content: result.content,
-        user: result.user
+        user: result.user,
+        date: result.date
       };
     }
   } catch (err) {
