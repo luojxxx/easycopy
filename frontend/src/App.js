@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import TextareaAutosize from "react-textarea-autosize";
+import styled from "styled-components";
+import { Box, Flex } from "rebass";
 
+import CreatePage from "./CreatePage";
+import GetPage from "./GetPage";
+import NotFoundPage from "./NotFoundPage";
+import theme from "./theme";
 import constants from "./constants";
-const { api, contentLimit } = constants
+const { api, contentLimit } = constants;
 
 const App = props => {
   console.log(props);
   const { history, location } = props;
-  const { pathname } = location
+  const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
-  const [notFoundPage, setNotFoundPage] = useState(false)
+  const [notFoundPage, setNotFoundPage] = useState(false);
   const handleUserChange = e => {
     setUser(e.target.value);
   };
   const handleContentChange = e => {
-    const content = e.target.value.slice(0, contentLimit)
+    const content = e.target.value.slice(0, contentLimit);
     setContent(content);
   };
   const handleSubmit = async () => {
@@ -41,14 +46,14 @@ const App = props => {
     try {
       const response = await axios({
         method: "get",
-        url: api+pathname 
+        url: api + pathname
       });
-      setNotFoundPage(false)
-      setUser(response.data.user)
-      setContent(response.data.content)
+      setNotFoundPage(false);
+      setUser(response.data.user);
+      setContent(response.data.content);
     } catch (err) {
       if (err.response.status === 404) {
-        setNotFoundPage(true)
+        setNotFoundPage(true);
       } else {
         console.error("GetUrl error");
         console.error(err);
@@ -56,31 +61,37 @@ const App = props => {
     }
   };
   useEffect(() => {
-    if (pathname !== '/') {
+    if (pathname !== "/") {
       handleGet();
     }
   }, []);
   return (
-    <div>
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      style={{
+        width: "100vw",
+        height: "100vh",
+        background: theme.colors.background
+      }}
+    >
       {pathname === "/" && !notFoundPage && (
-        <React.Fragment>
-          <input type="text" onChange={handleUserChange} value={user} />
-          <TextareaAutosize onChange={handleContentChange} value={content} />
-          <button onClick={handleSubmit}>Submit</button>
-        </React.Fragment>
+        <CreatePage
+          handleUserChange={handleUserChange}
+          handleContentChange={handleContentChange}
+          handleSubmit={handleSubmit}
+          user={user}
+          content={content}
+        />
       )}
       {pathname !== "/" && !notFoundPage && (
-        <React.Fragment>
-          {`User:${user}`}
-          {`Content:${content}`}
-        </React.Fragment>
+        <GetPage user={user} content={content} pathname={pathname} />
       )}
-      {pathname !== '/' && notFoundPage && (
-        <React.Fragment>
-          Not found
-        </React.Fragment>
+      {pathname !== "/" && notFoundPage && (
+        <NotFoundPage />
       )}
-    </div>
+    </Flex>
   );
 };
 

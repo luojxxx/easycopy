@@ -6,13 +6,18 @@ import * as Sentry from "@sentry/browser";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { ThemeProvider } from "emotion-theming";
+import theme from "./theme";
+
 // Sentry.init({
 //   dsn: "https://83b0d8e1cf934f2aa72aa89f194a5732@sentry.io/5169583"
 // });
 const Index = (
   <Router>
     <Switch>
-      <Route path="/" component={App} />
+      <ThemeProvider theme={theme}>
+        <Route path="/" component={App} />
+      </ThemeProvider>
     </Switch>
   </Router>
 );
