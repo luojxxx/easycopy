@@ -36,7 +36,7 @@ export const createUrl = async (ctx, next) => {
       }
 
       const instance = new Url({
-        url: url,
+        url: url.toLowerCase(),
         content: content,
         user: user
       });
