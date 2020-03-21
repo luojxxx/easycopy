@@ -9,6 +9,7 @@ import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 import theme from "./theme";
 import Input from "./components/Input";
 import Textarea from "./components/Textarea";
+import Clock from './components/Clock'
 
 const AppContainer = styled.div`
   display: flex;
@@ -45,6 +46,8 @@ const CopiedText = ({ pathname, copied }) => {
   }
 };
 
+const dateFormat = "YYYY-MM-DD HH:mm:ss A" 
+
 const AppDisplay = ({
   pathname,
   zeroContentFlag,
@@ -55,7 +58,8 @@ const AppDisplay = ({
   handleBack,
   handleSubmit,
   user,
-  content
+  content,
+  date
 }) => {
   const [copied, setCopied] = useState(false);
   const copyPathToClipboard = () => {
@@ -83,7 +87,9 @@ const AppDisplay = ({
       </Box>
       <Box width={0.5} pb={3}>
         <Text color="primary">
-          {`Date: ${isViewPage ? "" : dayjs().format("YYYY-MM-DD HH:mm:ss A")}`}
+          {isViewPage
+          ? `Date: ${dayjs(date).format(dateFormat)}`
+          : <Clock format={dateFormat} />}
         </Text>
       </Box>
       <Box width={0.5} pb={3}>

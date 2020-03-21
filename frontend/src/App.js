@@ -61,7 +61,7 @@ const App = props => {
       setNotFoundPage(false);
       setUser(response.data.user);
       setContent(response.data.content);
-      setDate(response.data, date);
+      setDate(response.data.date);
     } catch (err) {
       if (err.response.status === 404) {
         setNotFoundPage(true);
@@ -76,11 +76,6 @@ const App = props => {
       handleGet();
     }
   }, [pathname]);
-  useEffect(() => {
-    setInterval(() => {
-      setDate(dayjs.valueOf())
-    }, 1000)
-  }, [])
   return (
     <AppDisplay
       pathname={pathname}
@@ -93,6 +88,7 @@ const App = props => {
       handleSubmit={handleSubmit}
       user={user}
       content={content}
+      date={date}
     />
   );
 };
