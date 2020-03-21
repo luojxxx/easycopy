@@ -12,6 +12,10 @@ const TextareaComponent = styled(Textarea)`
   :focus {
     outline-color: ${theme.colors.primary};
   }
+  :-webkit-autofill {
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+  }
 `;
 
 export default TextareaComponent;
