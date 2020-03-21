@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import * as Sentry from "@sentry/browser";
 
 import App from "./App";
+import Contact from "./Contact";
+import Privacy from "./Privacy";
+import TermsOfService from "./TermsOfService";
 import * as serviceWorker from "./serviceWorker";
 
 import { ThemeProvider } from "emotion-theming";
@@ -14,11 +17,14 @@ import theme from "./theme";
 // });
 const Index = (
   <Router>
-    <Switch>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <Switch>
+        <Route path="/contact" component={Contact} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/termsofservice" component={TermsOfService} />
         <Route path="/" component={App} />
-      </ThemeProvider>
-    </Switch>
+      </Switch>
+    </ThemeProvider>
   </Router>
 );
 

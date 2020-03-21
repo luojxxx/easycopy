@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
 import styled from "styled-components";
@@ -7,36 +8,10 @@ import { Label } from "@rebass/forms";
 import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
 import theme from "./theme";
+import Template from "./components/Template";
 import Input from "./components/Input";
 import Textarea from "./components/Textarea";
-import Clock from './components/Clock'
-
-const AppContainer = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  font-family: Source Code Pro;
-
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-`;
+import Clock from "./components/Clock";
 
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
@@ -46,7 +21,7 @@ const CopiedText = ({ pathname, copied }) => {
   }
 };
 
-const dateFormat = "YYYY-MM-DD HH:mm:ss A" 
+const dateFormat = "YYYY-MM-DD HH:mm:ss A";
 
 const AppDisplay = ({
   pathname,
@@ -76,23 +51,17 @@ const AppDisplay = ({
   };
   const isViewPage = pathname !== "/";
   return (
-    <AppContainer>
-      <Heading color="primary" pb={3}>
-        EasyCopy
-      </Heading>
-      <Box width={0.4} style={{ textAlign: "center" }}>
-        <Text color="primary" pb={3}>
-          Copy text to human readable urls
-        </Text>
-      </Box>
-      <Box width={0.5} pb={3}>
+    <Template subheading="Copy text to human readable urls">
+      <Box width={1} pb={3}>
         <Text color="primary">
-          {isViewPage
-          ? `Date: ${dayjs(date).format(dateFormat)}`
-          : <Clock format={dateFormat} />}
+          {isViewPage ? (
+            `Date: ${dayjs(date).format(dateFormat)}`
+          ) : (
+            <Clock format={dateFormat} />
+          )}
         </Text>
       </Box>
-      <Box width={0.5} pb={3}>
+      <Box width={1} pb={3}>
         <Label htmlFor="user">User (optional)</Label>
         <Input
           id="user"
@@ -103,7 +72,7 @@ const AppDisplay = ({
           readOnly={isViewPage}
         />
       </Box>
-      <Box width={0.5} pb={3}>
+      <Box width={1} pb={3}>
         <Flex width={1} justifyContent="space-between">
           <Label htmlFor="content">Content</Label>
           <span>
@@ -123,9 +92,9 @@ const AppDisplay = ({
           }}
         />
       </Box>
-      {pathname === "/" && !notFoundPage && (
+      {pathname === "/" && (
         <Flex
-          width={0.5}
+          width={1}
           flexDirection="row"
           justifyContent="center"
           alignItems="center"
@@ -159,7 +128,7 @@ const AppDisplay = ({
         </Flex>
       )}
       {pathname !== "/" && !notFoundPage && (
-        <Flex width={0.5} flexDirection="column">
+        <Flex width={1} flexDirection="column">
           <Flex width={1} pb={1} flexDirection="row" alignItems="center">
             <FiCornerUpLeft
               onClick={handleClickBack}
@@ -197,7 +166,7 @@ const AppDisplay = ({
         </Box>
       )}
       <CopiedText pathname={pathname} copied={copied} />
-    </AppContainer>
+    </Template>
   );
 };
 export default AppDisplay;
