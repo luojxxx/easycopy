@@ -4,10 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { Box, Flex } from "rebass";
 
-import CreatePage from "./CreatePage";
-import GetPage from "./GetPage";
-import NotFoundPage from "./NotFoundPage";
-import theme from "./theme";
+import AppDisplay from "./AppDisplay";
 import constants from "./constants";
 const { api, contentLimit } = constants;
 
@@ -66,32 +63,15 @@ const App = props => {
     }
   }, []);
   return (
-    <Flex
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        background: theme.colors.background
-      }}
-    >
-      {pathname === "/" && !notFoundPage && (
-        <CreatePage
-          handleUserChange={handleUserChange}
-          handleContentChange={handleContentChange}
-          handleSubmit={handleSubmit}
-          user={user}
-          content={content}
-        />
-      )}
-      {pathname !== "/" && !notFoundPage && (
-        <GetPage user={user} content={content} pathname={pathname} />
-      )}
-      {pathname !== "/" && notFoundPage && (
-        <NotFoundPage />
-      )}
-    </Flex>
+      <AppDisplay
+        pathname={pathname}
+        notFoundPage={notFoundPage}
+        handleUserChange={handleUserChange}
+        handleContentChange={handleContentChange}
+        handleSubmit={handleSubmit}
+        user={user}
+        content={content}
+      />
   );
 };
 
