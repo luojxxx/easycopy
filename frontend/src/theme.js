@@ -2,13 +2,15 @@ const preset = {
   colors: {
     text: "#000",
     background: "#fff",
-    primary: "#07c",
+    primary: "white",
     secondary: "#30c",
     muted: "#f6f6f9",
     gray: "#dddddf",
-    highlight: "hsla(205, 100%, 40%, 0.125)"
+    highlight: 'white',
+    transparent: "rgba(0,0,0,0)"
   },
   fonts: {
+    primary: "Source Code Pro",
     body: "system-ui, sans-serif",
     heading: "inherit",
     monospace: "Menlo, monospace"
@@ -35,7 +37,19 @@ const preset = {
     card: "0 0 4px rgba(0, 0, 0, .125)"
   },
   // rebass variants
+  input: {
+    borderColor: 'primary',
+    color:'primary',
+  },
+  textarea: {
+    borderColor: "primary",
+    color: "primary"
+  },
+  label: {
+    color: 'primary'
+  },
   text: {
+    color: 'primary',
     heading: {
       fontFamily: "heading",
       lineHeight: "heading",
@@ -83,9 +97,11 @@ const preset = {
       fontSize: 2,
       fontWeight: "bold",
       color: "background",
-      bg: "primary",
+      bg: "transparent",
       borderRadius: "default",
-      height: '36px'
+      height: '36px',
+      border: '1px solid',
+      borderColor: 'primary'
     },
     outline: {
       variant: "buttons.primary",

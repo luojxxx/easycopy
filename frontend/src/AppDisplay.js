@@ -1,14 +1,42 @@
 import React, { useState } from "react";
 import copy from "copy-to-clipboard";
+import styled from "styled-components";
 import { Box, Flex, Heading, Button, Text } from "rebass";
 import { Label, Input, Textarea } from "@rebass/forms";
 import { FaRegClipboard } from "react-icons/fa";
 
 import theme from "./theme";
 
+const AppContainer = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Source Code Pro;
+
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+`;
+
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
-    return <Text>copied url</Text>;
+    return <Text color="primary">copied url</Text>;
   } else {
     return <Text>&nbsp;</Text>;
   }
@@ -34,24 +62,16 @@ const AppDisplay = ({
   };
   const isViewPage = pathname !== "/";
   return (
-    <Flex
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        background: theme.colors.background
-      }}
-    >
-      <Heading color="primary" pb={3}>EasyCopy</Heading>
+    <AppContainer>
+      <Heading color="primary" pb={3}>
+        EasyCopy
+      </Heading>
       <Box width={0.5} pb={3}>
         <Label htmlFor="user">User</Label>
         <Input
           id="user"
           name="user"
           type="text"
-          placeholder="johnDoe"
           onChange={handleUserChange}
           value={user}
           readOnly={isViewPage}
@@ -60,7 +80,9 @@ const AppDisplay = ({
       <Box width={0.5} pb={3}>
         <Flex width={1} justifyContent="space-between">
           <Label htmlFor="content">Content</Label>
-          <span>{`${content.length}/10000`}</span>
+          <span>
+            <Text color="primary">{`${content.length}/10000`}</Text>
+          </span>
         </Flex>
         <Textarea
           id="content"
@@ -94,19 +116,20 @@ const AppDisplay = ({
               onClick={copyPathToClipboard}
               size={32}
               style={{
-                cursor: "pointer"
+                cursor: "pointer",
+                color: theme.colors.primary
               }}
             />
           </Flex>
         </Flex>
       )}
       {pathname !== "/" && notFoundPage && (
-        <Box mb={1} style={{ height: '36px'}}>
-          <Heading>Not Found</Heading>
+        <Box mb={1} style={{ height: "36px" }}>
+          <Heading color="primary">Not Found</Heading>
         </Box>
       )}
       <CopiedText pathname={pathname} copied={copied} />
-    </Flex>
+    </AppContainer>
   );
 };
 export default AppDisplay;
