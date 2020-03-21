@@ -11,7 +11,13 @@ import { getUrl } from './route/GetUrl';
 const app = new Koa();
 const router = new Router();
 
-app.use(cors())
+app.use(
+  cors({
+    origin: function(ctx) {
+      return "*";
+    }
+  })
+);
 app.use(bodyParser())
 
 router.post('/', createUrl);
