@@ -13,6 +13,7 @@ const App = props => {
   const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
+  const [zeroContentFlag, setZeroContentFlag] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const handleUserChange = e => {
     setUser(e.target.value);
@@ -22,12 +23,16 @@ const App = props => {
     setContent(content);
   };
   const handleBack = () => {
-    setUser('')
-    setContent('')
-    history.push('/')
-  }
+    setUser("");
+    setContent("");
+    setZeroContentFlag(false);
+    history.push("/");
+  };
   const handleSubmit = async () => {
     try {
+      if (content.length === 0) {
+        return setZeroContentFlag(true);
+      }
       const response = await axios({
         method: "post",
         url: api,
@@ -69,6 +74,7 @@ const App = props => {
   return (
     <AppDisplay
       pathname={pathname}
+      zeroContentFlag={zeroContentFlag}
       notFoundPage={notFoundPage}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}

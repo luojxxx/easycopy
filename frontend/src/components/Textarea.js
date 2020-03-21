@@ -6,6 +6,9 @@ import theme from "../theme";
 
 const TextareaComponent = styled(Textarea)`
   resize: none;
+  ::placeholder {
+    color: ${theme.colors.primary};
+  }
   :focus {
     outline-color: ${theme.colors.primary};
   }

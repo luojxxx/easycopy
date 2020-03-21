@@ -46,6 +46,7 @@ const CopiedText = ({ pathname, copied }) => {
 
 const AppDisplay = ({
   pathname,
+  zeroContentFlag,
   notFoundPage,
   handleUserChange,
   handleContentChange,
@@ -95,6 +96,7 @@ const AppDisplay = ({
           id="content"
           name="content"
           type="text"
+          placeholder={!zeroContentFlag ? "" : 'Must have content'}
           onChange={handleContentChange}
           value={content}
           readOnly={isViewPage}
