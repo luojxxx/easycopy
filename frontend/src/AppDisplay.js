@@ -52,8 +52,9 @@ const AppDisplay = ({
           name="user"
           type="text"
           placeholder="johnDoe"
-          onChange={isViewPage ? () => {} : handleUserChange}
+          onChange={handleUserChange}
           value={user}
+          readOnly={isViewPage}
         />
       </Box>
       <Box width={0.5} pb={3}>
@@ -65,8 +66,9 @@ const AppDisplay = ({
           id="content"
           name="content"
           type="text"
-          onChange={isViewPage ? () => {} : handleContentChange}
+          onChange={handleContentChange}
           value={content}
+          readOnly={isViewPage}
           style={{
             minHeight: "25vh"
           }}
@@ -86,6 +88,7 @@ const AppDisplay = ({
               mr={2}
               type="text"
               value={window.location.href}
+              readOnly
             />
             <FaRegClipboard
               onClick={copyPathToClipboard}
