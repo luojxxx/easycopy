@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import CreatePage from './CreatePage';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const Index = (
   <Router>
     <Switch>
-      <Route path="/" component={CreatePage} />
-      {/* <Route path="/*" component={GetPage} /> */}
+      <Route path="/" component={App} />
     </Switch>
   </Router>
 );
