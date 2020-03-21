@@ -165,7 +165,9 @@ const AppDisplay = ({
           <Heading color="primary">Not Found</Heading>
         </Box>
       )}
-      <CopiedText pathname={pathname} copied={copied} />
+      <Flex width={1} justifyContent="center">
+        <CopiedText pathname={pathname} copied={copied} />
+      </Flex>
     </Template>
   );
 };
