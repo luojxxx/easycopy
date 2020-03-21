@@ -61,7 +61,7 @@ const App = props => {
     if (pathname !== "/") {
       handleGet();
     }
-  }, []);
+  }, [pathname]);
   return (
       <AppDisplay
         pathname={pathname}
