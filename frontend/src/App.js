@@ -3,6 +3,9 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import TextareaAutosize from "react-textarea-autosize";
 
+import constants from "./constants";
+const { api, contentLimit } = constants
+
 const App = props => {
   console.log(props);
   const { history, location } = props;
@@ -13,13 +16,14 @@ const App = props => {
     setUser(e.target.value);
   };
   const handleContentChange = e => {
-    setContent(e.target.value);
+    const content = e.target.value.slice(0, contentLimit)
+    setContent(content);
   };
   const handleSubmit = async () => {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:3000`,
+        url: api,
         data: {
           user: user,
           content: content
@@ -36,7 +40,7 @@ const App = props => {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000${pathname}`
+        url: api+pathname 
       });
       setUser(response.data.user)
       setContent(response.data.content)
