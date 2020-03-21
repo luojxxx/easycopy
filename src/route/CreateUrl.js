@@ -13,10 +13,6 @@ const contentLimit = 10000;
 
 export const createUrl = async (ctx, next) => {
   try {
-    const wordArray = [0, 0, 0, 0].map(
-      _ => wordBank[Math.floor(Math.random() * wordBank.length)]
-    );
-    const url = wordArray.join("-");
     const content = ctx.request.body.content;
     const user = ctx.request.body.user;
 
@@ -26,7 +22,19 @@ export const createUrl = async (ctx, next) => {
         msg: `Content is longer than the ${contentLimit} limit`,
         url: ""
       };
+
     } else {
+      // make sure url doesn't already exist
+      let url
+      let results = true
+      while (results) {
+        const wordArray = [0, 0, 0, 0].map(
+          _ => wordBank[Math.floor(Math.random() * wordBank.length)]
+        );
+        url = wordArray.join("-");
+        results = await Url.findOne({ url: url })
+      }
+
       const instance = new Url({
         url: url,
         content: content,
@@ -39,6 +47,7 @@ export const createUrl = async (ctx, next) => {
         url: url
       };
     }
+
   } catch (err) {
     console.error("CreateUrl error");
     console.error(err);
