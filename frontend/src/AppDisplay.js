@@ -54,19 +54,19 @@ const AppDisplay = ({
   user,
   content
 }) => {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
   const copyPathToClipboard = () => {
     copy(window.location.href);
     document.getElementById("pathField").focus();
     setCopied(true);
   };
   const handleSelect = () => {
-    document.getElementById("pathField").select()
-  }
+    document.getElementById("pathField").select();
+  };
   const handleClickBack = () => {
-    setCopied(false)
-    handleBack()
-  }
+    setCopied(false);
+    handleBack();
+  };
   const isViewPage = pathname !== "/";
   return (
     <AppContainer>
@@ -104,8 +104,13 @@ const AppDisplay = ({
         />
       </Box>
       {pathname === "/" && !notFoundPage && (
-        <Button variant="primary" mb={1} onClick={handleSubmit}>
-            Submit
+        <Button
+          variant="primary"
+          mb={1}
+          onClick={handleSubmit}
+          style={{ cursor: "pointer" }}
+        >
+          Submit
         </Button>
       )}
       {pathname !== "/" && !notFoundPage && (
