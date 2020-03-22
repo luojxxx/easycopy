@@ -33,6 +33,7 @@ const App = props => {
   };
   const handleSubmit = async () => {
     try {
+      setNotFoundPage(false)
       if (content.length === 0) {
         return setZeroContentFlag(true);
       }
