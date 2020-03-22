@@ -18,7 +18,7 @@ export const getUrl = async (ctx, next) => {
       ctx.body = {
         content: result.content,
         user: result.user,
-        date: result.date
+        createdAt: result.createdAt
       };
     }
   } catch (err) {

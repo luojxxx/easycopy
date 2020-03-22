@@ -60,7 +60,7 @@ const App = props => {
       setNotFoundPage(false);
       setUser(response.data.user);
       setContent(response.data.content);
-      setDate(response.data.date);
+      setDate(response.data.createdAt);
     } catch (err) {
       if (err.response.status === 404) {
         setNotFoundPage(true);
