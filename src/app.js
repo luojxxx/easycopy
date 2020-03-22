@@ -1,16 +1,22 @@
 require("dotenv").config();
 
-import Koa from 'koa';
-import Router from '@koa/router';
-import cors from '@koa/cors'
-import bodyParser from 'koa-bodyparser'
+import Koa from "koa";
+import Router from "@koa/router";
+import cors from "@koa/cors";
+import bodyParser from "koa-bodyparser";
+const Sentry = require("@sentry/node");
 
-import { createUrl } from './route/CreateUrl';
-import { getUrl } from './route/GetUrl';
+import { createUrl } from "./route/CreateUrl";
+import { getUrl } from "./route/GetUrl";
 
+// Initialization
 const app = new Koa();
 const router = new Router();
+Sentry.init({
+  dsn: process.env.SENTRY_DSN
+});
 
+// Middleware
 app.use(
   cors({
     origin: function(ctx) {
@@ -18,11 +24,22 @@ app.use(
     }
   })
 );
-app.use(bodyParser())
+app.use(bodyParser());
 
-router.post('/', createUrl);
-router.get('/*', getUrl);
+// Routes
+router.post("/", createUrl);
+router.get("/*", getUrl);
 
+// Middleware
 app.use(router.routes()).use(router.allowedMethods());
+app.on("error", (err, ctx) => {
+  Sentry.withScope(function(scope) {
+    scope.addEventProcessor(function(event) {
+      return Sentry.Handlers.parseRequest(event, ctx.request);
+    });
+    Sentry.captureException(err);
+  });
+});
 
+// Set port
 app.listen(3000);
