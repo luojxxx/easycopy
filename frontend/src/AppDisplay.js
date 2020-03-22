@@ -9,7 +9,7 @@ import theme from "./theme";
 import Template from "./components/Template";
 import Input from "./components/Input";
 import Textarea from "./components/Textarea";
-import Button from './components/Button';
+import Button from "./components/Button";
 import Clock from "./components/Clock";
 
 const CopiedText = ({ pathname, copied }) => {
@@ -127,42 +127,45 @@ const AppDisplay = ({
         </Flex>
       )}
       {pathname !== "/" && !notFoundPage && (
-        <Flex width={1} flexDirection="column">
-          <Flex width={1} pb={1} flexDirection="row" alignItems="center">
-            <FiCornerUpLeft
-              onClick={handleClickBack}
-              size={32}
-              style={{
-                cursor: "pointer",
-                color: theme.colors.primary
-              }}
-              title="Go back"
-            />
-            <Input
-              id="pathField"
-              width={1}
-              mx={2}
-              type="text"
-              onClick={handleSelect}
-              value={window.location.href}
-              readOnly
-            />
-            <FiCopy
-              onClick={copyPathToClipboard}
-              size={32}
-              style={{
-                cursor: "pointer",
-                color: theme.colors.primary
-              }}
-              title="Copy to clipboard"
-            />
-          </Flex>
+        <Flex width={1} pb={1} flexDirection="row" alignItems="center">
+          <FiCornerUpLeft
+            onClick={handleClickBack}
+            size={32}
+            style={{
+              cursor: "pointer",
+              color: theme.colors.primary
+            }}
+            title="Go back"
+          />
+          <Input
+            id="pathField"
+            width={1}
+            mx={2}
+            type="text"
+            onClick={handleSelect}
+            value={window.location.href}
+            readOnly
+          />
+          <FiCopy
+            onClick={copyPathToClipboard}
+            size={32}
+            style={{
+              cursor: "pointer",
+              color: theme.colors.primary
+            }}
+            title="Copy to clipboard"
+          />
         </Flex>
       )}
       {pathname !== "/" && notFoundPage && (
-        <Box mb={1} style={{ height: "36px" }}>
+        <Flex
+          width={1}
+          mb={1}
+          justifyContent="center"
+          style={{ height: "36px" }}
+        >
           <Heading color="primary">Not Found</Heading>
-        </Box>
+        </Flex>
       )}
       <Flex width={1} justifyContent="center">
         <CopiedText pathname={pathname} copied={copied} />
