@@ -42,4 +42,8 @@ app.on("error", (err, ctx) => {
 });
 
 // Set port
-app.listen(3000);
+if (process.env.DEBUG) {
+  app.listen(3000);
+} else {
+  app.listen(80);
+}
