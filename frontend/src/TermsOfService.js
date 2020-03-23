@@ -10,7 +10,7 @@ const TermsOfService = () => (
       value={"Placeholder text"}
       readOnly
       style={{
-        minHeight: "25vh"
+        minHeight: "50vh"
       }}
     />
   </Template>
