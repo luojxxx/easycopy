@@ -49,15 +49,12 @@ const AppDisplay = ({
     handleBack();
   };
   const isViewPage = pathname !== "/";
+  const dateDisplay = date === '' ? '' : dayjs(date).format(dateFormat)
   return (
     <Template subheading="Copy text to human readable urls">
       <Box width={1} pb={3}>
         <Text color="primary">
-          {isViewPage ? (
-            `Date: ${dayjs(date).format(dateFormat)}`
-          ) : (
-            <Clock format={dateFormat} />
-          )}
+          {isViewPage ? `Date: ${dateDisplay}` : <Clock format={dateFormat} />}
         </Text>
       </Box>
       <Box width={1} pb={3}>
