@@ -1,5 +1,4 @@
-// const api = "http://localhost:3000";
-const api = "https://easycopy.herokuapp.com";
+const api = process.env.DEBUG === 'true' ? "http://localhost:3000" : "https://easycopy.herokuapp.com"
 const contentLimit = 10000;
 
 export default {
