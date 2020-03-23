@@ -16,11 +16,11 @@
     "dotenv": "^8.2.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
-    "mongoose": "^5.9.5"
-  },
-  "devDependencies": {
+    "mongoose": "^5.9.5",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7"
+  },
+  "devDependencies": {
   }
 }
