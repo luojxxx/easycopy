@@ -45,5 +45,5 @@ app.on("error", (err, ctx) => {
 if (process.env.DEBUG) {
   app.listen(3000);
 } else {
-  app.listen(80);
+  app.listen(process.env.PORT);
 }
