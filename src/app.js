@@ -6,8 +6,8 @@ import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 const Sentry = require("@sentry/node");
 
-import { createUrl } from "./route/CreateUrl";
-import { getUrl } from "./route/GetUrl";
+import { createUrlRoute } from "./routes";
+import { getUrlRoute } from "./routes";
 
 // Initialization
 const app = new Koa();
@@ -27,8 +27,8 @@ app.use(
 app.use(bodyParser());
 
 // Routes
-router.post("/", createUrl);
-router.get("/*", getUrl);
+router.post("/", createUrlRoute);
+router.get("/*", getUrlRoute);
 
 // Middleware
 app.use(router.routes()).use(router.allowedMethods());
