@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "description": "Starting",
   "main": "app.js",
-  "scripts": {
-    "start": "./node_modules/.bin/babel src -d lib && node ./lib/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "scripts": {
+    "start": "nodemon src/app.js --exec babel-node",
+    "build": "babel src -d dist --copy-files",
+    "serve": "node dist/app.js",
+    "test": "mocha --require @babel/register"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
     "@koa/cors": "^3.0.0",
     "@koa/router": "^8.0.8",
     "@sentry/node": "^5.15.0",
@@ -22,5 +25,11 @@
     "@babel/preset-env": "^7.8.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "nodemon": "^2.0.2"
   }
 }

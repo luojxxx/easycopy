@@ -4,7 +4,7 @@ import path from "path";
 import Url from "../model/Url";
 
 const text = fs.readFileSync(
-  path.resolve(__dirname, "../../wordbank.txt"),
+  path.resolve(__dirname, "../wordbank.txt"),
   "utf8"
 );
 const wordBank = text.trim("\n").split(",");
