@@ -11,6 +11,7 @@ import Input from "./components/Input";
 import Textarea from "./components/Textarea";
 import Button from "./components/Button";
 import Clock from "./components/Clock";
+import Loader from "./components/Loader";
 
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
@@ -25,6 +26,7 @@ const dateFormat = "YYYY-MM-DD HH:mm:ss A";
 const AppDisplay = ({
   pathname,
   zeroContentFlag,
+  submissionProcessing,
   notFoundPage,
   handleUserChange,
   handleContentChange,
@@ -49,7 +51,7 @@ const AppDisplay = ({
     handleBack();
   };
   const isViewPage = pathname !== "/";
-  const dateDisplay = date === '' ? '' : dayjs(date).format(dateFormat)
+  const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
     <Template subheading="Copy text to human readable urls">
       <Box width={1} pb={3}>
@@ -88,7 +90,7 @@ const AppDisplay = ({
           }}
         />
       </Box>
-      {pathname === "/" && (
+      {pathname === "/" && !submissionProcessing && (
         <Flex
           width={1}
           flexDirection="row"
@@ -121,6 +123,17 @@ const AppDisplay = ({
               <FiStar />
             </Flex>
           </Button>
+        </Flex>
+      )}
+      {pathname === "/" && submissionProcessing && (
+        <Flex
+          width={1}
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
+          style={{ height: "40px" }}
+        >
+          {/* <Loader /> */}
         </Flex>
       )}
       {pathname !== "/" && !notFoundPage && (

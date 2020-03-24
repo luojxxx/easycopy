@@ -13,6 +13,7 @@ const App = props => {
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
   const [zeroContentFlag, setZeroContentFlag] = useState(false);
+  const [submissionProcessing, setSubmissionProcessing] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const handleUserChange = e => {
     setUser(e.target.value);
@@ -33,10 +34,11 @@ const App = props => {
   };
   const handleSubmit = async () => {
     try {
-      setNotFoundPage(false)
+      setNotFoundPage(false);
       if (content.length === 0) {
         return setZeroContentFlag(true);
       }
+      setSubmissionProcessing(true);
       const response = await axios({
         method: "post",
         url: api,
@@ -45,6 +47,7 @@ const App = props => {
           content: content
         }
       });
+      setSubmissionProcessing(false);
       const url = response.data.url;
       history.push(url);
     } catch (err) {
@@ -80,6 +83,7 @@ const App = props => {
     <AppDisplay
       pathname={pathname}
       zeroContentFlag={zeroContentFlag}
+      submissionProcessing={submissionProcessing}
       notFoundPage={notFoundPage}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
