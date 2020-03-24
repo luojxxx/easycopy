@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 import AppDisplay from "./AppDisplay";
+import { sleep } from "./lib";
 import constants from "./constants";
 const { api, contentLimit } = constants;
 
@@ -47,6 +48,7 @@ const App = props => {
           content: content
         }
       });
+      sleep(300);
       setSubmissionProcessing(false);
       const url = response.data.url;
       history.push(url);

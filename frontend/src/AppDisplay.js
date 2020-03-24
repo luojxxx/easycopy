@@ -134,7 +134,7 @@ const AppDisplay = ({
           alignItems="center"
           style={{ height: "40px" }}
         >
-          {/* <Loader /> */}
+          <Loader />
         </Flex>
       )}
       {pathname !== "/" && !notFoundPage && (
