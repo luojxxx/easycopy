@@ -11,6 +11,7 @@ import Input from "./components/Input";
 import Textarea from "./components/Textarea";
 import Button from "./components/Button";
 import Clock from "./components/Clock";
+import StarIcon from "./components/StarIcon";
 import Loader from "./components/Loader";
 
 const CopiedText = ({ pathname, copied }) => {
@@ -120,7 +121,7 @@ const AppDisplay = ({
               alignItems="center"
             >
               <Text pr={2}>Submit</Text>
-              <FiStar />
+              <StarIcon />
             </Flex>
           </Button>
         </Flex>
