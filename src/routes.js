@@ -1,5 +1,6 @@
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
+import { loaderVerify } from "./functions/loaderVerify";
 
 export const createUrlRoute = async (ctx, next) => {
   const content = ctx.request.body.content;
@@ -16,6 +17,13 @@ export const getUrlRoute = async (ctx, next) => {
   const url = path.slice(1, path.length);
 
   const { status, body } = await getUrl(url);
+
+  ctx.status = status;
+  ctx.body = body;
+};
+
+export const loaderVerifyRoute = async (ctx, next) => {
+  const { status, body } = await loaderVerify();
 
   ctx.status = status;
   ctx.body = body;
