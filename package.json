@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Starting",
   "main": "app.js",
-   "scripts": {
+  "scripts": {
     "start": "nodemon src/app.js --exec babel-node",
     "build": "babel src -d dist --copy-files",
     "serve": "node dist/app.js",
@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@babel/runtime": "^7.9.2",
     "@koa/cors": "^3.0.0",
     "@koa/router": "^8.0.8",
@@ -20,9 +23,7 @@
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "mongoose": "^5.9.5",
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.8.7"
+    "stripe": "^8.36.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

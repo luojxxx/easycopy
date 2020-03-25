@@ -1,5 +1,6 @@
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
+import { stripePayment } from './functions/stripePayment'
 import { loaderVerify } from "./functions/loaderVerify";
 
 export const createUrlRoute = async (ctx, next) => {
@@ -21,6 +22,15 @@ export const getUrlRoute = async (ctx, next) => {
   ctx.status = status;
   ctx.body = body;
 };
+
+export const stripePaymentRoute = async (ctx, next) => {
+  const amount = ctx.request.body.amount;
+
+  const { status, body } = await stripePayment(amount);
+
+  ctx.status = status;
+  ctx.body = body;
+}
 
 export const loaderVerifyRoute = async (ctx, next) => {
   const { status, body } = await loaderVerify();
