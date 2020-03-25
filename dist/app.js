@@ -30,6 +30,7 @@ app.use((0, _cors["default"])({
 }));
 app.use((0, _koaBodyparser["default"])()); // Routes
 
+router.get("/loaderio-4972e2831d525a495d3bff7e96b9182b.txt", _routes.loaderVerifyRoute);
 router.post("/", _routes.createUrlRoute);
 router.get("/*", _routes.getUrlRoute); // Middleware
 
