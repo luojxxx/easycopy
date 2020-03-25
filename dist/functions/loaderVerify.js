@@ -15,8 +15,6 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _path = _interopRequireDefault(require("path"));
 
-var _Url = _interopRequireDefault(require("../model/Url"));
-
 var text = _fs["default"].readFileSync(_path["default"].resolve(__dirname, "../loaderio-4972e2831d525a495d3bff7e96b9182b.txt"), "utf8");
 
 var loaderVerify = /*#__PURE__*/function () {
