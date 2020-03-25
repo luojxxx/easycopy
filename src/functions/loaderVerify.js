@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-import Url from "../model/Url";
-
 const text = fs.readFileSync(
   path.resolve(
     __dirname,
