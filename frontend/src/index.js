@@ -5,11 +5,11 @@ import * as Sentry from "@sentry/browser";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-import App from "./App";
-import Contact from "./Contact";
-import Privacy from "./Privacy";
-import TermsOfService from "./TermsOfService";
-import Donate from "./Donate";
+import App from "./views/App";
+import Contact from "./views/Contact";
+import Privacy from "./views/Privacy";
+import TermsOfService from "./views/TermsOfService";
+import Donate from "./views/Donate";
 
 import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";

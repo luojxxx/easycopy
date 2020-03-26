@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 import AppDisplay from "./AppDisplay";
-import { sleep } from "./lib";
-import constants from "./constants";
+import { sleep } from "../lib";
+import constants from "../constants";
 const { api, contentLimit } = constants;
 
 const App = props => {

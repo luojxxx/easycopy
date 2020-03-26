@@ -5,13 +5,13 @@ import { Box, Flex, Text, Heading } from "rebass";
 import { Label } from "@rebass/forms";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
-import Template from "./components/Template";
-import Input from "./components/Input";
-import Button from "./components/Button";
-import StarIcon from "./components/StarIcon";
-import Loader from "./components/Loader";
-import { sleep } from "./lib";
-import constants from "./constants";
+import Template from "../components/Template";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import StarIcon from "../components/StarIcon";
+import Loader from "../components/Loader";
+import { sleep } from "../lib";
+import constants from "../constants";
 const { api, contentLimit } = constants;
 
 const CARD_ELEMENT_OPTIONS = {

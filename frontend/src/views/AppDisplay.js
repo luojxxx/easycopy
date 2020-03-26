@@ -5,14 +5,14 @@ import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
-import theme from "./theme";
-import Template from "./components/Template";
-import Input from "./components/Input";
-import Textarea from "./components/Textarea";
-import Button from "./components/Button";
-import Clock from "./components/Clock";
-import StarIcon from "./components/StarIcon";
-import Loader from "./components/Loader";
+import theme from "../theme";
+import Template from "../components/Template";
+import Input from "../components/Input";
+import Textarea from "../components/Textarea";
+import Button from "../components/Button";
+import Clock from "../components/Clock";
+import StarIcon from "../components/StarIcon";
+import Loader from "../components/Loader";
 
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
