@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
 import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
-import { FiXSquare, FiStar, FiCornerUpLeft, FiCopy } from "react-icons/fi";
+import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
 import theme from "../theme";
 import Template from "../components/Template";
@@ -190,4 +191,21 @@ const AppDisplay = ({
     </Template>
   );
 };
+
+AppDisplay.propTypes = {
+  pathname: PropTypes.string.isRequired,
+  zeroContentFlag: PropTypes.bool.isRequired,
+  submissionProcessing: PropTypes.bool.isRequired,
+  submissionError: PropTypes.bool.isRequired,
+  notFoundPage: PropTypes.bool.isRequired,
+  handleUserChange: PropTypes.func.isRequired,
+  handleContentChange: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  user: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
+};
+
 export default AppDisplay;

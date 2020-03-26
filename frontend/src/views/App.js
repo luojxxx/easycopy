@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
@@ -12,7 +13,6 @@ const App = props => {
   const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
-  const [type, setType] = useState("text");
   const [date, setDate] = useState("");
   const [zeroContentFlag, setZeroContentFlag] = useState(false);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
@@ -31,8 +31,6 @@ const App = props => {
     setContent("");
   };
   const handleBack = () => {
-    // setUser("");
-    // setContent("");
     setZeroContentFlag(false);
     history.push("/");
   };
@@ -104,6 +102,11 @@ const App = props => {
       date={date}
     />
   );
+};
+
+App.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default withRouter(App);

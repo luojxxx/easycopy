@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import styled from "styled-components";
 import { Box, Flex, Text, Heading } from "rebass";
@@ -12,7 +13,7 @@ import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
 import { sleep } from "../lib";
 import constants from "../constants";
-const { api, contentLimit } = constants;
+const { api } = constants;
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -147,6 +148,11 @@ const CheckoutForm = ({ clientSecret, amount }) => {
       )}
     </CheckoutContainer>
   );
+};
+
+CheckoutForm.propTypes = {
+  clientSecret: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired
 };
 
 const Donate = () => {

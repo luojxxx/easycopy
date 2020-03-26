@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
@@ -116,6 +117,11 @@ const Template = ({ subheading, children }) => {
       </Footer>
     </AppContainer>
   );
+};
+
+Template.propTypes = {
+  children: PropTypes.node.isRequired,
+  subheading: PropTypes.string.isRequired
 };
 
 export default Template;

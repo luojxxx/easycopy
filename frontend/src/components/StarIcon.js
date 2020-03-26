@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Flex } from "rebass";
 import { FaRegStar, FaStar } from "react-icons/fa";
 
-import Button from './Button'
+import Button from "./Button";
 
 const StarOutline = styled(FaRegStar)`
   position: absolute;
@@ -22,7 +22,7 @@ const StarFilled = styled(FaStar)`
 
   -webkit-transition: color 0.25s;
   ${Button}:hover & {
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     -webkit-transition: color 0.25s;
   }
 `;
@@ -34,9 +34,9 @@ const StarIcon = () => (
     alignItems="center"
     style={{
       position: "relative",
-      width: '18px',
-      height: '15px',
-      marginTop: '3px'
+      width: "18px",
+      height: "15px",
+      marginTop: "3px"
     }}
   >
     <StarOutline />

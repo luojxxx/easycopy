@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const LoaderContainer = styled.div`
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
   div {
     position: absolute;
     top: 33px;
@@ -66,4 +66,4 @@ const Loader = () => (
   </LoaderContainer>
 );
 
-export default Loader
+export default Loader;
