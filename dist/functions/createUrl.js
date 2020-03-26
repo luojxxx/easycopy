@@ -21,6 +21,7 @@ var text = _fs["default"].readFileSync(_path["default"].resolve(__dirname, "../w
 
 var wordBank = text.trim("\n").split(",");
 var contentLimit = 10000;
+var userLimit = 256;
 
 var createUrl = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user) {
@@ -43,11 +44,25 @@ var createUrl = /*#__PURE__*/function () {
             });
 
           case 2:
+            if (!(user.length > userLimit)) {
+              _context.next = 4;
+              break;
+            }
+
+            return _context.abrupt("return", {
+              status: 400,
+              body: {
+                msg: "User is longer than the ".concat(userLimit, " limit"),
+                url: ""
+              }
+            });
+
+          case 4:
             results = true;
 
-          case 3:
+          case 5:
             if (!results) {
-              _context.next = 11;
+              _context.next = 13;
               break;
             }
 
@@ -55,26 +70,26 @@ var createUrl = /*#__PURE__*/function () {
               return wordBank[Math.floor(Math.random() * wordBank.length)];
             });
             url = wordArray.join("-");
-            _context.next = 8;
+            _context.next = 10;
             return _Url["default"].findOne({
               url: url
             });
 
-          case 8:
+          case 10:
             results = _context.sent;
-            _context.next = 3;
+            _context.next = 5;
             break;
 
-          case 11:
+          case 13:
             instance = new _Url["default"]({
               url: url.toLowerCase(),
               content: content,
               user: user
             });
-            _context.next = 14;
+            _context.next = 16;
             return instance.save();
 
-          case 14:
+          case 16:
             saved = _context.sent;
             return _context.abrupt("return", {
               status: 200,
@@ -84,7 +99,7 @@ var createUrl = /*#__PURE__*/function () {
               }
             });
 
-          case 16:
+          case 18:
           case "end":
             return _context.stop();
         }

@@ -36,7 +36,7 @@ var getUrl = /*#__PURE__*/function () {
             return _context.abrupt("return", {
               status: 404,
               body: {
-                msg: '',
+                msg: "",
                 content: "",
                 user: ""
               }
@@ -46,7 +46,7 @@ var getUrl = /*#__PURE__*/function () {
             return _context.abrupt("return", {
               status: 200,
               body: {
-                msg: '',
+                msg: "",
                 content: result.content,
                 user: result.user,
                 createdAt: result.createdAt
