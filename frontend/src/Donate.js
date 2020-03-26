@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
-import styled from 'styled-components'
-import { Box, Flex, Text } from "rebass";
+import styled from "styled-components";
+import { Box, Flex, Text, Heading } from "rebass";
 import { Label } from "@rebass/forms";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
@@ -66,6 +66,8 @@ const CheckoutContainer = styled(Flex)`
 `;
 
 const CheckoutForm = ({ clientSecret }) => {
+  const [confirmationProcessing, setConfirmationProcessing] = useState(false);
+  const [confirmationStatus, setConfirmationStatus] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -73,6 +75,7 @@ const CheckoutForm = ({ clientSecret }) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     event.preventDefault();
+    setConfirmationProcessing(true);
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -84,7 +87,7 @@ const CheckoutForm = ({ clientSecret }) => {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: "Jenny Rosen"
+          // name: "Jenny Rosen"
         }
       }
     });
@@ -92,6 +95,7 @@ const CheckoutForm = ({ clientSecret }) => {
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
+      setConfirmationStatus("error");
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === "succeeded") {
@@ -100,17 +104,45 @@ const CheckoutForm = ({ clientSecret }) => {
         // execution. Set up a webhook or plugin to listen for the
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
+        setConfirmationStatus("success");
       }
     }
+    setConfirmationProcessing(false);
   };
 
   return (
     <CheckoutContainer>
-      <Label>Card details</Label>
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
-      <Button mt={3} onClick={handleSubmit} disabled={!stripe}>
-        Confirm donation
-      </Button>
+      {confirmationStatus === null && (
+        <Fragment>
+          <Label>Card details</Label>
+          <Box width={1} mb={3}>
+            <CardElement options={CARD_ELEMENT_OPTIONS} />
+          </Box>
+          {!confirmationProcessing && (
+            <Button onClick={handleSubmit} disabled={!stripe} mb={1}>
+              Confirm donation
+            </Button>
+          )}
+          {confirmationProcessing && (
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              style={{ height: "40px" }}
+            >
+              <Loader />
+            </Flex>
+          )}
+        </Fragment>
+      )}
+      {confirmationStatus === "error" && (
+        <Heading color="primary">
+          Sorry there was an error, but Thank you for trying! We'll work on
+          fixing this bug
+        </Heading>
+      )}
+      {confirmationStatus === "success" && (
+        <Heading color="primary">Thank you so much!</Heading>
+      )}
     </CheckoutContainer>
   );
 };
@@ -135,7 +167,6 @@ const Donate = () => {
       });
       sleep(300);
       setSubmissionProcessing(false);
-      console.log(response.data);
       setClientSecret(response.data.client_secret);
     } catch (err) {
       console.error("CreateUrl error");
