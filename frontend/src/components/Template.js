@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
@@ -59,44 +59,56 @@ const Footer = styled.div`
   }
 `;
 
-const Template = ({ subheading, children }) => (
-  <AppContainer>
-    <Heading color="primary" pb={3}>
-      EasyCopy
-    </Heading>
-    <Box width={[0.95, .7, .5]}>
-      <Flex width={1} justifyContent="center">
-        <Box width={0.8} style={{ textAlign: "center" }}>
-          <Text color="primary" pb={3}>
-            {subheading}
+const Template = ({ subheading, children }) => {
+  const resetHeight = () => {
+    // reset the body height to that of the inner browser
+    document.body.style.height = window.innerHeight + "px";
+  };
+  useEffect(() => {
+    window.addEventListener("resize", resetHeight);
+    return () => {
+      window.removeEventListener("resize", resetHeight);
+    };
+  }, []);
+  return (
+    <AppContainer>
+      <Heading color="primary" pb={3}>
+        EasyCopy
+      </Heading>
+      <Box width={[0.95, 0.7, 0.5]}>
+        <Flex width={1} justifyContent="center">
+          <Box width={0.8} style={{ textAlign: "center" }}>
+            <Text color="primary" pb={3}>
+              {subheading}
+            </Text>
+          </Box>
+        </Flex>
+        {children}
+      </Box>
+      <Footer>
+        <Link to="/">
+          <Text px={1} color="primary">
+            Home
           </Text>
-        </Box>
-      </Flex>
-      {children}
-    </Box>
-    <Footer>
-      <Link to="/">
-        <Text px={1} color="primary">
-          Home
-        </Text>
-      </Link>
-      <Link to="/contact">
-        <Text px={1} color="primary">
-          Contact
-        </Text>
-      </Link>
-      <Link to="/privacy">
-        <Text px={1} color="primary">
-          Privacy
-        </Text>
-      </Link>
-      <Link to="/termsofservice">
-        <Text px={1} color="primary">
-          Terms of Service
-        </Text>
-      </Link>
-    </Footer>
-  </AppContainer>
-);
+        </Link>
+        <Link to="/contact">
+          <Text px={1} color="primary">
+            Contact
+          </Text>
+        </Link>
+        <Link to="/privacy">
+          <Text px={1} color="primary">
+            Privacy
+          </Text>
+        </Link>
+        <Link to="/termsofservice">
+          <Text px={1} color="primary">
+            Terms of Service
+          </Text>
+        </Link>
+      </Footer>
+    </AppContainer>
+  );
+};
 
 export default Template;
