@@ -66,6 +66,7 @@ const Template = ({ subheading, children }) => {
   };
   useEffect(() => {
     window.addEventListener("resize", resetHeight);
+    resetHeight();
     return () => {
       window.removeEventListener("resize", resetHeight);
     };
