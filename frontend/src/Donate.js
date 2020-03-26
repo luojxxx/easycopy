@@ -65,9 +65,10 @@ const CheckoutContainer = styled(Flex)`
   }
 `;
 
-const CheckoutForm = ({ clientSecret }) => {
+const CheckoutForm = ({ clientSecret, amount }) => {
   const [confirmationProcessing, setConfirmationProcessing] = useState(false);
   const [confirmationStatus, setConfirmationStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const stripe = useStripe();
   const elements = useElements();
 
@@ -96,6 +97,7 @@ const CheckoutForm = ({ clientSecret }) => {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
       setConfirmationStatus("error");
+      setErrorMessage(result.error.message);
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === "succeeded") {
@@ -112,6 +114,7 @@ const CheckoutForm = ({ clientSecret }) => {
 
   return (
     <CheckoutContainer>
+      <Heading color="primary">{`$${amount}`}</Heading>
       {confirmationStatus === null && (
         <Fragment>
           <Label>Card details</Label>
@@ -135,9 +138,8 @@ const CheckoutForm = ({ clientSecret }) => {
         </Fragment>
       )}
       {confirmationStatus === "error" && (
-        <Heading color="primary">
-          Sorry there was an error, but Thank you for trying! We'll work on
-          fixing this bug
+        <Heading color="primary" style={{ textAlign: "center" }}>
+          {`Sorry Stripe gave us an error: ${errorMessage}`}
         </Heading>
       )}
       {confirmationStatus === "success" && (
@@ -150,6 +152,7 @@ const CheckoutForm = ({ clientSecret }) => {
 const Donate = () => {
   const [amount, setAmount] = useState(1.0);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
+  const [submissionError, setSubmissionError] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const handleAmountChange = e => {
     // Should add validation to cut off decimal points
@@ -158,6 +161,7 @@ const Donate = () => {
   const handleSubmit = async () => {
     try {
       setSubmissionProcessing(true);
+      setSubmissionError(false);
       const response = await axios({
         method: "post",
         url: api + "/payment",
@@ -169,8 +173,10 @@ const Donate = () => {
       setSubmissionProcessing(false);
       setClientSecret(response.data.client_secret);
     } catch (err) {
-      console.error("CreateUrl error");
+      console.error("Donation error");
       console.error(err);
+      setSubmissionProcessing(false);
+      setSubmissionError(true);
     }
   };
   return (
@@ -181,7 +187,7 @@ const Donate = () => {
         justifyContent="center"
         alignItems="center"
       >
-        {!clientSecret && (
+        {!clientSecret && !submissionError && (
           <Fragment>
             <Box width={0.5} pb={3}>
               <Label htmlFor="user">Amount ($USD)</Label>
@@ -221,7 +227,15 @@ const Donate = () => {
             )}
           </Fragment>
         )}
-        {clientSecret && <CheckoutForm clientSecret={clientSecret} />}
+        {!clientSecret && submissionError && (
+          <Text color="primary" style={{ textAlign: "center" }}>
+            Sorry there was an error, but Thank you for trying! We'll be fixing
+            this bug soon
+          </Text>
+        )}
+        {clientSecret && (
+          <CheckoutForm clientSecret={clientSecret} amount={amount} />
+        )}
       </Flex>
     </Template>
   );
