@@ -62,7 +62,7 @@ const Footer = styled.div`
 const Template = ({ subheading, children }) => {
   const resetHeight = () => {
     // reset the body height to that of the inner browser
-    const container = document.getElementById('appContainer')
+    const container = document.getElementById("appContainer");
     container.style.height = window.innerHeight + "px";
   };
   useEffect(() => {
@@ -106,6 +106,11 @@ const Template = ({ subheading, children }) => {
         <Link to="/termsofservice">
           <Text px={1} color="primary">
             Terms of Service
+          </Text>
+        </Link>
+        <Link to="/donate">
+          <Text px={1} color="primary">
+            Donate
           </Text>
         </Link>
       </Footer>

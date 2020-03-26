@@ -6,7 +6,7 @@ import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 const Sentry = require("@sentry/node");
 
-import { createUrlRoute, getUrlRoute, loaderVerifyRoute } from "./routes";
+import { createUrlRoute, getUrlRoute, stripePaymentRoute } from "./routes";
 
 // Initialization
 const app = new Koa();
@@ -26,8 +26,9 @@ app.use(
 app.use(bodyParser());
 
 // Routes
-router.get("/loaderio-4972e2831d525a495d3bff7e96b9182b.txt", loaderVerifyRoute);
-router.post("/", createUrlRoute);
+// router.get("/loaderio-4972e2831d525a495d3bff7e96b9182b.txt", loaderVerifyRoute);
+router.post("/create", createUrlRoute);
+router.post('/payment', stripePaymentRoute)
 router.get("/*", getUrlRoute);
 
 // Middleware

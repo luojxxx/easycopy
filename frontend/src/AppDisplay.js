@@ -113,7 +113,6 @@ const AppDisplay = ({
             // ml={2}
             mb={1}
             onClick={handleSubmit}
-            style={{ cursor: "pointer" }}
           >
             <Flex
               flexDirection="row"
