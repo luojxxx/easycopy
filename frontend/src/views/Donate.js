@@ -161,8 +161,9 @@ const Donate = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const handleAmountChange = e => {
-    // Should add validation to cut off decimal points
-    setAmount(e.target.value);
+    const rawAmount = e.target.value;
+    const amount = parseInt(rawAmount * 100, 10) / 100;
+    setAmount(amount);
   };
   const handleSubmit = async () => {
     try {
