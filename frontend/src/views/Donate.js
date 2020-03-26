@@ -4,8 +4,10 @@ import axios from "axios";
 import styled from "styled-components";
 import { Box, Flex, Text, Heading } from "rebass";
 import { Label } from "@rebass/forms";
+import { FiCornerUpLeft } from "react-icons/fi";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
+import theme from "../theme";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -66,7 +68,7 @@ const CheckoutContainer = styled(Flex)`
   }
 `;
 
-const CheckoutForm = ({ clientSecret, amount }) => {
+const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
   const [confirmationProcessing, setConfirmationProcessing] = useState(false);
   const [confirmationStatus, setConfirmationStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -112,6 +114,9 @@ const CheckoutForm = ({ clientSecret, amount }) => {
     }
     setConfirmationProcessing(false);
   };
+  const handleClickBack = () => {
+    setClientSecret("");
+  };
 
   return (
     <CheckoutContainer>
@@ -123,9 +128,20 @@ const CheckoutForm = ({ clientSecret, amount }) => {
             <CardElement options={CARD_ELEMENT_OPTIONS} />
           </Box>
           {!confirmationProcessing && (
-            <Button onClick={handleSubmit} disabled={!stripe} mb={1}>
-              Confirm donation
-            </Button>
+            <Flex>
+              <FiCornerUpLeft
+                onClick={handleClickBack}
+                size={32}
+                style={{
+                  cursor: "pointer",
+                  color: theme.colors.primary
+                }}
+                title="Go back"
+              />
+              <Button onClick={handleSubmit} disabled={!stripe} mb={1} ml={2}>
+                Confirm donation
+              </Button>
+            </Flex>
           )}
           {confirmationProcessing && (
             <Flex
@@ -152,6 +168,7 @@ const CheckoutForm = ({ clientSecret, amount }) => {
 
 CheckoutForm.propTypes = {
   clientSecret: PropTypes.string.isRequired,
+  setClientSecret: PropTypes.func.isRequired,
   amount: PropTypes.number.isRequired
 };
 
@@ -241,7 +258,11 @@ const Donate = () => {
           </Text>
         )}
         {clientSecret && (
-          <CheckoutForm clientSecret={clientSecret} amount={amount} />
+          <CheckoutForm
+            clientSecret={clientSecret}
+            setClientSecret={setClientSecret}
+            amount={amount}
+          />
         )}
       </Flex>
     </Template>
