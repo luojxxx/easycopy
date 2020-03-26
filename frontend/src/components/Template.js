@@ -62,7 +62,8 @@ const Footer = styled.div`
 const Template = ({ subheading, children }) => {
   const resetHeight = () => {
     // reset the body height to that of the inner browser
-    document.body.style.height = window.innerHeight + "px";
+    const container = document.getElementById('appContainer')
+    container.style.height = window.innerHeight + "px";
   };
   useEffect(() => {
     window.addEventListener("resize", resetHeight);
@@ -72,7 +73,7 @@ const Template = ({ subheading, children }) => {
     };
   }, []);
   return (
-    <AppContainer>
+    <AppContainer id="appContainer">
       <Heading color="primary" pb={3}>
         EasyCopy
       </Heading>
