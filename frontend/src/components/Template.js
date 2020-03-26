@@ -64,7 +64,7 @@ const Template = ({ subheading, children }) => (
     <Heading color="primary" pb={3}>
       EasyCopy
     </Heading>
-    <Box width={[0.95, .7, .5]}>
+    <Box width={[0.95, 0.7, 0.5]}>
       <Flex width={1} justifyContent="center">
         <Box width={0.8} style={{ textAlign: "center" }}>
           <Text color="primary" pb={3}>
@@ -93,6 +93,11 @@ const Template = ({ subheading, children }) => (
       <Link to="/termsofservice">
         <Text px={1} color="primary">
           Terms of Service
+        </Text>
+      </Link>
+      <Link to="/donate">
+        <Text px={1} color="primary">
+          Donate
         </Text>
       </Link>
     </Footer>

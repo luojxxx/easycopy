@@ -9,7 +9,7 @@ import App from "./App";
 import Contact from "./Contact";
 import Privacy from "./Privacy";
 import TermsOfService from "./TermsOfService";
-import CheckoutForm from "./CheckoutForm";
+import Donate from "./Donate";
 
 import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";
@@ -19,7 +19,7 @@ import * as serviceWorker from "./serviceWorker";
 Sentry.init({
   dsn: "https://83b0d8e1cf934f2aa72aa89f194a5732@sentry.io/5169583"
 });
-const stripePromise = loadStripe("pk_test_sqH73i1MZwX6qXXBfb3OcfLP00vL4K6A37");
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const Index = (
   <Elements stripe={stripePromise}>
@@ -29,6 +29,7 @@ const Index = (
           <Route path="/contact" component={Contact} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/termsofservice" component={TermsOfService} />
+          <Route path="/donate" component={Donate} />
           <Route path="/" component={App} />
         </Switch>
       </ThemeProvider>

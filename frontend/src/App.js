@@ -42,7 +42,7 @@ const App = props => {
       setSubmissionProcessing(true);
       const response = await axios({
         method: "post",
-        url: api + 'create',
+        url: api + '/create',
         data: {
           user: user,
           content: content

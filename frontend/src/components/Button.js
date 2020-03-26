@@ -6,6 +6,7 @@ import theme from '../theme'
 
 const ButtonComponent = styled(Button)`
   outline-color: ${theme.colors.primary};
+  cursor: pointer;
 `;
 
 export default ButtonComponent
