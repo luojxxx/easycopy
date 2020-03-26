@@ -10,6 +10,7 @@ const text = fs.readFileSync(
 const wordBank = text.trim("\n").split(",");
 
 const contentLimit = 10000;
+const userLimit = 256;
 
 export const createUrl = async (content, user) => {
   if (content.length > contentLimit) {
@@ -17,6 +18,15 @@ export const createUrl = async (content, user) => {
       status: 400,
       body: {
         msg: `Content is longer than the ${contentLimit} limit`,
+        url: ""
+      }
+    };
+  }
+  if (user.length > userLimit) {
+    return {
+      status: 400,
+      body: {
+        msg: `User is longer than the ${userLimit} limit`,
         url: ""
       }
     };

@@ -8,7 +8,7 @@ export const getUrl = async url => {
     return {
       status: 404,
       body: {
-        msg: '',
+        msg: "",
         content: "",
         user: ""
       }
@@ -17,10 +17,10 @@ export const getUrl = async url => {
   return {
     status: 200,
     body: {
-      msg: '',
+      msg: "",
       content: result.content,
       user: result.user,
       createdAt: result.createdAt
     }
-  }
+  };
 };

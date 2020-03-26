@@ -5,20 +5,22 @@ import axios from "axios";
 import AppDisplay from "./AppDisplay";
 import { sleep } from "../lib";
 import constants from "../constants";
-const { api, contentLimit } = constants;
+const { api, contentLimit, userLimit } = constants;
 
 const App = props => {
   const { history, location } = props;
   const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
+  const [type, setType] = useState("text");
   const [date, setDate] = useState("");
   const [zeroContentFlag, setZeroContentFlag] = useState(false);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const handleUserChange = e => {
-    setUser(e.target.value);
+    const user = e.target.value.slice(0, userLimit);
+    setUser(user);
   };
   const handleContentChange = e => {
     const content = e.target.value.slice(0, contentLimit);
