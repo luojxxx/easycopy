@@ -28,6 +28,7 @@ const AppDisplay = ({
   pathname,
   zeroContentFlag,
   submissionProcessing,
+  submissionError,
   notFoundPage,
   handleUserChange,
   handleContentChange,
@@ -177,8 +178,14 @@ const AppDisplay = ({
           <Heading color="primary">Not Found</Heading>
         </Flex>
       )}
-      <Flex width={1} justifyContent="center">
-        <CopiedText pathname={pathname} copied={copied} />
+      <Flex width={1} justifyContent="center" style={{ textAlign: "center" }}>
+        {submissionError ? (
+          <Text color="primary">
+            Sorry there was an error, we'll be fixing it soon
+          </Text>
+        ) : (
+          <CopiedText pathname={pathname} copied={copied} />
+        )}
       </Flex>
     </Template>
   );
