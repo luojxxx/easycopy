@@ -4,7 +4,7 @@ import Template from "./components/Template";
 import Textarea from "./components/Textarea";
 
 const Privacy = () => (
-  <Template subheading="Privacy">
+  <Template subheading="Privacy Policy">
     <Textarea
       type="text"
       value={privacyText}
@@ -16,9 +16,7 @@ const Privacy = () => (
   </Template>
 );
 
-const privacyText = `QuickShift.io Privacy Policy
-
-This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from easycopy.io (the “Site”).
+const privacyText = `This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from easycopy.io (the “Site”).
 
 PERSONAL INFORMATION WE COLLECT
 
