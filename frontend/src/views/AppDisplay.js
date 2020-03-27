@@ -8,13 +8,15 @@ import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 
 import theme from "../theme";
 import Template from "../components/Template";
+import Clock from "../components/Clock";
 import Input from "../components/Input";
+import Selector from "../components/Selector";
 import Textarea from "../components/Textarea";
 import Button from "../components/Button";
-import Clock from "../components/Clock";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
-import Selector from "../components/Selector";
+import TextView from "../components/TextView";
+import UrlView from '../components/UrlView'
 
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
@@ -59,7 +61,7 @@ const AppDisplay = ({
   const isViewPage = pathname !== "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
-    <Template subheading="Copy text to human readable urls">
+    <Template subheading="Copy stuff to human readable urls">
       <Box width={1} pb={3}>
         <Text color="primary">
           {isViewPage ? `Date: ${dateDisplay}` : <Clock format={dateFormat} />}
@@ -79,7 +81,10 @@ const AppDisplay = ({
       <Box width={1} pb={3}>
         <Flex width={1} justifyContent="space-between">
           <Flex flexDirection="row" justifyContent="center" alignItems="center">
-            <Label htmlFor="content">Content</Label>
+            <Label htmlFor="content" style={{ width: "auto" }}>
+              Content
+            </Label>
+            &nbsp;
             <Selector
               items={["text", "url"]}
               selected={type}
@@ -90,18 +95,25 @@ const AppDisplay = ({
             <Text color="primary">{`${content.length}/10000`}</Text>
           </span>
         </Flex>
-        <Textarea
-          id="content"
-          name="content"
-          type="text"
-          placeholder={!zeroContentFlag ? "" : "Must have content"}
-          onChange={handleContentChange}
-          value={content}
-          readOnly={isViewPage}
-          style={{
-            minHeight: "25vh"
-          }}
-        />
+        {!isViewPage && (
+          <Textarea
+            id="content"
+            name="content"
+            type="text"
+            placeholder={!zeroContentFlag ? "" : "Must have content"}
+            onChange={handleContentChange}
+            value={content}
+            style={{
+              minHeight: "25vh"
+            }}
+          />
+        )}
+        {isViewPage && type === 'text' && (
+          <TextView text={content} />
+        )}
+        {isViewPage && type === 'url' && (
+          <UrlView url={content} />
+        )}
       </Box>
       {pathname === "/" && !submissionProcessing && (
         <Flex
