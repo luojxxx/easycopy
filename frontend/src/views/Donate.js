@@ -26,7 +26,12 @@ const CARD_ELEMENT_OPTIONS = {
       fontSize: "16px",
       "::placeholder": {
         color: theme.colors.primary
-      }
+      },
+      ":-webkit-autofill": {
+        "color": theme.colors.primary,
+        "-webkit-transition-delay": "9999s",
+        "-webkit-transition": "color 9999s ease-out, background-color 9999s ease-out"
+      },
     },
     invalid: {
       color: "#fa755a",
