@@ -166,7 +166,7 @@ const Template = ({ subheading, children }) => {
         </Link>
         <Link to="/termsofservice">
           <Text px={1} color="primary">
-            Terms of Service
+            Terms
           </Text>
         </Link>
         <Link to="/donate">
