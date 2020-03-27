@@ -24,7 +24,7 @@ var stripePayment = /*#__PURE__*/function () {
           case 0:
             _context.next = 2;
             return stripe.paymentIntents.create({
-              amount: amount,
+              amount: Math.floor(amount),
               currency: "usd",
               // Verify your integration in this guide by including this parameter
               metadata: {
