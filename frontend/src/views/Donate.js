@@ -48,14 +48,6 @@ const CheckoutContainer = styled(Flex)`
     background-color: rgba(255, 255, 255, 0);
     border: 1px solid ${theme.colors.primary};
     border-radius: 4px;
-
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
-  }
-  
-  .StripeElement--focus {
-    box-shadow: 0 1px 3px 0 #cfd7df;
   }
 
   .StripeElement--invalid {
@@ -74,6 +66,17 @@ const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const formatAmount = (amount) => {
+    const amountStr = amount.toString(10);
+    const dotIdx = amountStr.indexOf('.');
+    let formattedAmount = amountStr
+    if (dotIdx === -1) {
+      formattedAmount += '.00'
+    } else if (amountStr.length - dotIdx === 2) {
+      formattedAmount += '0'
+    }
+    return formattedAmount
+  } 
   const handleSubmit = async event => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -119,7 +122,7 @@ const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
 
   return (
     <CheckoutContainer>
-      <Heading color="primary">{`$${amount}`}</Heading>
+      <Heading color="primary">{`$${formatAmount(amount)}`}</Heading>
       {confirmationStatus === null && (
         <Fragment>
           <Label>Card details</Label>
