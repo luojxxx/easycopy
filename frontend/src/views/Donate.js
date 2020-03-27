@@ -26,6 +26,9 @@ const CARD_ELEMENT_OPTIONS = {
       fontSize: "16px",
       "::placeholder": {
         color: theme.colors.primary
+      },
+      ":-webkit-autofill": {
+        color: theme.colors.primary
       }
     },
     invalid: {
@@ -56,7 +59,9 @@ const CheckoutContainer = styled(Flex)`
 
   .StripeElement--webkit-autofill {
     color: ${theme.colors.primary} !important;
-    background-color: rgba(0,0,0,0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
   }
 `;
 
@@ -67,17 +72,17 @@ const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const formatAmount = (amount) => {
+  const formatAmount = amount => {
     const amountStr = amount.toString(10);
-    const dotIdx = amountStr.indexOf('.');
-    let formattedAmount = amountStr
+    const dotIdx = amountStr.indexOf(".");
+    let formattedAmount = amountStr;
     if (dotIdx === -1) {
-      formattedAmount += '.00'
+      formattedAmount += ".00";
     } else if (amountStr.length - dotIdx === 2) {
-      formattedAmount += '0'
+      formattedAmount += "0";
     }
-    return formattedAmount
-  } 
+    return formattedAmount;
+  };
   const handleSubmit = async event => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -178,7 +183,7 @@ CheckoutForm.propTypes = {
 const Donate = () => {
   const [amount, setAmount] = useState(1.0);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
-  const [submissionError, setSubmissionError] = useState('');
+  const [submissionError, setSubmissionError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const handleAmountChange = e => {
     const rawAmount = e.target.value;
@@ -191,7 +196,7 @@ const Donate = () => {
     }
     try {
       setSubmissionProcessing(true);
-      setSubmissionError('');
+      setSubmissionError("");
       const response = await axios({
         method: "post",
         url: api + "/payment",
@@ -206,7 +211,9 @@ const Donate = () => {
       console.error("Donation error");
       console.error(err);
       setSubmissionProcessing(false);
-      setSubmissionError('Sorry there was an error, but Thank you for trying! We\'ll be fixing this bug soon');
+      setSubmissionError(
+        "Sorry there was an error, but Thank you for trying! We'll be fixing this bug soon"
+      );
     }
   };
   return (
