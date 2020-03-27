@@ -26,13 +26,7 @@ const CARD_ELEMENT_OPTIONS = {
       fontSize: "16px",
       "::placeholder": {
         color: theme.colors.primary
-      },
-      ":-webkit-autofill": {
-        "color": theme.colors.primary,
-        "background-color": theme.colors.transparent,
-        "-webkit-transition-delay": "9999s",
-        "-webkit-transition": "color 9999s ease-out, background-color 9999s ease-out"
-      },
+      }
     },
     invalid: {
       color: "#fa755a",
@@ -61,7 +55,8 @@ const CheckoutContainer = styled(Flex)`
   }
 
   .StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
+    color: ${theme.colors.primary} !important;
+    background-color: rgba(0,0,0,0) !important;
   }
 `;
 
