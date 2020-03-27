@@ -29,6 +29,7 @@ const CARD_ELEMENT_OPTIONS = {
       },
       ":-webkit-autofill": {
         "color": theme.colors.primary,
+        "background-color": theme.colors.transparent,
         "-webkit-transition-delay": "9999s",
         "-webkit-transition": "color 9999s ease-out, background-color 9999s ease-out"
       },
@@ -182,7 +183,7 @@ CheckoutForm.propTypes = {
 const Donate = () => {
   const [amount, setAmount] = useState(1.0);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
-  const [submissionError, setSubmissionError] = useState(false);
+  const [submissionError, setSubmissionError] = useState('');
   const [clientSecret, setClientSecret] = useState("");
   const handleAmountChange = e => {
     const rawAmount = e.target.value;
@@ -190,9 +191,12 @@ const Donate = () => {
     setAmount(amount);
   };
   const handleSubmit = async () => {
+    if (amount < 0.5) {
+      return setSubmissionError("Sorry Stripe only allows payments over $0.50");
+    }
     try {
       setSubmissionProcessing(true);
-      setSubmissionError(false);
+      setSubmissionError('');
       const response = await axios({
         method: "post",
         url: api + "/payment",
@@ -207,7 +211,7 @@ const Donate = () => {
       console.error("Donation error");
       console.error(err);
       setSubmissionProcessing(false);
-      setSubmissionError(true);
+      setSubmissionError('Sorry there was an error, but Thank you for trying! We\'ll be fixing this bug soon');
     }
   };
   return (
@@ -260,8 +264,7 @@ const Donate = () => {
         )}
         {!clientSecret && submissionError && (
           <Text color="primary" style={{ textAlign: "center" }}>
-            Sorry there was an error, but Thank you for trying! We'll be fixing
-            this bug soon
+            {submissionError}
           </Text>
         )}
         {clientSecret && (
