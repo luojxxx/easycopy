@@ -22,9 +22,10 @@ var text = _fs["default"].readFileSync(_path["default"].resolve(__dirname, "../w
 var wordBank = text.trim("\n").split(",");
 var contentLimit = 10000;
 var userLimit = 256;
+var acceptedTypes = ["url", "text"];
 
 var createUrl = /*#__PURE__*/function () {
-  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user) {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user, type) {
     var url, results, wordArray, instance, saved;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -58,11 +59,25 @@ var createUrl = /*#__PURE__*/function () {
             });
 
           case 4:
+            if (acceptedTypes.includes(type)) {
+              _context.next = 6;
+              break;
+            }
+
+            return _context.abrupt("return", {
+              status: 400,
+              body: {
+                msg: "Type needs to be url or text, got ".concat(type, " instead"),
+                url: ""
+              }
+            });
+
+          case 6:
             results = true;
 
-          case 5:
+          case 7:
             if (!results) {
-              _context.next = 13;
+              _context.next = 15;
               break;
             }
 
@@ -70,26 +85,27 @@ var createUrl = /*#__PURE__*/function () {
               return wordBank[Math.floor(Math.random() * wordBank.length)];
             });
             url = wordArray.join("-");
-            _context.next = 10;
+            _context.next = 12;
             return _Url["default"].findOne({
               url: url
             });
 
-          case 10:
+          case 12:
             results = _context.sent;
-            _context.next = 5;
+            _context.next = 7;
             break;
 
-          case 13:
+          case 15:
             instance = new _Url["default"]({
               url: url.toLowerCase(),
               content: content,
-              user: user
+              user: user,
+              type: type
             });
-            _context.next = 16;
+            _context.next = 18;
             return instance.save();
 
-          case 16:
+          case 18:
             saved = _context.sent;
             return _context.abrupt("return", {
               status: 200,
@@ -99,7 +115,7 @@ var createUrl = /*#__PURE__*/function () {
               }
             });
 
-          case 18:
+          case 20:
           case "end":
             return _context.stop();
         }
@@ -107,7 +123,7 @@ var createUrl = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function createUrl(_x, _x2) {
+  return function createUrl(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();

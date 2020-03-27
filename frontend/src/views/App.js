@@ -6,13 +6,14 @@ import axios from "axios";
 import AppDisplay from "./AppDisplay";
 import { sleep } from "../lib";
 import constants from "../constants";
-const { api, contentLimit, userLimit } = constants;
+const { api, contentLimit, userLimit, acceptedTypes } = constants;
 
 const App = props => {
   const { history, location } = props;
   const { pathname } = location;
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
+  const [type, setType] = useState("text");
   const [date, setDate] = useState("");
   const [zeroContentFlag, setZeroContentFlag] = useState(false);
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
@@ -25,6 +26,10 @@ const App = props => {
   const handleContentChange = e => {
     const content = e.target.value.slice(0, contentLimit);
     setContent(content);
+  };
+  const handleTypeChange = rawType => {
+    const type = acceptedTypes.includes(rawType) ? rawType : "text";
+    setType(type);
   };
   const handleClear = () => {
     setUser("");
@@ -47,7 +52,8 @@ const App = props => {
         url: api + "/create",
         data: {
           user: user,
-          content: content
+          content: content,
+          type: type
         }
       });
       sleep(300);
@@ -70,6 +76,7 @@ const App = props => {
       setNotFoundPage(false);
       setUser(response.data.user);
       setContent(response.data.content);
+      setType(response.data.type);
       setDate(response.data.createdAt);
     } catch (err) {
       if (err.response.status === 404) {
@@ -94,11 +101,13 @@ const App = props => {
       notFoundPage={notFoundPage}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
+      handleTypeChange={handleTypeChange}
       handleClear={handleClear}
       handleBack={handleBack}
       handleSubmit={handleSubmit}
       user={user}
       content={content}
+      type={type}
       date={date}
     />
   );

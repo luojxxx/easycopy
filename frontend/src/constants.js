@@ -4,9 +4,11 @@ const api =
     : "https://easycopy.herokuapp.com";
 const contentLimit = 10000;
 const userLimit = 256;
+const acceptedTypes = ["text", "url"];
 
 export default {
   api,
   contentLimit,
-  userLimit
+  userLimit,
+  acceptedTypes
 };

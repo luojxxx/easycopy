@@ -21,7 +21,7 @@ var _loaderVerify = require("./functions/loaderVerify");
 
 var createUrlRoute = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(ctx, next) {
-    var content, user, _yield$createUrl, status, body;
+    var content, user, type, _yield$createUrl, status, body;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -29,17 +29,18 @@ var createUrlRoute = /*#__PURE__*/function () {
           case 0:
             content = ctx.request.body.content;
             user = ctx.request.body.user;
-            _context.next = 4;
-            return (0, _createUrl.createUrl)(content, user);
+            type = ctx.request.body.type;
+            _context.next = 5;
+            return (0, _createUrl.createUrl)(content, user, type);
 
-          case 4:
+          case 5:
             _yield$createUrl = _context.sent;
             status = _yield$createUrl.status;
             body = _yield$createUrl.body;
             ctx.status = status;
             ctx.body = body;
 
-          case 9:
+          case 10:
           case "end":
             return _context.stop();
         }

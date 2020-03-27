@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import Clock from "../components/Clock";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
+import Selector from "../components/Selector";
 
 const CopiedText = ({ pathname, copied }) => {
   if (pathname !== "/" && copied) {
@@ -33,11 +34,13 @@ const AppDisplay = ({
   notFoundPage,
   handleUserChange,
   handleContentChange,
+  handleTypeChange,
   handleClear,
   handleBack,
   handleSubmit,
   user,
   content,
+  type,
   date
 }) => {
   const [copied, setCopied] = useState(false);
@@ -75,7 +78,14 @@ const AppDisplay = ({
       </Box>
       <Box width={1} pb={3}>
         <Flex width={1} justifyContent="space-between">
-          <Label htmlFor="content">Content</Label>
+          <Flex flexDirection="row" justifyContent="center" alignItems="center">
+            <Label htmlFor="content">Content</Label>
+            <Selector
+              items={["text", "url"]}
+              selected={type}
+              handleSelect={isViewPage ? () => {} : handleTypeChange}
+            />
+          </Flex>
           <span>
             <Text color="primary">{`${content.length}/10000`}</Text>
           </span>
@@ -200,11 +210,13 @@ AppDisplay.propTypes = {
   notFoundPage: PropTypes.bool.isRequired,
   handleUserChange: PropTypes.func.isRequired,
   handleContentChange: PropTypes.func.isRequired,
+  handleTypeChange: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired
 };
 

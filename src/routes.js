@@ -6,8 +6,9 @@ import { loaderVerify } from "./functions/loaderVerify";
 export const createUrlRoute = async (ctx, next) => {
   const content = ctx.request.body.content;
   const user = ctx.request.body.user;
+  const type = ctx.request.body.type;
 
-  const { status, body } = await createUrl(content, user);
+  const { status, body } = await createUrl(content, user, type);
 
   ctx.status = status;
   ctx.body = body;

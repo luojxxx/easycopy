@@ -11,8 +11,9 @@ const wordBank = text.trim("\n").split(",");
 
 const contentLimit = 10000;
 const userLimit = 256;
+const acceptedTypes = ["url", "text"];
 
-export const createUrl = async (content, user) => {
+export const createUrl = async (content, user, type) => {
   if (content.length > contentLimit) {
     return {
       status: 400,
@@ -31,6 +32,16 @@ export const createUrl = async (content, user) => {
       }
     };
   }
+  if (!acceptedTypes.includes(type)) {
+    return {
+      status: 400,
+      body: {
+        msg: `Type needs to be url or text, got ${type} instead`,
+        url: ""
+      }
+    };
+  }
+
   // make sure url doesn't already exist
   let url;
   let results = true;
@@ -45,7 +56,8 @@ export const createUrl = async (content, user) => {
   const instance = new Url({
     url: url.toLowerCase(),
     content: content,
-    user: user
+    user: user,
+    type: type
   });
 
   const saved = await instance.save();

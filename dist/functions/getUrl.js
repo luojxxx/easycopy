@@ -38,7 +38,9 @@ var getUrl = /*#__PURE__*/function () {
               body: {
                 msg: "",
                 content: "",
-                user: ""
+                user: "",
+                type: "",
+                createdAt: ""
               }
             });
 
@@ -49,6 +51,7 @@ var getUrl = /*#__PURE__*/function () {
                 msg: "",
                 content: result.content,
                 user: result.user,
+                type: result.type,
                 createdAt: result.createdAt
               }
             });

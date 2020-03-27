@@ -10,7 +10,9 @@ export const getUrl = async url => {
       body: {
         msg: "",
         content: "",
-        user: ""
+        user: "",
+        type: "",
+        createdAt: ""
       }
     };
   }
@@ -20,6 +22,7 @@ export const getUrl = async url => {
       msg: "",
       content: result.content,
       user: result.user,
+      type: result.type,
       createdAt: result.createdAt
     }
   };

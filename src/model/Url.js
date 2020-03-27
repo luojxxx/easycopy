@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const UrlSchema = new Schema({
   url: String,
   content: String,
+  type: String,
   createdAt: { type: Date, default: Date.now },
   user: { type: String, default: "" }
 });
