@@ -33,16 +33,6 @@ const AppContainer = styled.div`
     }
   }
 
-  div::placeholder {
-    color: ${theme.colors.primary};
-  }
-  div:focus {
-    outline-color: ${theme.colors.primary};
-  }
-  div:-webkit-autofill {
-    -webkit-transition-delay: 9999s;
-    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
-  }
   div::-webkit-scrollbar {
     width: 9px;
   }
@@ -60,36 +50,6 @@ const AppContainer = styled.div`
     background: rgba(255, 255, 255, 0.6);
   }
   div::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  textarea::placeholder {
-    color: ${theme.colors.primary};
-  }
-  textarea:focus {
-    outline-color: ${theme.colors.primary};
-  }
-  textarea:-webkit-autofill {
-    -webkit-transition-delay: 9999s;
-    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
-  }
-  textarea::-webkit-scrollbar {
-    width: 9px;
-  }
-  textarea::-webkit-scrollbar-track {
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0);
-  }
-  textarea::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.4);
-  }
-  textarea::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.6);
-  }
-  textarea::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(255, 255, 255, 0.2);
   }
 
