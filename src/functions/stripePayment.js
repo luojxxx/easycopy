@@ -7,7 +7,8 @@ export const stripePayment = async amount => {
     amount: Math.floor(amount),
     currency: "usd",
     // Verify your integration in this guide by including this parameter
-    metadata: { integration_check: "accept_a_payment" }
+    metadata: { integration_check: "accept_a_payment" },
+    statement_descriptor: "Donation to EasyCopy"
   });
 
   return {
