@@ -3,34 +3,9 @@
   "name": "EasyCopy",
   "icons": [
     {
-      "src": "favicon-3.ico",
+      "src": "favicon.ico",
       "sizes": "48x48",
       "type": "image/x-icon"
-    },
-    {
-      "src": "favicon-3-16.png",
-      "type": "image/png",
-      "sizes": "16x16"
-    },
-    {
-      "src": "favicon-3-32.png",
-      "type": "image/png",
-      "sizes": "32x32"
-    },
-    {
-      "src": "favicon-3-180.png",
-      "type": "image/png",
-      "sizes": "180x180"
-    },
-    {
-      "src": "favicon-3-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "favicon-3-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",
