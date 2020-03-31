@@ -26,18 +26,21 @@ var stripePayment = /*#__PURE__*/function () {
             return stripe.paymentIntents.create({
               amount: Math.floor(amount),
               currency: "usd",
+              statement_descriptor: "Donation to EasyCopy",
+              payment_method_types: ["card"],
               // Verify your integration in this guide by including this parameter
               metadata: {
                 integration_check: "accept_a_payment"
-              },
-              statement_descriptor: "Donation to EasyCopy"
+              }
             });
 
           case 2:
             paymentIntent = _context.sent;
             return _context.abrupt("return", {
               status: 200,
-              body: paymentIntent
+              body: {
+                clientSecret: paymentIntent.client_secret
+              }
             });
 
           case 4:

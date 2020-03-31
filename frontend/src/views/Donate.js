@@ -205,7 +205,7 @@ const Donate = () => {
       });
       sleep(300);
       setSubmissionProcessing(false);
-      setClientSecret(response.data.client_secret);
+      setClientSecret(response.data.clientSecret);
     } catch (err) {
       console.error("Donation error");
       console.error(err);
