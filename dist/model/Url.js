@@ -23,6 +23,10 @@ var UrlSchema = new Schema({
   user: {
     type: String,
     "default": ""
+  },
+  userId: {
+    type: String,
+    "default": ""
   }
 });
 

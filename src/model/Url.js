@@ -8,7 +8,8 @@ const UrlSchema = new Schema({
   content: String,
   type: String,
   createdAt: { type: Date, default: Date.now },
-  user: { type: String, default: "" }
+  user: { type: String, default: "" },
+  userId: { type: String, default: "" }
 });
 
 export default mongoose.model("url", UrlSchema);
