@@ -16,15 +16,7 @@ import Button from "../components/Button";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
 import TextView from "../components/TextView";
-import UrlView from '../components/UrlView'
-
-const CopiedText = ({ pathname, copied }) => {
-  if (pathname !== "/" && copied) {
-    return <Text color="primary">copied url</Text>;
-  } else {
-    return <Text>&nbsp;</Text>;
-  }
-};
+import UrlView from "../components/UrlView";
 
 const dateFormat = "YYYY-MM-DD HH:mm:ss A";
 
@@ -57,6 +49,20 @@ const AppDisplay = ({
   const handleClickBack = () => {
     setCopied(false);
     handleBack();
+  };
+  const generateMsg = (isViewPage, copied, submissionError) => {
+    if (!isViewPage && !submissionError) {
+      return "";
+    }
+    if (!isViewPage && submissionError) {
+      return "Sorry there was an error, we'll be fixing it soon";
+    }
+    if (isViewPage && !copied) {
+      return "Expires after a month";
+    }
+    if (isViewPage && copied) {
+      return "copied url";
+    }
   };
   const isViewPage = pathname !== "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
@@ -108,14 +114,10 @@ const AppDisplay = ({
             }}
           />
         )}
-        {isViewPage && type === 'text' && (
-          <TextView text={content} />
-        )}
-        {isViewPage && type === 'url' && (
-          <UrlView url={content} />
-        )}
+        {isViewPage && type === "text" && <TextView text={content} />}
+        {isViewPage && type === "url" && <UrlView url={content} />}
       </Box>
-      {pathname === "/" && !submissionProcessing && (
+      {!isViewPage && !submissionProcessing && (
         <Flex
           width={1}
           flexDirection="row"
@@ -149,7 +151,7 @@ const AppDisplay = ({
           </Button>
         </Flex>
       )}
-      {pathname === "/" && submissionProcessing && (
+      {!isViewPage && submissionProcessing && (
         <Flex
           width={1}
           flexDirection="row"
@@ -160,7 +162,7 @@ const AppDisplay = ({
           <Loader />
         </Flex>
       )}
-      {pathname !== "/" && !notFoundPage && (
+      {isViewPage && !notFoundPage && (
         <Flex width={1} pb={1} flexDirection="row" alignItems="center">
           <FiCornerUpLeft
             onClick={handleClickBack}
@@ -191,7 +193,7 @@ const AppDisplay = ({
           />
         </Flex>
       )}
-      {pathname !== "/" && notFoundPage && (
+      {isViewPage && notFoundPage && (
         <Flex
           width={1}
           mb={1}
@@ -202,13 +204,11 @@ const AppDisplay = ({
         </Flex>
       )}
       <Flex width={1} justifyContent="center" style={{ textAlign: "center" }}>
-        {submissionError ? (
-          <Text color="primary">
-            Sorry there was an error, we'll be fixing it soon
-          </Text>
-        ) : (
-          <CopiedText pathname={pathname} copied={copied} />
-        )}
+        <Text color="primary">
+          {generateMsg(isViewPage, copied, submissionError) || (
+            <span>&nbsp;</span>
+          )}
+        </Text>
       </Flex>
     </Template>
   );
