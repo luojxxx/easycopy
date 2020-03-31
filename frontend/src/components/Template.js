@@ -129,11 +129,11 @@ const Template = ({ subheading, children }) => {
             Terms
           </Text>
         </Link>
-        <Link to="/donate">
+        {/* <Link to="/donate">
           <Text px={1} color="primary">
             Donate
           </Text>
-        </Link>
+        </Link> */}
       </Footer>
     </AppContainer>
   );
