@@ -6,7 +6,7 @@ export const stripePayment = async amount => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: Math.floor(amount),
     currency: "usd",
-    statement_descriptor: "Donation to EasyCopy",
+    statement_descriptor: "Donation",
     payment_method_types: ["card"],
     // Verify your integration in this guide by including this parameter
     metadata: { integration_check: "accept_a_payment" },
