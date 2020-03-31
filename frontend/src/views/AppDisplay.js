@@ -50,27 +50,27 @@ const AppDisplay = ({
     setCopied(false);
     handleBack();
   };
-  const generateMsg = (isViewPage, copied, submissionError) => {
-    if (!isViewPage && !submissionError) {
+  const generateMsg = (isCreatePage, copied, submissionError) => {
+    if (isCreatePage && !submissionError) {
       return "";
     }
-    if (!isViewPage && submissionError) {
+    if (isCreatePage && submissionError) {
       return "Sorry there was an error, we'll be fixing it soon";
     }
-    if (isViewPage && !copied) {
+    if (!isCreatePage && !copied) {
       return "Expires after a month";
     }
-    if (isViewPage && copied) {
+    if (!isCreatePage && copied) {
       return "copied url";
     }
   };
-  const isViewPage = pathname !== "/";
+  const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
     <Template subheading="Copy stuff to human readable urls">
       <Box width={1} pb={3}>
         <Text color="primary">
-          {isViewPage ? `Date: ${dateDisplay}` : <Clock format={dateFormat} />}
+          {isCreatePage ? <Clock format={dateFormat} /> : `Date: ${dateDisplay}` }
         </Text>
       </Box>
       <Box width={1} pb={3}>
@@ -81,7 +81,7 @@ const AppDisplay = ({
           type="text"
           onChange={handleUserChange}
           value={user}
-          readOnly={isViewPage}
+          readOnly={!isCreatePage}
         />
       </Box>
       <Box width={1} pb={3}>
@@ -94,19 +94,19 @@ const AppDisplay = ({
             <Selector
               items={["text", "url"]}
               selected={type}
-              handleSelect={isViewPage ? () => {} : handleTypeChange}
+              handleSelect={isCreatePage ? handleTypeChange : () => {}}
             />
           </Flex>
           <span>
             <Text color="primary">{`${content.length}/10000`}</Text>
           </span>
         </Flex>
-        {!isViewPage && (
+        {isCreatePage && (
           <Textarea
             id="content"
             name="content"
             type="text"
-            placeholder={!zeroContentFlag ? "" : "Must have content"}
+            placeholder={zeroContentFlag ? "Must have content" : ""}
             onChange={handleContentChange}
             value={content}
             style={{
@@ -114,8 +114,8 @@ const AppDisplay = ({
             }}
           />
         )}
-        {isViewPage && type === "text" && <TextView text={content} />}
-        {isViewPage && type === "url" && <UrlView url={content} />}
+        {!isCreatePage && type === "text" && <TextView text={content} />}
+        {!isCreatePage && type === "url" && <UrlView url={content} />}
       </Box>
       <Flex
         width={1}
@@ -124,7 +124,7 @@ const AppDisplay = ({
         alignItems="center"
         style={{ height: '40px' }}
       >
-        {!isViewPage && !submissionProcessing && (
+        {isCreatePage && !submissionProcessing && (
           <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
             <Flex
               flexDirection="row"
@@ -136,8 +136,8 @@ const AppDisplay = ({
             </Flex>
           </Button>
         )}
-        {!isViewPage && submissionProcessing && <Loader />}
-        {isViewPage && !notFoundPage && (
+        {isCreatePage && submissionProcessing && <Loader />}
+        {!isCreatePage && !notFoundPage && (
           <Fragment>
             <FiCornerUpLeft
               onClick={handleClickBack}
@@ -168,13 +168,13 @@ const AppDisplay = ({
             />
           </Fragment>
         )}
-        {isViewPage && notFoundPage && (
+        {!isCreatePage && notFoundPage && (
           <Heading color="primary">Not Found</Heading>
         )}
       </Flex>
       <Flex width={1} justifyContent="center" style={{ textAlign: "center" }}>
         <Text color="primary">
-          {generateMsg(isViewPage, copied, submissionError) || (
+          {generateMsg(isCreatePage, copied, submissionError) || (
             <span>&nbsp;</span>
           )}
         </Text>
