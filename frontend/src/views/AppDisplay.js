@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import copy from "copy-to-clipboard";
@@ -117,29 +117,15 @@ const AppDisplay = ({
         {isViewPage && type === "text" && <TextView text={content} />}
         {isViewPage && type === "url" && <UrlView url={content} />}
       </Box>
-      {!isViewPage && !submissionProcessing && (
-        <Flex
-          width={1}
-          flexDirection="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {/* <FiXSquare
-            onClick={handleClear}
-            size={32}
-            style={{
-              cursor: "pointer",
-              color: theme.colors.primary
-            }}
-            title="Clear"
-          /> */}
-          <Button
-            variant="primary"
-            width={1}
-            // ml={2}
-            mb={1}
-            onClick={handleSubmit}
-          >
+      <Flex
+        width={1}
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        style={{ height: '40px' }}
+      >
+        {!isViewPage && !submissionProcessing && (
+          <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
             <Flex
               flexDirection="row"
               justifyContent="center"
@@ -149,60 +135,43 @@ const AppDisplay = ({
               <StarIcon />
             </Flex>
           </Button>
-        </Flex>
-      )}
-      {!isViewPage && submissionProcessing && (
-        <Flex
-          width={1}
-          flexDirection="row"
-          justifyContent="center"
-          alignItems="center"
-          style={{ height: "40px" }}
-        >
-          <Loader />
-        </Flex>
-      )}
-      {isViewPage && !notFoundPage && (
-        <Flex width={1} pb={1} flexDirection="row" alignItems="center">
-          <FiCornerUpLeft
-            onClick={handleClickBack}
-            size={32}
-            style={{
-              cursor: "pointer",
-              color: theme.colors.primary
-            }}
-            title="Go back"
-          />
-          <Input
-            id="pathField"
-            width={1}
-            mx={2}
-            type="text"
-            onClick={handleSelect}
-            value={window.location.href}
-            readOnly
-          />
-          <FiCopy
-            onClick={copyPathToClipboard}
-            size={32}
-            style={{
-              cursor: "pointer",
-              color: theme.colors.primary
-            }}
-            title="Copy to clipboard"
-          />
-        </Flex>
-      )}
-      {isViewPage && notFoundPage && (
-        <Flex
-          width={1}
-          mb={1}
-          justifyContent="center"
-          style={{ height: "36px" }}
-        >
+        )}
+        {!isViewPage && submissionProcessing && <Loader />}
+        {isViewPage && !notFoundPage && (
+          <Fragment>
+            <FiCornerUpLeft
+              onClick={handleClickBack}
+              size={32}
+              style={{
+                cursor: "pointer",
+                color: theme.colors.primary
+              }}
+              title="Go back"
+            />
+            <Input
+              id="pathField"
+              width={1}
+              mx={2}
+              type="text"
+              onClick={handleSelect}
+              value={window.location.href}
+              readOnly
+            />
+            <FiCopy
+              onClick={copyPathToClipboard}
+              size={32}
+              style={{
+                cursor: "pointer",
+                color: theme.colors.primary
+              }}
+              title="Copy to clipboard"
+            />
+          </Fragment>
+        )}
+        {isViewPage && notFoundPage && (
           <Heading color="primary">Not Found</Heading>
-        </Flex>
-      )}
+        )}
+      </Flex>
       <Flex width={1} justifyContent="center" style={{ textAlign: "center" }}>
         <Text color="primary">
           {generateMsg(isViewPage, copied, submissionError) || (
