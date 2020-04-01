@@ -1,46 +1,46 @@
 require("dotenv").config();
-
-import Koa from "koa";
-import Router from "@koa/router";
-import cors from "@koa/cors";
-import bodyParser from "koa-bodyparser";
-const Sentry = require("@sentry/node");
+import createError from "http-errors";
+import express from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import cors from "cors";
+import helmet from "helmet";
+const Sentry = require('@sentry/node');
 
 import { createUrlRoute, getUrlRoute, stripePaymentRoute } from "./routes";
 
-// Initialization
-const app = new Koa();
-const router = new Router();
+const app = express();
 Sentry.init({
   dsn: process.env.SENTRY_DSN
 });
 
-// Middleware
-app.use(
-  cors({
-    origin: function(ctx) {
-      return "*";
-    }
-  })
-);
-app.use(bodyParser());
+app.use(Sentry.Handlers.requestHandler());
+app.use(logger("dev"));
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-// Routes
-// router.get("/loaderio-4972e2831d525a495d3bff7e96b9182b.txt", loaderVerifyRoute);
-router.post("/create", createUrlRoute);
-router.post('/payment', stripePaymentRoute)
-router.get("/*", getUrlRoute);
+app.post("/create", createUrlRoute);
+app.post("/payment", stripePaymentRoute);
+app.get("/*", getUrlRoute);
 
-// Middleware
-app.use(router.routes()).use(router.allowedMethods());
-app.on("error", (err, ctx) => {
-  Sentry.withScope(function(scope) {
-    scope.addEventProcessor(function(event) {
-      return Sentry.Handlers.parseRequest(event, ctx.request);
-    });
-    Sentry.captureException(err);
-  });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-// Set port
-app.listen(process.env.PORT || 3000);
+// error handler
+app.use(Sentry.Handlers.errorHandler());
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
+
+module.exports = app;

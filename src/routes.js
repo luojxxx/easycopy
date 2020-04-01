@@ -1,41 +1,39 @@
+import asyncHandler from "express-async-handler";
+
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
-import { stripePayment } from './functions/stripePayment'
+import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 
-export const createUrlRoute = async (ctx, next) => {
-  const content = ctx.request.body.content;
-  const user = ctx.request.body.user;
-  const type = ctx.request.body.type;
+export const createUrlRoute = asyncHandler(async (req, res, next) => {
+  const content = req.body.content;
+  const user = req.body.user;
+  const type = req.body.type;
 
   const { status, body } = await createUrl(content, user, type);
 
-  ctx.status = status;
-  ctx.body = body;
-};
+  res.status(status).send(body);
+});
 
-export const getUrlRoute = async (ctx, next) => {
-  const path = ctx.request.path;
+export const getUrlRoute = asyncHandler(async (req, res, next) => {
+  const path = req.path;
   const url = path.slice(1, path.length);
 
   const { status, body } = await getUrl(url);
 
-  ctx.status = status;
-  ctx.body = body;
-};
+  res.status(status).send(body);
+});
 
-export const stripePaymentRoute = async (ctx, next) => {
+export const stripePaymentRoute = asyncHandler(async (req, res, next) => {
   const amount = ctx.request.body.amount;
 
   const { status, body } = await stripePayment(amount);
 
-  ctx.status = status;
-  ctx.body = body;
-}
+  res.status(status).send(body);
+});
 
-export const loaderVerifyRoute = async (ctx, next) => {
+export const loaderVerifyRoute = asyncHandler(async (req, res, next) => {
   const { status, body } = await loaderVerify();
 
-  ctx.status = status;
-  ctx.body = body;
-};
+  res.status(status).send(body);
+});
