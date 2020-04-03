@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import helmet from "helmet";
-const Sentry = require('@sentry/node');
+const Sentry = require("@sentry/node");
 
 import { createUrlRoute, getUrlRoute, stripePaymentRoute } from "./routes";
 
@@ -17,7 +17,13 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 app.use(logger("dev"));
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors(
+    process.env.DEBUG
+      ? { origin: "http://localhost:3001" }
+      : { origin: "https://www.easycopy.io" }
+  )
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

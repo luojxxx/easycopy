@@ -18,7 +18,7 @@ var _routes = require("./routes");
 
 require("dotenv").config();
 
-var Sentry = require('@sentry/node');
+var Sentry = require("@sentry/node");
 
 var app = (0, _express["default"])();
 Sentry.init({
@@ -27,7 +27,11 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 app.use((0, _morgan["default"])("dev"));
 app.use((0, _helmet["default"])());
-app.use((0, _cors["default"])());
+app.use((0, _cors["default"])(process.env.DEBUG ? {
+  origin: "http://localhost:3001"
+} : {
+  origin: "https://www.easycopy.io"
+}));
 app.use(_express["default"].json());
 app.use(_express["default"].urlencoded({
   extended: false
