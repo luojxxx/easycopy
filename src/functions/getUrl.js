@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 import Url from "../model/Url";
 
 export const getUrl = async url => {
@@ -16,11 +18,16 @@ export const getUrl = async url => {
       }
     };
   }
+  const byteContent = CryptoJS.AES.decrypt(
+    result.content,
+    process.env.ENCRYPTION_KEY
+  );
+  const content = byteContent.toString(CryptoJS.enc.Utf8);
   return {
     status: 200,
     body: {
       msg: "",
-      content: result.content,
+      content: content,
       user: result.user,
       type: result.type,
       createdAt: result.createdAt

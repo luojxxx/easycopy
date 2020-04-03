@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import CryptoJS from "crypto-js";
 
 import Url from "../model/Url";
 
@@ -23,7 +24,10 @@ export const createUrl = async (content, user, type) => {
 
   const instance = new Url({
     url: url.toLowerCase(),
-    content: content,
+    content: CryptoJS.AES.encrypt(
+      content,
+      process.env.ENCRYPTION_KEY
+    ).toString(),
     user: user,
     type: type
   });

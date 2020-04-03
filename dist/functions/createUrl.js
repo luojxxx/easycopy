@@ -15,6 +15,8 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _path = _interopRequireDefault(require("path"));
 
+var _cryptoJs = _interopRequireDefault(require("crypto-js"));
+
 var _Url = _interopRequireDefault(require("../model/Url"));
 
 var text = _fs["default"].readFileSync(_path["default"].resolve(__dirname, "../wordbank.txt"), "utf8");
@@ -54,7 +56,7 @@ var createUrl = /*#__PURE__*/function () {
           case 9:
             instance = new _Url["default"]({
               url: url.toLowerCase(),
-              content: content,
+              content: _cryptoJs["default"].AES.encrypt(content, process.env.ENCRYPTION_KEY).toString(),
               user: user,
               type: type
             });
