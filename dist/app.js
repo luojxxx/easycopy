@@ -27,7 +27,7 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 app.use((0, _morgan["default"])("dev"));
 app.use((0, _helmet["default"])());
-app.use((0, _cors["default"])(process.env.DEBUG === 'false' ? {
+app.use((0, _cors["default"])(process.env.DEBUG === 'true' ? {
   origin: "http://localhost:3001"
 } : {
   origin: "https://www.easycopy.io"
