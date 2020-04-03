@@ -51,8 +51,8 @@ const App = props => {
         method: "post",
         url: api + "/create",
         data: {
-          user: user,
-          content: content,
+          user: user.toString(10),
+          content: content.toString(10),
           type: type
         }
       });
