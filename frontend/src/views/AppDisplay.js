@@ -70,11 +70,20 @@ const AppDisplay = ({
     <Template subheading="Copy stuff to human readable urls">
       <Box width={1} pb={3}>
         <Text color="primary">
-          {isCreatePage ? <Clock format={dateFormat} /> : `Date: ${dateDisplay}` }
+          {isCreatePage ? (
+            <Clock format={dateFormat} />
+          ) : (
+            `Date: ${dateDisplay}`
+          )}
         </Text>
       </Box>
       <Box width={1} pb={3}>
-        <Label htmlFor="user">User (optional)</Label>
+        <Flex flexDirection="row" justifyContent="space-between">
+          <Label htmlFor="user">User (optional)</Label>
+          <span>
+            <Text color="primary">{`${user.length}/256`}</Text>
+          </span>
+        </Flex>
         <Input
           id="user"
           name="user"
@@ -122,7 +131,7 @@ const AppDisplay = ({
         flexDirection="row"
         justifyContent="center"
         alignItems="center"
-        style={{ height: '40px' }}
+        style={{ height: "40px" }}
       >
         {isCreatePage && !submissionProcessing && (
           <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
