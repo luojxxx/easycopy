@@ -13,6 +13,8 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _expressAsyncHandler = _interopRequireDefault(require("express-async-handler"));
 
+var _constants = require("./constants");
+
 var _createUrl = require("./functions/createUrl");
 
 var _getUrl = require("./functions/getUrl");
@@ -21,27 +23,122 @@ var _stripePayment = require("./functions/stripePayment");
 
 var _loaderVerify = require("./functions/loaderVerify");
 
+var sendResponse = function sendResponse(result, res) {
+  if (result) {
+    var status = result.status,
+        body = result.body;
+    res.status(status).send(body);
+  }
+};
+
+var bodyContains = function bodyContains(expected, actual) {
+  if (!expected.every(function (key) {
+    return Object.keys(actual).includes(key);
+  })) {
+    return {
+      status: 400,
+      body: {
+        msg: 'Missing arguments'
+      }
+    };
+  }
+};
+
+var bodyContainsStrings = function bodyContainsStrings(expected, actual) {
+  if (!expected.every(function (key) {
+    return typeof actual[key] === "string";
+  })) {
+    return {
+      status: 400,
+      body: {
+        msg: 'Invalid arguments'
+      }
+    };
+  }
+};
+
+var bodyContainsInt = function bodyContainsInt(expected, actual) {
+  if (!expected.every(function (key) {
+    return Number.isInteger(actual[key]);
+  })) {
+    return {
+      status: 400,
+      body: {
+        msg: 'Invalid arguments'
+      }
+    };
+  }
+};
+
+var isString = function isString(actual) {
+  if (typeof actual !== "string") {
+    return {
+      status: 400,
+      body: {
+        msg: 'Invalid arguments'
+      }
+    };
+  }
+};
+
+var lessThanLength = function lessThanLength(limit, actual) {
+  var limitName = Object.keys(limit);
+  var limitValue = limit[limitName[0]];
+
+  if (actual.length > limitValue) {
+    return {
+      status: 400,
+      body: {
+        msg: "".concat(limitName, " is longer than the ").concat(limitValue, " limit"),
+        url: ""
+      }
+    };
+  }
+};
+
+var oneOfType = function oneOfType(expectedTypes, actual) {
+  if (!expectedTypes.includes(actual)) {
+    return {
+      status: 400,
+      body: {
+        msg: "Type needs to be (".concat(expectedTypes, "), got ").concat(actual, " instead"),
+        url: ""
+      }
+    };
+  }
+};
+
 var createUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
-    var content, user, type, _yield$createUrl, status, body;
+    var expectedArgs, content, user, type, _yield$createUrl, status, body;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            expectedArgs = ["content", "user", "type"];
+            sendResponse(bodyContains(expectedArgs, req.body), res);
+            sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
             content = req.body.content;
             user = req.body.user;
             type = req.body.type;
-            _context.next = 5;
+            sendResponse(lessThanLength({
+              Content: _constants.contentLimit
+            }, content), res);
+            sendResponse(lessThanLength({
+              User: _constants.userLimit
+            }, user), res);
+            sendResponse(oneOfType(_constants.acceptedTypes, type), res);
+            _context.next = 11;
             return (0, _createUrl.createUrl)(content, user, type);
 
-          case 5:
+          case 11:
             _yield$createUrl = _context.sent;
             status = _yield$createUrl.status;
             body = _yield$createUrl.body;
             res.status(status).send(body);
 
-          case 9:
+          case 15:
           case "end":
             return _context.stop();
         }
@@ -64,16 +161,17 @@ var getUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function ()
           case 0:
             path = req.path;
             url = path.slice(1, path.length);
-            _context2.next = 4;
+            sendResponse(isString(url), res);
+            _context2.next = 5;
             return (0, _getUrl.getUrl)(url);
 
-          case 4:
+          case 5:
             _yield$getUrl = _context2.sent;
             status = _yield$getUrl.status;
             body = _yield$getUrl.body;
             res.status(status).send(body);
 
-          case 8:
+          case 9:
           case "end":
             return _context2.stop();
         }
@@ -88,23 +186,26 @@ var getUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function ()
 exports.getUrlRoute = getUrlRoute;
 var stripePaymentRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
-    var amount, _yield$stripePayment, status, body;
+    var expectedArgs, amount, _yield$stripePayment, status, body;
 
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            expectedArgs = ["amount"];
+            sendResponse(bodyContains(expectedArgs, req.body), res);
+            sendResponse(bodyContainsInt(expectedArgs, req.body), res);
             amount = ctx.request.body.amount;
-            _context3.next = 3;
+            _context3.next = 6;
             return (0, _stripePayment.stripePayment)(amount);
 
-          case 3:
+          case 6:
             _yield$stripePayment = _context3.sent;
             status = _yield$stripePayment.status;
             body = _yield$stripePayment.body;
             res.status(status).send(body);
 
-          case 7:
+          case 10:
           case "end":
             return _context3.stop();
         }

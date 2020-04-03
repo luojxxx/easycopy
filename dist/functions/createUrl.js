@@ -20,9 +20,6 @@ var _Url = _interopRequireDefault(require("../model/Url"));
 var text = _fs["default"].readFileSync(_path["default"].resolve(__dirname, "../wordbank.txt"), "utf8");
 
 var wordBank = text.trim("\n").split(",");
-var contentLimit = 10000;
-var userLimit = 256;
-var acceptedTypes = ["url", "text"];
 
 var createUrl = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user, type) {
@@ -31,53 +28,12 @@ var createUrl = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            if (!(content.length > contentLimit)) {
-              _context.next = 2;
-              break;
-            }
-
-            return _context.abrupt("return", {
-              status: 400,
-              body: {
-                msg: "Content is longer than the ".concat(contentLimit, " limit"),
-                url: ""
-              }
-            });
-
-          case 2:
-            if (!(user.length > userLimit)) {
-              _context.next = 4;
-              break;
-            }
-
-            return _context.abrupt("return", {
-              status: 400,
-              body: {
-                msg: "User is longer than the ".concat(userLimit, " limit"),
-                url: ""
-              }
-            });
-
-          case 4:
-            if (acceptedTypes.includes(type)) {
-              _context.next = 6;
-              break;
-            }
-
-            return _context.abrupt("return", {
-              status: 400,
-              body: {
-                msg: "Type needs to be url or text, got ".concat(type, " instead"),
-                url: ""
-              }
-            });
-
-          case 6:
+            // make sure url doesn't already exist
             results = true;
 
-          case 7:
+          case 1:
             if (!results) {
-              _context.next = 15;
+              _context.next = 9;
               break;
             }
 
@@ -85,27 +41,27 @@ var createUrl = /*#__PURE__*/function () {
               return wordBank[Math.floor(Math.random() * wordBank.length)];
             });
             url = wordArray.join("-");
-            _context.next = 12;
+            _context.next = 6;
             return _Url["default"].findOne({
               url: url
             });
 
-          case 12:
+          case 6:
             results = _context.sent;
-            _context.next = 7;
+            _context.next = 1;
             break;
 
-          case 15:
+          case 9:
             instance = new _Url["default"]({
               url: url.toLowerCase(),
               content: content,
               user: user,
               type: type
             });
-            _context.next = 18;
+            _context.next = 12;
             return instance.save();
 
-          case 18:
+          case 12:
             saved = _context.sent;
             return _context.abrupt("return", {
               status: 200,
@@ -115,7 +71,7 @@ var createUrl = /*#__PURE__*/function () {
               }
             });
 
-          case 20:
+          case 14:
           case "end":
             return _context.stop();
         }

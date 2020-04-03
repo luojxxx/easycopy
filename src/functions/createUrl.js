@@ -9,39 +9,7 @@ const text = fs.readFileSync(
 );
 const wordBank = text.trim("\n").split(",");
 
-const contentLimit = 10000;
-const userLimit = 256;
-const acceptedTypes = ["url", "text"];
-
 export const createUrl = async (content, user, type) => {
-  if (content.length > contentLimit) {
-    return {
-      status: 400,
-      body: {
-        msg: `Content is longer than the ${contentLimit} limit`,
-        url: ""
-      }
-    };
-  }
-  if (user.length > userLimit) {
-    return {
-      status: 400,
-      body: {
-        msg: `User is longer than the ${userLimit} limit`,
-        url: ""
-      }
-    };
-  }
-  if (!acceptedTypes.includes(type)) {
-    return {
-      status: 400,
-      body: {
-        msg: `Type needs to be url or text, got ${type} instead`,
-        url: ""
-      }
-    };
-  }
-
   // make sure url doesn't already exist
   let url;
   let results = true;
