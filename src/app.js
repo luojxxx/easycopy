@@ -19,7 +19,7 @@ app.use(logger("dev"));
 app.use(helmet());
 app.use(
   cors(
-    process.env.DEBUG
+    process.env.DEBUG === 'false'
       ? { origin: "http://localhost:3001" }
       : { origin: "https://www.easycopy.io" }
   )
