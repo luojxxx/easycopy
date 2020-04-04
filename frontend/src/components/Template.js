@@ -95,9 +95,11 @@ const Template = ({ subheading, children }) => {
   }, []);
   return (
     <AppContainer id="appContainer">
-      <Heading color="primary" pb={3}>
-        EasyCopy
-      </Heading>
+      <Link to="/">
+        <Heading color="primary" pb={3}>
+          EasyCopy
+        </Heading>
+      </Link>
       <Box width={[0.95, 0.7, 0.5]}>
         <Flex width={1} justifyContent="center">
           <Box width={0.8} style={{ textAlign: "center" }}>
