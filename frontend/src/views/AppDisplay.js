@@ -119,7 +119,7 @@ const AppDisplay = ({
             onChange={handleContentChange}
             value={content}
             style={{
-              minHeight: "25vh"
+              // height: "75%"
             }}
           />
         )}

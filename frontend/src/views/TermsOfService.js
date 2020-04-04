@@ -10,7 +10,8 @@ const TermsOfService = () => (
       value={termsOfServiceText}
       readOnly
       style={{
-        minHeight: "50vh"
+        minHeight: "50vh",
+        marginBottom: "1em"
       }}
     />
   </Template>

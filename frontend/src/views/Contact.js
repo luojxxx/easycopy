@@ -12,7 +12,8 @@ const Contact = () => (
       value={text}
       readOnly
       style={{
-        minHeight: "25vh"
+        minHeight: "25vh",
+        marginBottom: '1em'
       }}
     />
   </Template>

@@ -13,7 +13,6 @@ const AppContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
 
   font-family: Source Code Pro;
 
@@ -74,10 +73,6 @@ const Footer = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-
-  width: 100%;
-  position: absolute;
-  bottom: 1em;
 `;
 
 const Template = ({ subheading, children }) => {
@@ -95,19 +90,22 @@ const Template = ({ subheading, children }) => {
   }, []);
   return (
     <AppContainer id="appContainer">
-      <Heading color="primary" pb={3}>
-        EasyCopy
-      </Heading>
-      <Box width={[0.95, 0.7, 0.5]}>
-        <Flex width={1} justifyContent="center">
-          <Box width={0.8} style={{ textAlign: "center" }}>
-            <Text color="primary" pb={3}>
-              {subheading}
-            </Text>
-          </Box>
-        </Flex>
+      <Flex
+        width={[0.95, 0.7, 0.5]}
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Heading color="primary" pb={3}>
+          EasyCopy
+        </Heading>
+        <Box width={0.8} style={{ textAlign: "center" }}>
+          <Text color="primary" pb={3}>
+            {subheading}
+          </Text>
+        </Box>
         {children}
-      </Box>
+      </Flex>
       <Footer>
         <Link to="/">
           <Text px={1} color="primary">

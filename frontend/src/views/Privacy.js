@@ -10,7 +10,8 @@ const Privacy = () => (
       value={privacyText}
       readOnly
       style={{
-        minHeight: "50vh"
+        minHeight: "50vh",
+        marginBottom: "1em"
       }}
     />
   </Template>
