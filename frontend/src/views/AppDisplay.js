@@ -18,7 +18,7 @@ import Loader from "../components/Loader";
 import TextView from "../components/TextView";
 import UrlView from "../components/UrlView";
 
-const dateFormat = "YYYY-MM-DD HH:mm:ss A";
+const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 
 const AppDisplay = ({
   pathname,
