@@ -23,9 +23,13 @@ const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 const getFormattedUrl = () => {
   const path = window.location.href;
   const wwwIdx = window.location.href.indexOf("www.");
+  const localhostIdx = window.location.href.indexOf('localhost')
   let substringIdx = 0;
   if (wwwIdx !== -1) {
     substringIdx = wwwIdx + 4;
+  }
+  if (localhostIdx !== -1) {
+    substringIdx = localhostIdx;
   }
   return path.substring(substringIdx);
 };
