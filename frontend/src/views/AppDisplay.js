@@ -21,6 +21,8 @@ import UrlView from "../components/UrlView";
 import QRCodeView from '../components/QRCodeView'
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
+const userCharLimit = 256
+const contentCharLimit = 10000
 
 const getFormattedUrl = () => {
   const path = window.location.href;
@@ -106,7 +108,7 @@ const AppDisplay = ({
         <Flex flexDirection="row" justifyContent="space-between">
           <Label htmlFor="user">User (optional)</Label>
           <span>
-            <Text color="primary">{`${user.length}/256`}</Text>
+            <Text color="primary">{`${userCharLimit - user.length}`}</Text>
           </span>
         </Flex>
         <Input
@@ -132,7 +134,7 @@ const AppDisplay = ({
             />
           </Flex>
           <span>
-            <Text color="primary">{`${content.length}/10000`}</Text>
+            <Text color="primary">{`${contentCharLimit - content.length}`}</Text>
           </span>
         </Flex>
         {isCreatePage && (
