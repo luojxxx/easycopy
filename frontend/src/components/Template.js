@@ -97,7 +97,7 @@ const Template = ({ subheading, children }) => {
     <AppContainer id="appContainer">
       <Link to="/">
         <Heading color="primary" pb={3}>
-          EasyCopy
+          EasyCopy.io
         </Heading>
       </Link>
       <Box width={[0.95, 0.7, 0.5]}>
