@@ -18,11 +18,11 @@ import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
 import TextView from "../components/TextView";
 import UrlView from "../components/UrlView";
-import QRCodeView from '../components/QRCodeView'
+import QRCodeView from "../components/QRCodeView";
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
-const userCharLimit = 256
-const contentCharLimit = 10000
+const userCharLimit = 256;
+const contentCharLimit = 10000;
 
 const getFormattedUrl = () => {
   const path = window.location.href;
@@ -56,7 +56,14 @@ const AppDisplay = ({
   date,
 }) => {
   const [copied, setCopied] = useState(false);
-  const [displayQRCode, setDisplayQRCode] = useState(true);
+  const [displayQRCode, setDisplayQRCode] = useState(false);
+  const handleClickBack = () => {
+    setCopied(false);
+    handleBack();
+  };
+  const copyContentToClipboard = () => {
+    copy(content);
+  };
   const copyPathToClipboard = () => {
     copy(window.location.href);
     document.getElementById("pathField").focus();
@@ -65,16 +72,12 @@ const AppDisplay = ({
   const handleSelect = () => {
     document.getElementById("pathField").select();
   };
-  const handleClickBack = () => {
-    setCopied(false);
-    handleBack();
-  };
   const showQRCode = () => {
     setDisplayQRCode(true);
-  }
+  };
   const closeQRCode = () => {
     setDisplayQRCode(false);
-  }
+  };
   const generateMsg = (isCreatePage, copied, submissionError) => {
     if (isCreatePage && !submissionError) {
       return "";
@@ -95,152 +98,174 @@ const AppDisplay = ({
     <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
       {!displayQRCode && (
         <Fragment>
-        <Box width={1} pb={3}>
-        <Text color="primary">
-          {isCreatePage ? (
-            <Clock format={dateFormat} />
-          ) : (
-            `Date: ${dateDisplay}`
-          )}
-        </Text>
-      </Box>
-      <Box width={1} pb={3}>
-        <Flex flexDirection="row" justifyContent="space-between">
-          <Label htmlFor="user">User (optional)</Label>
-          <span>
-            <Text color="primary">{`${userCharLimit - user.length}`}</Text>
-          </span>
-        </Flex>
-        <Input
-          id="user"
-          name="user"
-          type="text"
-          onChange={handleUserChange}
-          value={user}
-          readOnly={!isCreatePage}
-        />
-      </Box>
-      <Box width={1} pb={3}>
-        <Flex width={1} justifyContent="space-between">
-          <Flex flexDirection="row" justifyContent="center" alignItems="center">
-            <Label htmlFor="content" style={{ width: "auto" }}>
-              Content
-            </Label>
-            &nbsp;
-            <Selector
-              items={["text", "url"]}
-              selected={type}
-              handleSelect={isCreatePage ? handleTypeChange : () => {}}
+          <Box width={1} pb={3}>
+            <Text color="primary">
+              {isCreatePage ? (
+                <Clock format={dateFormat} />
+              ) : (
+                `Date: ${dateDisplay}`
+              )}
+            </Text>
+          </Box>
+          <Box width={1} pb={3}>
+            <Flex flexDirection="row" justifyContent="space-between">
+              <Label htmlFor="user">User (optional)</Label>
+              <span>
+                <Text color="primary">{`${userCharLimit - user.length}`}</Text>
+              </span>
+            </Flex>
+            <Input
+              id="user"
+              name="user"
+              type="text"
+              onChange={handleUserChange}
+              value={user}
+              readOnly={!isCreatePage}
             />
-          </Flex>
-          <span>
-            <Text color="primary">{`${contentCharLimit - content.length}`}</Text>
-          </span>
-        </Flex>
-        {isCreatePage && (
-          <Textarea
-            id="content"
-            name="content"
-            type="text"
-            placeholder={zeroContentFlag ? "Must have content" : ""}
-            onChange={handleContentChange}
-            value={content}
-            style={{
-              minHeight: "25vh",
-            }}
-          />
-        )}
-        {!isCreatePage && type === "text" && <TextView text={content} />}
-        {!isCreatePage && type === "url" && <UrlView url={content} />}
-      </Box>
-      <Flex
-        width={1}
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {isCreatePage && !submissionProcessing && (
-          <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
-            <Flex
-              flexDirection="row"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text pr={2}>Submit</Text>
-              <StarIcon />
+          </Box>
+          <Box width={1} pb={3}>
+            <Flex width={1} justifyContent="space-between">
+              <Flex
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Label htmlFor="content" style={{ width: "auto" }}>
+                  Content
+                </Label>
+                &nbsp;
+                <Selector
+                  items={["text", "url"]}
+                  selected={type}
+                  handleSelect={isCreatePage ? handleTypeChange : () => {}}
+                />
+                &nbsp;
+                <Box
+                  onClick={isCreatePage ? () => {} : () => {}}
+                  style={{ cursor: "pointer" }}
+                >
+                  <Text color="primary">{isCreatePage ? "Paste" : "Copy"}</Text>
+                </Box>
+              </Flex>
+              <span>
+                <Text color="primary">{`${
+                  contentCharLimit - content.length
+                }`}</Text>
+              </span>
             </Flex>
-          </Button>
-        )}
-        {isCreatePage && submissionProcessing && <Loader />}
-        {!isCreatePage && !notFoundPage && (
-          <Fragment>
-            <Flex width={1} pb={2}>
-              <Input
-                id="pathField"
-                width={1}
+            {isCreatePage && (
+              <Textarea
+                id="content"
+                name="content"
                 type="text"
-                onClick={handleSelect}
-                value={getFormattedUrl()}
-                readOnly
+                placeholder={zeroContentFlag ? "Must have content" : ""}
+                onChange={handleContentChange}
+                value={content}
+                style={{
+                  minHeight: "25vh",
+                }}
               />
-            </Flex>
-            <Flex width={1} justifyContent="space-around">
-              <Button
-                variant="primary"
-                width={1}
-                mb={1}
-                onClick={handleClickBack}
-              >
+            )}
+            {!isCreatePage && type === "text" && <TextView text={content} />}
+            {!isCreatePage && type === "url" && <UrlView url={content} />}
+          </Box>
+          <Flex
+            width={1}
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {isCreatePage && !submissionProcessing && (
+              <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
                 <Flex
                   flexDirection="row"
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Text pr={2}>Back</Text>
-                  <FiCornerUpLeft />
+                  <Text pr={2}>Submit</Text>
+                  <StarIcon />
                 </Flex>
               </Button>
-              <Button
-                variant="primary"
-                width={1}
-                mb={1}
-                mx={1}
-                onClick={copyPathToClipboard}
-              >
-                <Flex
-                  flexDirection="row"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text pr={2}>Copy</Text>
-                  <FiCopy />
+            )}
+            {isCreatePage && submissionProcessing && <Loader />}
+            {!isCreatePage && !notFoundPage && (
+              <Fragment>
+                <Flex width={1} pb={2}>
+                  <Input
+                    id="pathField"
+                    width={1}
+                    type="text"
+                    onClick={handleSelect}
+                    value={getFormattedUrl()}
+                    readOnly
+                  />
                 </Flex>
-              </Button>
-              <Button variant="primary" width={1} mb={1} onClick={showQRCode}>
-                <Flex
-                  flexDirection="row"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text pr={2}>QR Code</Text>
-                  <FaQrcode />
+                <Flex width={1} justifyContent="space-around">
+                  <Button
+                    variant="primary"
+                    width={1}
+                    mb={1}
+                    onClick={handleClickBack}
+                  >
+                    <Flex
+                      flexDirection="row"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Text pr={2}>Back</Text>
+                      <FiCornerUpLeft />
+                    </Flex>
+                  </Button>
+                  <Button
+                    variant="primary"
+                    width={1}
+                    mb={1}
+                    mx={1}
+                    onClick={copyPathToClipboard}
+                  >
+                    <Flex
+                      flexDirection="row"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Text pr={2}>Copy</Text>
+                      <FiCopy />
+                    </Flex>
+                  </Button>
+                  <Button
+                    variant="primary"
+                    width={1}
+                    mb={1}
+                    onClick={showQRCode}
+                  >
+                    <Flex
+                      flexDirection="row"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Text pr={2}>QR Code</Text>
+                      <FaQrcode />
+                    </Flex>
+                  </Button>
                 </Flex>
-              </Button>
-            </Flex>
-          </Fragment>
-        )}
-        {!isCreatePage && notFoundPage && (
-          <Heading color="primary">Not Found</Heading>
-        )}
-      </Flex>
-      <Flex width={1} justifyContent="center" style={{ textAlign: "center" }}>
-        <Text color="primary">
-          {generateMsg(isCreatePage, copied, submissionError) || (
-            <span>&nbsp;</span>
-          )}
-        </Text>
-      </Flex>
-      </Fragment>
+              </Fragment>
+            )}
+            {!isCreatePage && notFoundPage && (
+              <Heading color="primary">Not Found</Heading>
+            )}
+          </Flex>
+          <Flex
+            width={1}
+            justifyContent="center"
+            style={{ textAlign: "center" }}
+          >
+            <Text color="primary">
+              {generateMsg(isCreatePage, copied, submissionError) || (
+                <span>&nbsp;</span>
+              )}
+            </Text>
+          </Flex>
+        </Fragment>
       )}
       {displayQRCode && (
         <QRCodeView text={window.location.href} handleClose={closeQRCode} />
