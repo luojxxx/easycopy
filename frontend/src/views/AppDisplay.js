@@ -20,6 +20,16 @@ import UrlView from "../components/UrlView";
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 
+const getFormattedUrl = () => {
+  const path = window.location.href;
+  const wwwIdx = window.location.href.indexOf("www.");
+  let substringIdx = 0;
+  if (wwwIdx !== -1) {
+    substringIdx = wwwIdx + 4;
+  }
+  return path.substring(substringIdx);
+};
+
 const AppDisplay = ({
   pathname,
   zeroContentFlag,
@@ -119,7 +129,7 @@ const AppDisplay = ({
             onChange={handleContentChange}
             value={content}
             style={{
-              minHeight: "25vh"
+              minHeight: "25vh",
             }}
           />
         )}
@@ -153,7 +163,7 @@ const AppDisplay = ({
               size={32}
               style={{
                 cursor: "pointer",
-                color: theme.colors.primary
+                color: theme.colors.primary,
               }}
               title="Go back"
             />
@@ -163,7 +173,7 @@ const AppDisplay = ({
               mx={2}
               type="text"
               onClick={handleSelect}
-              value={window.location.href}
+              value={getFormattedUrl()}
               readOnly
             />
             <FiCopy
@@ -171,7 +181,7 @@ const AppDisplay = ({
               size={32}
               style={{
                 cursor: "pointer",
-                color: theme.colors.primary
+                color: theme.colors.primary,
               }}
               title="Copy to clipboard"
             />
