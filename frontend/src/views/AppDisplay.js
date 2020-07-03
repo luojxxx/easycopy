@@ -63,9 +63,9 @@ const AppDisplay = ({
     handleBack();
   };
   const pasteContentToClipboard = async () => {
-    const text = await clip.read()
-    handleContentChange({target: {value: text}})
-  }
+    const text = await clip.read();
+    handleContentChange({ target: { value: text } });
+  };
   const copyContentToClipboard = () => {
     clip.write(content);
   };
@@ -113,7 +113,11 @@ const AppDisplay = ({
             </Text>
           </Box>
           <Box width={1} pb={3}>
-            <Flex flexDirection="row" justifyContent="space-between">
+            <Flex
+              flexDirection="row"
+              justifyContent="space-between"
+              style={{ userSelect: "None" }}
+            >
               <Label htmlFor="user">User (optional)</Label>
               <span>
                 <Text color="primary">{`${userCharLimit - user.length}`}</Text>
@@ -134,6 +138,7 @@ const AppDisplay = ({
                 flexDirection="row"
                 justifyContent="center"
                 alignItems="center"
+                style={{ userSelect: "None" }}
               >
                 <Label htmlFor="content" style={{ width: "auto" }}>
                   Content
@@ -146,10 +151,16 @@ const AppDisplay = ({
                 />
                 &nbsp;
                 <Box
-                  onClick={isCreatePage ? pasteContentToClipboard : copyContentToClipboard}
+                  onClick={
+                    isCreatePage
+                      ? pasteContentToClipboard
+                      : copyContentToClipboard
+                  }
                   style={{ cursor: "pointer" }}
                 >
-                  <Text color="primary">{isCreatePage ? "[paste]" : "[copy]"}</Text>
+                  <Text color="primary">
+                    {isCreatePage ? "[paste]" : "[copy]"}
+                  </Text>
                 </Box>
               </Flex>
               <span>
