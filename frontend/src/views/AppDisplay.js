@@ -91,7 +91,9 @@ const AppDisplay = ({
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
     <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
-      <Box width={1} pb={3}>
+      {!displayQRCode && (
+        <Fragment>
+        <Box width={1} pb={3}>
         <Text color="primary">
           {isCreatePage ? (
             <Clock format={dateFormat} />
@@ -236,7 +238,11 @@ const AppDisplay = ({
           )}
         </Text>
       </Flex>
-      {displayQRCode && <QRCodeView text={window.location.href} handleClose={closeQRCode} />}
+      </Fragment>
+      )}
+      {displayQRCode && (
+        <QRCodeView text={window.location.href} handleClose={closeQRCode} />
+      )}
     </Template>
   );
 };
