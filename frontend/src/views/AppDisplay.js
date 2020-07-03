@@ -20,6 +20,8 @@ import TextView from "../components/TextView";
 import UrlView from "../components/UrlView";
 import QRCodeView from "../components/QRCodeView";
 
+const clip = require("clipboardy");
+
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 const userCharLimit = 256;
 const contentCharLimit = 10000;
@@ -61,14 +63,15 @@ const AppDisplay = ({
     setCopied(false);
     handleBack();
   };
-  const pasteContentToClipboard = () => {
-    //
+  const pasteContentToClipboard = async () => {
+    const text = await clip.read()
+    handleContentChange({target: {value: text}})
   }
   const copyContentToClipboard = () => {
-    copy(content);
+    clip.write(content);
   };
   const copyPathToClipboard = () => {
-    copy(window.location.href);
+    clip.write(window.location.href);
     document.getElementById("pathField").focus();
     setCopied(true);
   };
@@ -144,7 +147,7 @@ const AppDisplay = ({
                 />
                 &nbsp;
                 <Box
-                  onClick={isCreatePage ? () => pasteContentToClipboard : copyContentToClipboard}
+                  onClick={isCreatePage ? pasteContentToClipboard : copyContentToClipboard}
                   style={{ cursor: "pointer" }}
                 >
                   <Text color="primary">{isCreatePage ? "[paste]" : "[copy]"}</Text>
