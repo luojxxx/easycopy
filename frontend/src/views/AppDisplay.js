@@ -144,7 +144,7 @@ const AppDisplay = ({
                   onClick={isCreatePage ? () => {} : () => {}}
                   style={{ cursor: "pointer" }}
                 >
-                  <Text color="primary">{isCreatePage ? "Paste" : "Copy"}</Text>
+                  <Text color="primary">{isCreatePage ? "[paste]" : "[copy]"}</Text>
                 </Box>
               </Flex>
               <span>

@@ -18,7 +18,7 @@ const Selector = ({ items, selected, handleSelect }) => {
   return (
     <Flex flexDirection="row" justifyContent="center" alignItems="center">
       <span>
-        <Text color="primary">(</Text>
+        <Text color="primary">[</Text>
       </span>
       {items.map((ele, idx) => (
         <Fragment>
@@ -33,7 +33,7 @@ const Selector = ({ items, selected, handleSelect }) => {
         </Fragment>
       ))}
       <span>
-        <Text color="primary">)</Text>
+        <Text color="primary">]</Text>
       </span>
     </Flex>
   );
