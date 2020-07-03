@@ -5,6 +5,7 @@ import copy from "copy-to-clipboard";
 import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
+import { FaQrcode } from "react-icons/fa";
 
 import theme from "../theme";
 import Template from "../components/Template";
@@ -17,13 +18,14 @@ import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
 import TextView from "../components/TextView";
 import UrlView from "../components/UrlView";
+import QRCodeView from '../components/QRCodeView'
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 
 const getFormattedUrl = () => {
   const path = window.location.href;
   const wwwIdx = window.location.href.indexOf("www.");
-  const localhostIdx = window.location.href.indexOf('localhost')
+  const localhostIdx = window.location.href.indexOf("localhost");
   let substringIdx = 0;
   if (wwwIdx !== -1) {
     substringIdx = wwwIdx + 4;
@@ -49,9 +51,10 @@ const AppDisplay = ({
   user,
   content,
   type,
-  date
+  date,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [displayQRCode, setDisplayQRCode] = useState(true);
   const copyPathToClipboard = () => {
     copy(window.location.href);
     document.getElementById("pathField").focus();
@@ -64,6 +67,12 @@ const AppDisplay = ({
     setCopied(false);
     handleBack();
   };
+  const showQRCode = () => {
+    setDisplayQRCode(true);
+  }
+  const closeQRCode = () => {
+    setDisplayQRCode(false);
+  }
   const generateMsg = (isCreatePage, copied, submissionError) => {
     if (isCreatePage && !submissionError) {
       return "";
@@ -81,7 +90,7 @@ const AppDisplay = ({
   const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
-    <Template subheading="Copy stuff to human readable urls">
+    <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
       <Box width={1} pb={3}>
         <Text color="primary">
           {isCreatePage ? (
@@ -142,10 +151,9 @@ const AppDisplay = ({
       </Box>
       <Flex
         width={1}
-        flexDirection="row"
+        flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        style={{ height: "40px" }}
       >
         {isCreatePage && !submissionProcessing && (
           <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
@@ -162,33 +170,59 @@ const AppDisplay = ({
         {isCreatePage && submissionProcessing && <Loader />}
         {!isCreatePage && !notFoundPage && (
           <Fragment>
-            <FiCornerUpLeft
-              onClick={handleClickBack}
-              size={32}
-              style={{
-                cursor: "pointer",
-                color: theme.colors.primary,
-              }}
-              title="Go back"
-            />
-            <Input
-              id="pathField"
-              width={1}
-              mx={2}
-              type="text"
-              onClick={handleSelect}
-              value={getFormattedUrl()}
-              readOnly
-            />
-            <FiCopy
-              onClick={copyPathToClipboard}
-              size={32}
-              style={{
-                cursor: "pointer",
-                color: theme.colors.primary,
-              }}
-              title="Copy to clipboard"
-            />
+            <Flex width={1} pb={2}>
+              <Input
+                id="pathField"
+                width={1}
+                type="text"
+                onClick={handleSelect}
+                value={getFormattedUrl()}
+                readOnly
+              />
+            </Flex>
+            <Flex width={1} justifyContent="space-around">
+              <Button
+                variant="primary"
+                width={1}
+                mb={1}
+                onClick={handleClickBack}
+              >
+                <Flex
+                  flexDirection="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Text pr={2}>Back</Text>
+                  <FiCornerUpLeft />
+                </Flex>
+              </Button>
+              <Button
+                variant="primary"
+                width={1}
+                mb={1}
+                mx={1}
+                onClick={copyPathToClipboard}
+              >
+                <Flex
+                  flexDirection="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Text pr={2}>Copy</Text>
+                  <FiCopy />
+                </Flex>
+              </Button>
+              <Button variant="primary" width={1} mb={1} onClick={showQRCode}>
+                <Flex
+                  flexDirection="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Text pr={2}>QR Code</Text>
+                  <FaQrcode />
+                </Flex>
+              </Button>
+            </Flex>
           </Fragment>
         )}
         {!isCreatePage && notFoundPage && (
@@ -202,6 +236,7 @@ const AppDisplay = ({
           )}
         </Text>
       </Flex>
+      {displayQRCode && <QRCodeView text={window.location.href} handleClose={closeQRCode} />}
     </Template>
   );
 };
@@ -221,7 +256,7 @@ AppDisplay.propTypes = {
   user: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired
+  date: PropTypes.string.isRequired,
 };
 
 export default AppDisplay;
