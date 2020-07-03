@@ -243,7 +243,7 @@ const AppDisplay = ({
                       justifyContent="center"
                       alignItems="center"
                     >
-                      <Text pr={2}>QR Code</Text>
+                      <Text pr={2}>QR</Text>
                       <FaQrcode />
                     </Flex>
                   </Button>
