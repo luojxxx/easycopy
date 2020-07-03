@@ -2,10 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Box, Flex, Text, Button } from "rebass";
-import { FiXSquare, FiSquare } from "react-icons/fi";
 import QRCode from "qrcode";
-
-import theme from "../theme";
 
 const QRCodeViewContainer = styled(Box)`
   display: flex;
@@ -27,7 +24,6 @@ const QRCodeView = ({ text, handleClose }) => {
       },
       function (err, url) {
         setQrCode(url);
-        console.log(url);
       }
     );
   });
