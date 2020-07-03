@@ -20,10 +20,20 @@ const QRCodeViewContainer = styled(Box)`
 const QRCodeView = ({ text, handleClose }) => {
   const [qrCode, setQrCode] = useState('');
   useEffect(() => {
-    QRCode.toDataURL(text, { errorCorrectionLevel: "H" }, function (err, url) {
-      setQrCode(url);
-      console.log(url);
-    });
+    const canvasElement = document.getElementById('QRCanvas')
+    QRCode.toDataURL(
+      canvasElement,
+      text,
+      {
+        errorCorrectionLevel: "H",
+        color: { light: "red", dark: "#ffffff" },
+        scale: 10,
+     },
+      function (err, url) {
+        setQrCode(url);
+        console.log(url);
+      }
+    );
   })
   return (
     <QRCodeViewContainer>
@@ -39,7 +49,7 @@ const QRCodeView = ({ text, handleClose }) => {
         />
       </Flex>
       <Flex width={1} style={{ flex: "1 1 auto", border: "0px solid white" }} justifyContent="center" alignItems="center">
-        <img src={qrCode} style={{ width: '75%', height: '75%',  zIndex: 5 }} />
+        <canvas id="QRCanvas"></canvas>
       </Flex>
     </QRCodeViewContainer>
   );
