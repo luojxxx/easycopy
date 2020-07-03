@@ -61,6 +61,9 @@ const AppDisplay = ({
     setCopied(false);
     handleBack();
   };
+  const pasteContentToClipboard = () => {
+    //
+  }
   const copyContentToClipboard = () => {
     copy(content);
   };
@@ -141,7 +144,7 @@ const AppDisplay = ({
                 />
                 &nbsp;
                 <Box
-                  onClick={isCreatePage ? () => {} : () => {}}
+                  onClick={isCreatePage ? () => pasteContentToClipboard : copyContentToClipboard}
                   style={{ cursor: "pointer" }}
                 >
                   <Text color="primary">{isCreatePage ? "[paste]" : "[copy]"}</Text>
