@@ -12,13 +12,18 @@ const wordBank = text.trim("\n").split(",");
 
 export const createUrl = async (content, user, type) => {
   // make sure url doesn't already exist
+  let wordArray
   let url;
   let results = true;
   while (results) {
-    const wordArray = [0, 0, 0, 0].map(
-      _ => wordBank[Math.floor(Math.random() * wordBank.length)]
+    wordArray = [0, 0, 0, 0].map(
+      _ => {
+        const idx = Math.floor(Math.random() * wordBank.length)
+        const word = wordBank[idx]
+        return word[0].toUpperCase() + word.substring(1,)
+    }
     );
-    url = wordArray.join("-");
+    url = wordArray.join("");
     results = await Url.findOne({ url: url });
   }
 

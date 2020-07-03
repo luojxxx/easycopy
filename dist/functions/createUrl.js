@@ -25,7 +25,7 @@ var wordBank = text.trim("\n").split(",");
 
 var createUrl = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user, type) {
-    var url, results, wordArray, instance, saved;
+    var wordArray, url, results, instance, saved;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -40,9 +40,11 @@ var createUrl = /*#__PURE__*/function () {
             }
 
             wordArray = [0, 0, 0, 0].map(function (_) {
-              return wordBank[Math.floor(Math.random() * wordBank.length)];
+              var idx = Math.floor(Math.random() * wordBank.length);
+              var word = wordBank[idx];
+              return word[0].toUpperCase() + word.substring(1);
             });
-            url = wordArray.join("-");
+            url = wordArray.join("");
             _context.next = 6;
             return _Url["default"].findOne({
               url: url
