@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const UrlSchema = new Schema({
   url: String,
+  urlChar: String,
   content: String,
   type: String,
   createdAt: { type: Date, default: Date.now },

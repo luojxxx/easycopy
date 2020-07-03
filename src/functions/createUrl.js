@@ -29,6 +29,7 @@ export const createUrl = async (content, user, type) => {
 
   const instance = new Url({
     url: url,
+    urlChar: url.toLowerCase(),
     content: CryptoJS.AES.encrypt(
       content,
       process.env.ENCRYPTION_KEY

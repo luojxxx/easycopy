@@ -4,7 +4,7 @@ import Url from "../model/Url";
 
 export const getUrl = async url => {
   const result = await Url.findOne({
-    url: url
+    urlChar: url.toLowercase()
   });
   if (!result) {
     return {

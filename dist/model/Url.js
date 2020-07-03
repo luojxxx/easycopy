@@ -14,6 +14,7 @@ var _db = _interopRequireDefault(require("../db"));
 var Schema = _mongoose["default"].Schema;
 var UrlSchema = new Schema({
   url: String,
+  urlChar: String,
   content: String,
   type: String,
   createdAt: {

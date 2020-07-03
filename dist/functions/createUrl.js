@@ -58,6 +58,7 @@ var createUrl = /*#__PURE__*/function () {
           case 9:
             instance = new _Url["default"]({
               url: url,
+              urlChar: url.toLowerCase(),
               content: _cryptoJs["default"].AES.encrypt(content, process.env.ENCRYPTION_KEY).toString(),
               user: user,
               type: type
