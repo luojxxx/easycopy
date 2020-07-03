@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import copy from "copy-to-clipboard";
 import { Box, Flex, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
