@@ -7,30 +7,42 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var _sequelize = require("sequelize");
 
-var _db = _interopRequireDefault(require("../db"));
+var _db = _interopRequireDefault(require("./../db"));
 
-var Schema = _mongoose["default"].Schema;
-var UrlSchema = new Schema({
-  url: String,
-  urlChar: String,
-  content: String,
-  type: String,
+var UrlSchema = _db["default"].define("Url", {
+  // Model attributes are defined here
+  url: {
+    type: _sequelize.DataTypes.STRING,
+    allowNull: false
+  },
+  urlChar: {
+    type: _sequelize.DataTypes.STRING,
+    allowNull: false
+  },
+  content: {
+    type: _sequelize.DataTypes.STRING,
+    allowNull: false
+  },
+  type: {
+    type: _sequelize.DataTypes.STRING,
+    allowNull: false
+  },
   createdAt: {
-    type: Date,
+    type: _sequelize.DataTypes.DATE,
     "default": Date.now
   },
   user: {
-    type: String,
+    type: _sequelize.DataTypes.STRING,
     "default": ""
   },
   userId: {
-    type: String,
+    type: _sequelize.DataTypes.STRING,
     "default": ""
   }
+}, {// Other model options go here
 });
 
-var _default = _mongoose["default"].model("url", UrlSchema);
-
+var _default = UrlSchema;
 exports["default"] = _default;

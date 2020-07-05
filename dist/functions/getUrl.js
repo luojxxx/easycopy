@@ -17,14 +17,16 @@ var _Url = _interopRequireDefault(require("../model/Url"));
 
 var getUrl = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(url) {
-    var result, byteContent, content;
+    var result, data, byteContent, content;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
             return _Url["default"].findOne({
-              urlChar: url.toLowercase()
+              where: {
+                urlChar: url.toLowerCase()
+              }
             });
 
           case 2:
@@ -47,20 +49,21 @@ var getUrl = /*#__PURE__*/function () {
             });
 
           case 5:
-            byteContent = _cryptoJs["default"].AES.decrypt(result.content, process.env.ENCRYPTION_KEY);
+            data = result.dataValues;
+            byteContent = _cryptoJs["default"].AES.decrypt(data.content, process.env.ENCRYPTION_KEY);
             content = byteContent.toString(_cryptoJs["default"].enc.Utf8);
             return _context.abrupt("return", {
               status: 200,
               body: {
                 msg: "",
                 content: content,
-                user: result.user,
-                type: result.type,
-                createdAt: result.createdAt
+                user: data.user,
+                type: data.type,
+                createdAt: data.createdAt
               }
             });
 
-          case 8:
+          case 9:
           case "end":
             return _context.stop();
         }

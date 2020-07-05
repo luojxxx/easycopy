@@ -25,7 +25,7 @@ var wordBank = text.trim("\n").split(",");
 
 var createUrl = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(content, user, type) {
-    var wordArray, url, results, instance, saved;
+    var wordArray, url, results;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -47,7 +47,9 @@ var createUrl = /*#__PURE__*/function () {
             url = wordArray.join("");
             _context.next = 6;
             return _Url["default"].findOne({
-              url: url
+              where: {
+                urlChar: url.toLowerCase()
+              }
             });
 
           case 6:
@@ -56,18 +58,16 @@ var createUrl = /*#__PURE__*/function () {
             break;
 
           case 9:
-            instance = new _Url["default"]({
+            _context.next = 11;
+            return _Url["default"].create({
               url: url,
               urlChar: url.toLowerCase(),
               content: _cryptoJs["default"].AES.encrypt(content, process.env.ENCRYPTION_KEY).toString(),
               user: user,
               type: type
             });
-            _context.next = 12;
-            return instance.save();
 
-          case 12:
-            saved = _context.sent;
+          case 11:
             return _context.abrupt("return", {
               status: 200,
               body: {
@@ -76,7 +76,7 @@ var createUrl = /*#__PURE__*/function () {
               }
             });
 
-          case 14:
+          case 12:
           case "end":
             return _context.stop();
         }

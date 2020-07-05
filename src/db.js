@@ -1,24 +1,19 @@
 require("dotenv").config();
+import { Sequelize } from "sequelize";
 
-import mongoose from "mongoose";
+const db = new Sequelize(process.env.DB_STRING);
 
-const main = async () => {
+const dbCheck = async () => {
   try {
-  const db = await mongoose.connect(
-    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@easycopy.njrb5.mongodb.net/easycopy?retryWrites=true&w=majority`,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  );
-  console.info('Connected to DB')
-  return db
-  } catch (err) {
-    console.error('Error connecting to DB')
-    console.error(err)
+    await db.authenticate();
+    console.log("Connection has been established successfully.");
+    // await db.sync({ force: true });
+    // console.log("Models are synchronized");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
   }
 }
 
-const db = main()
+dbCheck()
 
 export default db

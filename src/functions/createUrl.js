@@ -24,10 +24,10 @@ export const createUrl = async (content, user, type) => {
     }
     );
     url = wordArray.join("");
-    results = await Url.findOne({ url: url });
+    results = await Url.findOne({ where: { urlChar: url.toLowerCase() } });
   }
 
-  const instance = new Url({
+  await Url.create({
     url: url,
     urlChar: url.toLowerCase(),
     content: CryptoJS.AES.encrypt(
@@ -35,10 +35,9 @@ export const createUrl = async (content, user, type) => {
       process.env.ENCRYPTION_KEY
     ).toString(),
     user: user,
-    type: type
+    type: type,
   });
 
-  const saved = await instance.save();
   return {
     status: 200,
     body: {

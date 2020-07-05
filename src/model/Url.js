@@ -1,16 +1,43 @@
-import mongoose from "mongoose";
+import { Sequelize, DataTypes } from "sequelize";
 
-import db from "../db";
-const Schema = mongoose.Schema;
+import db from './../db'
 
-const UrlSchema = new Schema({
-  url: String,
-  urlChar: String,
-  content: String,
-  type: String,
-  createdAt: { type: Date, default: Date.now },
-  user: { type: String, default: "" },
-  userId: { type: String, default: "" }
-});
+const UrlSchema = db.define(
+  "Url",
+  {
+    // Model attributes are defined here
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    urlChar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
+    user: {
+      type: DataTypes.STRING,
+      default: "",
+    },
+    userId: {
+      type: DataTypes.STRING,
+      default: "",
+    },
+  },
+  {
+    // Other model options go here
+  }
+);
 
-export default mongoose.model("url", UrlSchema);
+export default UrlSchema;
