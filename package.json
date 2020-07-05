@@ -7,7 +7,9 @@
     "start": "nodemon src/bin/www --exec babel-node",
     "build": "babel src -d dist --copy-files",
     "serve": "node dist/bin/www",
-    "test": "mocha --require @babel/register"
+    "test": "mocha --require @babel/register",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -34,7 +36,8 @@
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.0",
-    "stripe": "^8.36.0"
+    "stripe": "^8.36.0",
+    "snyk": "^1.360.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -43,5 +46,6 @@
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "nodemon": "^2.0.2"
-  }
+  },
+  "snyk": true
 }
