@@ -22,7 +22,7 @@ var UrlSchema = _db["default"].define("Url", {
     allowNull: false
   },
   content: {
-    type: _sequelize.DataTypes.STRING,
+    type: _sequelize.DataTypes.STRING(10000),
     allowNull: false
   },
   type: {
@@ -34,7 +34,7 @@ var UrlSchema = _db["default"].define("Url", {
     "default": Date.now
   },
   user: {
-    type: _sequelize.DataTypes.STRING,
+    type: _sequelize.DataTypes.STRING(256),
     "default": ""
   },
   userId: {

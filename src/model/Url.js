@@ -15,7 +15,7 @@ const UrlSchema = db.define(
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(10000),
       allowNull: false,
     },
     type: {
@@ -27,7 +27,7 @@ const UrlSchema = db.define(
       default: Date.now,
     },
     user: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(256),
       default: "",
     },
     userId: {
