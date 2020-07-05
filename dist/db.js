@@ -15,7 +15,13 @@ var _sequelize = require("sequelize");
 
 require("dotenv").config();
 
-var db = new _sequelize.Sequelize(process.env.DB_STRING);
+var db = new _sequelize.Sequelize(process.env.DB_STRING, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
+    ssl: true
+  }
+});
 
 var dbCheck = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {

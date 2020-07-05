@@ -1,7 +1,13 @@
 require("dotenv").config();
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize(process.env.DB_STRING);
+const db = new Sequelize(process.env.DB_STRING, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
+    ssl: true,
+  },
+});
 
 const dbCheck = async () => {
   try {
