@@ -17,10 +17,10 @@ require("dotenv").config();
 
 var db = new _sequelize.Sequelize(process.env.DB_STRING, {
   dialect: "postgres",
-  protocol: "postgres",
-  dialectOptions: {
-    ssl: true
-  }
+  protocol: "postgres" // dialectOptions: {
+  //   ssl: true,
+  // },
+
 });
 
 var dbCheck = /*#__PURE__*/function () {
