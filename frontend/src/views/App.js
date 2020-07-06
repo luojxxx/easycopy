@@ -70,7 +70,7 @@ const App = (props) => {
         });
         const score = recaptchaResult.data.data.score;
 
-        if (score > 1.0) {
+        if (score > 0.1) {
           setShowRecaptcha(false);
           const response = await axios({
             method: "post",
@@ -91,6 +91,7 @@ const App = (props) => {
           );
           const id = window.grecaptcha.render(recaptchaContainer, {
             sitekey: recaptchaSiteKey,
+            callback: handleSubmit
           });
         }
       });
