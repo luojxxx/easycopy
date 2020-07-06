@@ -16,6 +16,8 @@ var _helmet = _interopRequireDefault(require("helmet"));
 
 var _routes = require("./routes");
 
+var _verifyRecaptcha = require("./functions/verifyRecaptcha");
+
 require("dotenv").config();
 
 var Sentry = require("@sentry/node");
@@ -38,8 +40,10 @@ app.use(_express["default"].urlencoded({
 }));
 app.use((0, _cookieParser["default"])());
 app.post("/create", _routes.createUrlRoute);
+app.post("/verifyRecaptcha", _routes.verifyRecaptchaRoute);
 app.post("/payment", _routes.stripePaymentRoute);
-app.get("/*", _routes.getUrlRoute); // catch 404 and forward to error handler
+app.get("/*", _routes.getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
+// catch 404 and forward to error handler
 
 app.use(function (req, res, next) {
   next((0, _httpErrors["default"])(404));

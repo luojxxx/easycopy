@@ -7,7 +7,13 @@ import cors from "cors";
 import helmet from "helmet";
 const Sentry = require("@sentry/node");
 
-import { createUrlRoute, getUrlRoute, stripePaymentRoute } from "./routes";
+import {
+  createUrlRoute,
+  getUrlRoute,
+  stripePaymentRoute,
+  verifyRecaptchaRoute,
+} from "./routes";
+import { verifyRecaptcha } from "./functions/verifyRecaptcha";
 
 const app = express();
 Sentry.init({
@@ -29,8 +35,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.post("/create", createUrlRoute);
+app.post("/verifyRecaptcha", verifyRecaptchaRoute);
 app.post("/payment", stripePaymentRoute);
-app.get("/*", getUrlRoute);
+app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

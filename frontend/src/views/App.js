@@ -48,19 +48,36 @@ const App = (props) => {
       }
       setSubmissionProcessing(true);
       setSubmissionError(false);
-      const response = await axios({
-        method: "post",
-        url: api + "/create",
-        data: {
-          user: user.toString(10),
-          content: content.toString(10),
-          type: type.toString(10)
-        },
+
+      window.grecaptcha.ready(async function() {
+        const token = await window.grecaptcha
+          .execute("6LdPW64ZAAAAAA9CYgNohsoJeUz8Wna-egnYZDfz", {
+            action: "submit",
+          })
+        const recaptchaResult = await axios({
+          method: "post",
+          url: api + "/verifyRecaptcha",
+          data: {
+            token: token,
+          },
+        });
+        const score = recaptchaResult.data.data.score;
+
+        if (score > 0.1) {
+          const response = await axios({
+            method: "post",
+            url: api + "/create",
+            data: {
+              user: user.toString(10),
+              content: content.toString(10),
+              type: type.toString(10),
+            },
+          });
+          setSubmissionProcessing(false);
+          const url = response.data.url;
+          history.push(url);
+        }
       });
-      sleep(300);
-      setSubmissionProcessing(false);
-      const url = response.data.url;
-      history.push(url);
     } catch (err) {
       console.error("CreateUrl error");
       console.error(err);

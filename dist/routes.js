@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.loaderVerifyRoute = exports.stripePaymentRoute = exports.getUrlRoute = exports.createUrlRoute = void 0;
+exports.loaderVerifyRoute = exports.stripePaymentRoute = exports.verifyRecaptchaRoute = exports.getUrlRoute = exports.createUrlRoute = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -18,6 +18,8 @@ var _constants = require("./constants");
 var _createUrl = require("./functions/createUrl");
 
 var _getUrl = require("./functions/getUrl");
+
+var _verifyRecaptcha = require("./functions/verifyRecaptcha");
 
 var _stripePayment = require("./functions/stripePayment");
 
@@ -184,28 +186,25 @@ var getUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function ()
   };
 }());
 exports.getUrlRoute = getUrlRoute;
-var stripePaymentRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
+var verifyRecaptchaRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
-    var expectedArgs, amount, _yield$stripePayment, status, body;
+    var token, _yield$verifyRecaptch, status, body;
 
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            expectedArgs = ["amount"];
-            sendResponse(bodyContains(expectedArgs, req.body), res);
-            sendResponse(bodyContainsInt(expectedArgs, req.body), res);
-            amount = ctx.request.body.amount;
-            _context3.next = 6;
-            return (0, _stripePayment.stripePayment)(amount);
+            token = req.body.token;
+            _context3.next = 3;
+            return (0, _verifyRecaptcha.verifyRecaptcha)(token);
 
-          case 6:
-            _yield$stripePayment = _context3.sent;
-            status = _yield$stripePayment.status;
-            body = _yield$stripePayment.body;
+          case 3:
+            _yield$verifyRecaptch = _context3.sent;
+            status = _yield$verifyRecaptch.status;
+            body = _yield$verifyRecaptch.body;
             res.status(status).send(body);
 
-          case 10:
+          case 7:
           case "end":
             return _context3.stop();
         }
@@ -217,25 +216,29 @@ var stripePaymentRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/func
     return _ref3.apply(this, arguments);
   };
 }());
-exports.stripePaymentRoute = stripePaymentRoute;
-var loaderVerifyRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
+exports.verifyRecaptchaRoute = verifyRecaptchaRoute;
+var stripePaymentRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
-    var _yield$loaderVerify, status, body;
+    var expectedArgs, amount, _yield$stripePayment, status, body;
 
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.next = 2;
-            return (0, _loaderVerify.loaderVerify)();
-
-          case 2:
-            _yield$loaderVerify = _context4.sent;
-            status = _yield$loaderVerify.status;
-            body = _yield$loaderVerify.body;
-            res.status(status).send(body);
+            expectedArgs = ["amount"];
+            sendResponse(bodyContains(expectedArgs, req.body), res);
+            sendResponse(bodyContainsInt(expectedArgs, req.body), res);
+            amount = ctx.request.body.amount;
+            _context4.next = 6;
+            return (0, _stripePayment.stripePayment)(amount);
 
           case 6:
+            _yield$stripePayment = _context4.sent;
+            status = _yield$stripePayment.status;
+            body = _yield$stripePayment.body;
+            res.status(status).send(body);
+
+          case 10:
           case "end":
             return _context4.stop();
         }
@@ -245,6 +248,36 @@ var loaderVerifyRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/funct
 
   return function (_x10, _x11, _x12) {
     return _ref4.apply(this, arguments);
+  };
+}());
+exports.stripePaymentRoute = stripePaymentRoute;
+var loaderVerifyRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
+  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {
+    var _yield$loaderVerify, status, body;
+
+    return _regenerator["default"].wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return (0, _loaderVerify.loaderVerify)();
+
+          case 2:
+            _yield$loaderVerify = _context5.sent;
+            status = _yield$loaderVerify.status;
+            body = _yield$loaderVerify.body;
+            res.status(status).send(body);
+
+          case 6:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function (_x13, _x14, _x15) {
+    return _ref5.apply(this, arguments);
   };
 }());
 exports.loaderVerifyRoute = loaderVerifyRoute;
