@@ -45,6 +45,7 @@ const AppDisplay = ({
   submissionProcessing,
   submissionError,
   notFoundPage,
+  showRecaptcha,
   handleUserChange,
   handleContentChange,
   handleTypeChange,
@@ -204,7 +205,7 @@ const AppDisplay = ({
                 </Flex>
               </Button>
             )}
-            {isCreatePage && submissionProcessing && <Loader />}
+            {isCreatePage && submissionProcessing && !showRecaptcha && <Loader />}
             {!isCreatePage && !notFoundPage && (
               <Fragment>
                 <Flex width={1} pb={2}>
@@ -286,6 +287,11 @@ const AppDisplay = ({
       )}
       {displayQRCode && (
         <QRCodeView text={window.location.href} handleClose={closeQRCode} />
+      )}
+      {showRecaptcha && (
+      <Flex width={1} justifyContent="center" alignItems="center">
+        <Box id="recaptchaContainer" />
+      </Flex>
       )}
     </Template>
   );

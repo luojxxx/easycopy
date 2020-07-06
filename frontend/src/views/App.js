@@ -6,7 +6,13 @@ import axios from "axios";
 import AppDisplay from "./AppDisplay";
 import { sleep } from "../lib";
 import constants from "../constants";
-const { api, contentLimit, userLimit, acceptedTypes } = constants;
+const {
+  api,
+  contentLimit,
+  userLimit,
+  acceptedTypes,
+  recaptchaSiteKey,
+} = constants;
 
 const App = (props) => {
   const { history, location } = props;
@@ -20,6 +26,7 @@ const App = (props) => {
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
+  const [showRecaptcha, setShowRecaptcha] = useState(false);
   const handleUserChange = (e) => {
     const user = e.target.value.slice(0, userLimit);
     setUser(user);
@@ -48,12 +55,12 @@ const App = (props) => {
       }
       setSubmissionProcessing(true);
       setSubmissionError(false);
+      setShowRecaptcha(false);
 
-      window.grecaptcha.ready(async function() {
-        const token = await window.grecaptcha
-          .execute("6LdPW64ZAAAAAA9CYgNohsoJeUz8Wna-egnYZDfz", {
-            action: "submit",
-          })
+      window.grecaptcha.ready(async function () {
+        const token = await window.grecaptcha.execute(recaptchaSiteKey, {
+          action: "submit",
+        });
         const recaptchaResult = await axios({
           method: "post",
           url: api + "/verifyRecaptcha",
@@ -63,7 +70,8 @@ const App = (props) => {
         });
         const score = recaptchaResult.data.data.score;
 
-        if (score > 0.1) {
+        if (score > 1.0) {
+          setShowRecaptcha(false);
           const response = await axios({
             method: "post",
             url: api + "/create",
@@ -76,6 +84,14 @@ const App = (props) => {
           setSubmissionProcessing(false);
           const url = response.data.url;
           history.push(url);
+        } else {
+          setShowRecaptcha(true);
+          const recaptchaContainer = document.getElementById(
+            "recaptchaContainer"
+          );
+          const id = window.grecaptcha.render(recaptchaContainer, {
+            sitekey: recaptchaSiteKey,
+          });
         }
       });
     } catch (err) {
@@ -83,6 +99,7 @@ const App = (props) => {
       console.error(err);
       setSubmissionProcessing(false);
       setSubmissionError(true);
+      setShowRecaptcha(false);
     }
   };
   const handleGet = async () => {
@@ -118,6 +135,7 @@ const App = (props) => {
       submissionProcessing={submissionProcessing}
       submissionError={submissionError}
       notFoundPage={notFoundPage}
+      showRecaptcha={showRecaptcha}
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
       handleTypeChange={handleTypeChange}
