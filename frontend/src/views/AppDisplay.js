@@ -25,10 +25,10 @@ const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 const userCharLimit = 256;
 const contentCharLimit = 10000;
 
-const getFormattedUrl = () => {
-  const path = window.location.href;
-  const wwwIdx = window.location.href.indexOf("www.");
-  const localhostIdx = window.location.href.indexOf("localhost");
+const getFormattedUrl = (url) => {
+  const path = window.location.host;
+  const wwwIdx = window.location.host.indexOf("www.");
+  const localhostIdx = window.location.host.indexOf("localhost");
   let substringIdx = 0;
   if (wwwIdx !== -1) {
     substringIdx = wwwIdx + 4;
@@ -36,7 +36,7 @@ const getFormattedUrl = () => {
   if (localhostIdx !== -1) {
     substringIdx = localhostIdx;
   }
-  return path.substring(substringIdx);
+  return `${path.substring(substringIdx)}/${url}`
 };
 
 const AppDisplay = ({
@@ -51,6 +51,7 @@ const AppDisplay = ({
   handleClear,
   handleBack,
   handleSubmit,
+  url,
   user,
   content,
   type,
@@ -212,7 +213,7 @@ const AppDisplay = ({
                     width={1}
                     type="text"
                     onClick={handleSelect}
-                    value={getFormattedUrl()}
+                    value={getFormattedUrl(url)}
                     readOnly
                   />
                 </Flex>

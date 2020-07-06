@@ -8,9 +8,10 @@ import { sleep } from "../lib";
 import constants from "../constants";
 const { api, contentLimit, userLimit, acceptedTypes } = constants;
 
-const App = props => {
+const App = (props) => {
   const { history, location } = props;
   const { pathname } = location;
+  const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
   const [content, setContent] = useState("");
   const [type, setType] = useState("text");
@@ -19,15 +20,15 @@ const App = props => {
   const [submissionProcessing, setSubmissionProcessing] = useState(false);
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
-  const handleUserChange = e => {
+  const handleUserChange = (e) => {
     const user = e.target.value.slice(0, userLimit);
     setUser(user);
   };
-  const handleContentChange = e => {
+  const handleContentChange = (e) => {
     const content = e.target.value.slice(0, contentLimit);
     setContent(content);
   };
-  const handleTypeChange = rawType => {
+  const handleTypeChange = (rawType) => {
     const type = acceptedTypes.includes(rawType) ? rawType : "text";
     setType(type);
   };
@@ -53,8 +54,8 @@ const App = props => {
         data: {
           user: user.toString(10),
           content: content.toString(10),
-          type: type
-        }
+          type: type.toString(10)
+        },
       });
       sleep(300);
       setSubmissionProcessing(false);
@@ -71,9 +72,10 @@ const App = props => {
     try {
       const response = await axios({
         method: "get",
-        url: api + pathname
+        url: api + pathname,
       });
       setNotFoundPage(false);
+      setUrl(response.data.url);
       setUser(response.data.user);
       setContent(response.data.content);
       setType(response.data.type);
@@ -105,6 +107,7 @@ const App = props => {
       handleClear={handleClear}
       handleBack={handleBack}
       handleSubmit={handleSubmit}
+      url={url}
       user={user}
       content={content}
       type={type}
@@ -115,7 +118,7 @@ const App = props => {
 
 App.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(App);
