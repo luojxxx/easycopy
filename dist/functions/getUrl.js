@@ -56,10 +56,11 @@ var getUrl = /*#__PURE__*/function () {
               status: 200,
               body: {
                 msg: "",
-                content: content,
+                url: data.url,
+                createdAt: data.createdAt,
                 user: data.user,
                 type: data.type,
-                createdAt: data.createdAt
+                content: content
               }
             });
 
