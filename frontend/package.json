@@ -28,10 +28,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI= react-scripts build",
-    "test": "snyk test && react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "snyk-protect": "snyk protect",
-    "prepare": "yarn run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
