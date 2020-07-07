@@ -93,7 +93,7 @@ const App = (props) => {
         //     sitekey: recaptchaSiteKey,
         //     callback: handleSubmit
         //   });
-        }
+        // }
       });
     } catch (err) {
       console.error("CreateUrl error");
