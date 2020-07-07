@@ -70,7 +70,7 @@ const App = (props) => {
         });
         const score = recaptchaResult.data.data.score;
 
-        if (score >= 0) {
+        // if (score >= 0) {
           setShowRecaptcha(false);
           const response = await axios({
             method: "post",
@@ -84,15 +84,15 @@ const App = (props) => {
           setSubmissionProcessing(false);
           const url = response.data.url;
           history.push(url);
-        } else {
-          setShowRecaptcha(true);
-          const recaptchaContainer = document.getElementById(
-            "recaptchaContainer"
-          );
-          const id = window.grecaptcha.render(recaptchaContainer, {
-            sitekey: recaptchaSiteKey,
-            callback: handleSubmit
-          });
+        // } else {
+        //   setShowRecaptcha(true);
+        //   const recaptchaContainer = document.getElementById(
+        //     "recaptchaContainer"
+        //   );
+        //   const id = window.grecaptcha.render(recaptchaContainer, {
+        //     sitekey: recaptchaSiteKey,
+        //     callback: handleSubmit
+        //   });
         }
       });
     } catch (err) {
