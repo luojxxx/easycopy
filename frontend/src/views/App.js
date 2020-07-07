@@ -70,7 +70,7 @@ const App = (props) => {
         });
         const score = recaptchaResult.data.data.score;
 
-        if (score > 0.1) {
+        if (score > 0.0) {
           setShowRecaptcha(false);
           const response = await axios({
             method: "post",
