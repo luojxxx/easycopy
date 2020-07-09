@@ -25,7 +25,7 @@ const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 const userCharLimit = 256;
 const contentCharLimit = 10000;
 
-const getFormattedUrl = (url) => {
+const getTruncatedUrl = (url) => {
   const path = window.location.host;
   const wwwIdx = window.location.host.indexOf("www.");
   const localhostIdx = window.location.host.indexOf("localhost");
@@ -72,7 +72,8 @@ const AppDisplay = ({
     clip.write(content);
   };
   const copyPathToClipboard = () => {
-    clip.write(window.location.href);
+    const truncatedUrl = getTruncatedUrl(window.location.href)
+    clip.write(truncatedUrl);
     document.getElementById("pathField").focus();
     setCopied(true);
   };
@@ -214,7 +215,7 @@ const AppDisplay = ({
                     width={1}
                     type="text"
                     onClick={handleSelect}
-                    value={getFormattedUrl(url)}
+                    value={getTruncatedUrl(url)}
                     readOnly
                   />
                 </Flex>
