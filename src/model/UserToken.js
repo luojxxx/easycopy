@@ -1,0 +1,31 @@
+import { Sequelize, DataTypes } from "sequelize";
+
+import db from './../db'
+
+const UserTokenSchema = db.define(
+  "UserToken",
+  {
+    // Model attributes are defined here
+    userTokenId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    userToken: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    // Other model options go here
+  }
+);
+
+export default UserTokenSchema;

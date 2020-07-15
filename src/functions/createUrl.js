@@ -24,12 +24,12 @@ export const createUrl = async (content, user, type) => {
     }
     );
     url = wordArray.join("");
-    results = await Url.findOne({ where: { urlChar: url.toLowerCase() } });
+    results = await Url.findOne({ where: { UrlRaw : url.toLowerCase() } });
   }
 
   await Url.create({
     url: url,
-    urlChar: url.toLowerCase(),
+    urlRaw: url.toLowerCase(),
     content: CryptoJS.AES.encrypt(
       content,
       process.env.ENCRYPTION_KEY

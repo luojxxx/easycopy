@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 import Url from "../model/Url";
 
 export const getUrl = async (url) => {
-  const result = await Url.findOne({ where: { urlChar: url.toLowerCase() } })
+  const result = await Url.findOne({ where: { urlRaw: url.toLowerCase() } })
   if (!result) {
     return {
       status: 404,

@@ -1,43 +1,36 @@
 import { Sequelize, DataTypes } from "sequelize";
 
-import db from './../db'
+import db from "./../db";
 
-const UrlSchema = db.define(
-  "Url",
+const UserSchema = db.define(
+  "User",
   {
-    urlId: {
+    // Model attributes are defined here
+    userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    url: {
+    userName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    urlRaw: {
+    email: {
+      type: DataTypes.STRING,
+    },
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    content: {
-      type: DataTypes.STRING(10000),
-      allowNull: false,
-    },
-    type: {
+    emailVerifying: {
       type: DataTypes.STRING,
+    },
+    emailVerified: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
       default: Date.now,
-    },
-    expiredAt: {
-      type: DataTypes.DATE,
-    },
-    user: {
-      type: DataTypes.STRING(256),
-      default: "",
-    },
-    userId: {
-      type: DataTypes.STRING,
     },
   },
   {
@@ -45,4 +38,4 @@ const UrlSchema = db.define(
   }
 );
 
-export default UrlSchema;
+export default UserSchema;
