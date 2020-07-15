@@ -11,13 +11,10 @@ import Input from "../components/Input";
 import Template from '../components/Template'
 import Clock from '../components/Clock'
 import UserField from '../components/UserField'
-import Selector from "../components/Selector";
-import Textarea from "../components/Textarea";
+import ContentField from '../components/ContentField'
 import Button from "../components/Button";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
-import TextView from "../components/TextView";
-import UrlView from "../components/UrlView";
 import QRCodeView from "../components/QRCodeView";
 
 const clip = require("clipboardy");
@@ -110,64 +107,21 @@ const AppDisplay = ({
               Date: {isCreatePage ? <Clock format={dateFormat} /> : dateDisplay}
             </Text>
           </Box>
-          <Box width={1} pb={3}>
-            <UserField
-              user={user}
-              handleUserChange={handleUserChange}
-              isCreatePage={isCreatePage}
-            />
-          </Box>
-          <Box width={1} pb={3}>
-            <Flex width={1} justifyContent="space-between">
-              <Flex
-                flexDirection="row"
-                justifyContent="center"
-                alignItems="center"
-                style={{ userSelect: "None" }}
-              >
-                <Label htmlFor="content" style={{ width: "auto" }}>
-                  Content
-                </Label>
-                &nbsp;
-                <Selector
-                  items={["text", "url"]}
-                  selected={type}
-                  handleSelect={isCreatePage ? handleTypeChange : () => {}}
-                />
-                &nbsp;
-                <Box
-                  onClick={
-                    isCreatePage
-                      ? pasteContentToClipboard
-                      : copyContentToClipboard
-                  }
-                  style={{ cursor: "pointer" }}
-                >
-                  <Text color="primary">
-                    {isCreatePage ? "[paste]" : "[copy]"}
-                  </Text>
-                </Box>
-              </Flex>
-              <span>
-                <Text color="primary">{`${10000 - content.length}`}</Text>
-              </span>
-            </Flex>
-            {isCreatePage && (
-              <Textarea
-                id="content"
-                name="content"
-                type="text"
-                placeholder={zeroContentFlag ? "Must have content" : ""}
-                onChange={handleContentChange}
-                value={content}
-                style={{
-                  minHeight: "25vh",
-                }}
-              />
-            )}
-            {!isCreatePage && type === "text" && <TextView text={content} />}
-            {!isCreatePage && type === "url" && <UrlView url={content} />}
-          </Box>
+          <UserField
+            user={user}
+            handleUserChange={handleUserChange}
+            isCreatePage={isCreatePage}
+          />
+          <ContentField 
+            content={content}
+            handleContentChange={handleContentChange}
+            type={type}
+            handleTypeChange={handleTypeChange}
+            pasteContentToClipboard={pasteContentToClipboard}
+            copyContentToClipboard={copyContentToClipboard}
+            zeroContentFlag={zeroContentFlag}
+            isCreatePage={isCreatePage}
+          />
           <Flex
             width={1}
             flexDirection="column"

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Flex, Text } from "rebass";
+import { Box, Flex, Text } from "rebass";
 import { Label } from "@rebass/forms";
 
 import constants from "./../constants";
@@ -8,7 +8,7 @@ import Input from "../components/Input";
 
 const UserField = ({user, handleUserChange, isCreatePage}) => {
   return (
-    <Fragment>
+    <Box width={1} pb={3}>
       <Flex
         flexDirection="row"
         justifyContent="space-between"
@@ -27,7 +27,7 @@ const UserField = ({user, handleUserChange, isCreatePage}) => {
         value={user}
         readOnly={!isCreatePage}
       />
-    </Fragment>
+    </Box>
   );
 };
 
