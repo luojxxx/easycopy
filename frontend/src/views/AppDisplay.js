@@ -1,13 +1,14 @@
 import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import { Box, Flex, Text } from "rebass";
+import { Box, Flex } from "rebass";
 
 import Template from '../components/Template'
 import DateField from '../components/DateField'
 import UserField from '../components/UserField'
 import ContentField from '../components/ContentField'
 import ControlBar from '../components/ControlBar'
+import MessageField from '../components/MessageField'
 import QRCodeView from "../components/QRCodeView";
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
@@ -38,20 +39,7 @@ const AppDisplay = ({
   const closeQRCode = () => {
     setDisplayQRCode(false);
   };
-  const generateMsg = (isCreatePage, copied, submissionError) => {
-    if (isCreatePage && !submissionError) {
-      return "";
-    }
-    if (isCreatePage && submissionError) {
-      return "Sorry there was an error, we'll be fixing it soon";
-    }
-    if (!isCreatePage && !copied) {
-      return "Expires after a month";
-    }
-    if (!isCreatePage && copied) {
-      return "copied url";
-    }
-  };
+  
   const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
@@ -83,17 +71,7 @@ const AppDisplay = ({
             showRecaptcha={showRecaptcha}
             showQRCode={showQRCode}
           />
-          <Flex
-            width={1}
-            justifyContent="center"
-            style={{ textAlign: "center" }}
-          >
-            <Text color="primary">
-              {generateMsg(isCreatePage, copied, submissionError) || (
-                <span>&nbsp;</span>
-              )}
-            </Text>
-          </Flex>
+          <MessageField isCreatePage={isCreatePage} copied={copied} submissionError={submissionError} />
         </Fragment>
       )}
       {displayQRCode && (
