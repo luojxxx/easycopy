@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { Box, Flex, Text } from "rebass";
 import { Label } from "@rebass/forms";
 
-import { userLimit } from "./../constants";
+import { userNameLimit } from "./../constants";
 import Input from "../components/Input";
 
-const UserField = ({ user, handleUserChange, isCreatePage }) => {
+const UserField = ({ userName, handleUserNameChange, isCreatePage }) => {
   return (
     <Box width={1} pb={3}>
       <Flex
@@ -16,15 +16,15 @@ const UserField = ({ user, handleUserChange, isCreatePage }) => {
       >
         <Label htmlFor="user">User (optional)</Label>
         <span>
-          <Text color="primary">{`${userLimit - user.length}`}</Text>
+          <Text color="primary">{`${userNameLimit - userName.length}`}</Text>
         </span>
       </Flex>
       <Input
         id="user"
         name="user"
         type="text"
-        onChange={handleUserChange}
-        value={user}
+        onChange={handleUserNameChange}
+        value={userName}
         readOnly={!isCreatePage}
       />
     </Box>
@@ -33,7 +33,7 @@ const UserField = ({ user, handleUserChange, isCreatePage }) => {
 
 UserField.propTypes = {
   handleUserChange: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
   isCreatePage: PropTypes.bool.isRequired,
 };
 

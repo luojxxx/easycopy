@@ -7,7 +7,7 @@ import AppDisplay from "./AppDisplay";
 import { sleep } from "../lib";
 import {
   api,
-  userLimit,
+  userNameLimit,
   contentLimit,
   acceptedTypes,
   recaptchaSiteKey,
@@ -17,7 +17,7 @@ const App = (props) => {
   const { history, location } = props;
   const { pathname } = location;
   const [url, setUrl] = useState("");
-  const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
   const [content, setContent] = useState("");
   const [type, setType] = useState("text");
   const [date, setDate] = useState("");
@@ -26,9 +26,9 @@ const App = (props) => {
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
-  const handleUserChange = (e) => {
-    const user = e.target.value.slice(0, userLimit);
-    setUser(user);
+  const handleUserNameChange = (e) => {
+    const userName = e.target.value.slice(0, userNameLimit);
+    setUserName(userName);
   };
   const handleContentChange = (e) => {
     const content = e.target.value.slice(0, contentLimit);
@@ -39,7 +39,7 @@ const App = (props) => {
     setType(type);
   };
   const handleClear = () => {
-    setUser("");
+    setUserName("");
     setContent("");
   };
   const handleBack = () => {
@@ -75,7 +75,7 @@ const App = (props) => {
             method: "post",
             url: api + "/create",
             data: {
-              user: user.toString(10),
+              userName: userName.toString(10),
               content: content.toString(10),
               type: type.toString(10),
             },
@@ -110,7 +110,7 @@ const App = (props) => {
       });
       setNotFoundPage(false);
       setUrl(response.data.url);
-      setUser(response.data.user);
+      setUserName(response.data.userName);
       setContent(response.data.content);
       setType(response.data.type);
       setDate(response.data.createdAt);
@@ -136,13 +136,13 @@ const App = (props) => {
       submissionError={submissionError}
       notFoundPage={notFoundPage}
       showRecaptcha={showRecaptcha}
-      handleUserChange={handleUserChange}
+      handleUserNameChange={handleUserNameChange}
       handleContentChange={handleContentChange}
       handleTypeChange={handleTypeChange}
       handleBack={handleBack}
       handleSubmit={handleSubmit}
       url={url}
-      user={user}
+      userName={userName}
       content={content}
       type={type}
       date={date}

@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 
-import { contentLimit, userLimit, acceptedTypes } from "./constants";
+import { contentLimit, userNameLimit, acceptedTypes } from "./constants";
 import {
   bodyContains,
   bodyContainsStrings,
@@ -23,17 +23,17 @@ const sendResponse = (result, res) => {
 };
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
-  const expectedArgs = ["content", "user", "type"];
+  const expectedArgs = ["content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
   sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
   const content = req.body.content;
-  const user = req.body.user;
+  const userName = req.body.userName;
   const type = req.body.type;
-  sendResponse(lessThanLength({ Content: contentLimit }, content), res);
-  sendResponse(lessThanLength({ User: userLimit }, user), res);
+  sendResponse(lessThanLength({ content: contentLimit }, content), res);
+  sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
-  const { status, body } = await createUrl(content, user, type);
+  const { status, body } = await createUrl(content, userName, type);
   res.status(status).send(body);
 });
 

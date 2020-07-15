@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from "./../db";
-import { userLimit } from '../constants'
+import { userNameLimit } from '../constants'
 
 const UserSchema = db.define(
   "User",
@@ -13,7 +13,7 @@ const UserSchema = db.define(
       primaryKey: true,
     },
     userName: {
-      type: DataTypes.STRING(userLimit),
+      type: DataTypes.STRING(userNameLimit),
       allowNull: false,
     },
     email: {

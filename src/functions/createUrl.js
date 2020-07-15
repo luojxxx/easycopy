@@ -10,7 +10,7 @@ const text = fs.readFileSync(
 );
 const wordBank = text.trim("\n").split(",");
 
-export const createUrl = async (content, user, type) => {
+export const createUrl = async (content, userName, type) => {
   // make sure url doesn't already exist
   let wordArray
   let url;
@@ -34,7 +34,7 @@ export const createUrl = async (content, user, type) => {
       content,
       process.env.ENCRYPTION_KEY
     ).toString(),
-    user: user,
+    userName: userName,
     type: type,
   });
 

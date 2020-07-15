@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
-import { userLimit } from "../constants";
+import { userNameLimit } from "../constants";
 
 const UrlSchema = db.define(
   "Url",
@@ -34,8 +34,8 @@ const UrlSchema = db.define(
     expiredAt: {
       type: DataTypes.DATE,
     },
-    user: {
-      type: DataTypes.STRING(256),
+    userName: {
+      type: DataTypes.STRING(userNameLimit),
       default: "",
     },
     userId: {

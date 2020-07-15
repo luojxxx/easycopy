@@ -20,13 +20,13 @@ const AppDisplay = ({
   submissionError,
   notFoundPage,
   showRecaptcha,
-  handleUserChange,
+  handleUserNameChange,
   handleContentChange,
   handleTypeChange,
   handleBack,
   handleSubmit,
   url,
-  user,
+  userName,
   content,
   type,
   date,
@@ -51,8 +51,8 @@ const AppDisplay = ({
             isCreatePage={isCreatePage}
           />
           <UserField
-            user={user}
-            handleUserChange={handleUserChange}
+            userName={userName}
+            handleUserNameChange={handleUserNameChange}
             isCreatePage={isCreatePage}
           />
           <ContentField
@@ -105,7 +105,7 @@ AppDisplay.propTypes = {
   handleClear: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
