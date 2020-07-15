@@ -48,7 +48,7 @@ var createUrl = /*#__PURE__*/function () {
             _context.next = 6;
             return _Url["default"].findOne({
               where: {
-                urlChar: url.toLowerCase()
+                UrlRaw: url.toLowerCase()
               }
             });
 
@@ -61,7 +61,7 @@ var createUrl = /*#__PURE__*/function () {
             _context.next = 11;
             return _Url["default"].create({
               url: url,
-              urlChar: url.toLowerCase(),
+              urlRaw: url.toLowerCase(),
               content: _cryptoJs["default"].AES.encrypt(content, process.env.ENCRYPTION_KEY).toString(),
               user: user,
               type: type

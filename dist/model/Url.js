@@ -12,12 +12,15 @@ var _sequelize = require("sequelize");
 var _db = _interopRequireDefault(require("./../db"));
 
 var UrlSchema = _db["default"].define("Url", {
-  // Model attributes are defined here
+  urlId: {
+    type: _sequelize.DataTypes.INTEGER,
+    primaryKey: true
+  },
   url: {
     type: _sequelize.DataTypes.STRING,
     allowNull: false
   },
-  urlChar: {
+  urlRaw: {
     type: _sequelize.DataTypes.STRING,
     allowNull: false
   },
@@ -33,13 +36,15 @@ var UrlSchema = _db["default"].define("Url", {
     type: _sequelize.DataTypes.DATE,
     "default": Date.now
   },
+  expiredAt: {
+    type: _sequelize.DataTypes.DATE
+  },
   user: {
     type: _sequelize.DataTypes.STRING(256),
     "default": ""
   },
   userId: {
-    type: _sequelize.DataTypes.STRING,
-    "default": ""
+    type: _sequelize.DataTypes.STRING
   }
 }, {// Other model options go here
 });

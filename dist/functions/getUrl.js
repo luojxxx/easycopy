@@ -25,7 +25,7 @@ var getUrl = /*#__PURE__*/function () {
             _context.next = 2;
             return _Url["default"].findOne({
               where: {
-                urlChar: url.toLowerCase()
+                urlRaw: url.toLowerCase()
               }
             });
 
