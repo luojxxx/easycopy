@@ -140,7 +140,6 @@ const App = (props) => {
       handleUserChange={handleUserChange}
       handleContentChange={handleContentChange}
       handleTypeChange={handleTypeChange}
-      handleClear={handleClear}
       handleBack={handleBack}
       handleSubmit={handleSubmit}
       url={url}

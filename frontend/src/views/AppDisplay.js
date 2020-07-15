@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import { Box, Flex, Heading, Text } from "rebass";
+import { Box, Flex, Text } from "rebass";
 
 import Template from '../components/Template'
 import DateField from '../components/DateField'
@@ -9,8 +9,6 @@ import UserField from '../components/UserField'
 import ContentField from '../components/ContentField'
 import ControlBar from '../components/ControlBar'
 import QRCodeView from "../components/QRCodeView";
-
-const clip = require("clipboardy");
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
 
@@ -24,7 +22,6 @@ const AppDisplay = ({
   handleUserChange,
   handleContentChange,
   handleTypeChange,
-  handleClear,
   handleBack,
   handleSubmit,
   url,
