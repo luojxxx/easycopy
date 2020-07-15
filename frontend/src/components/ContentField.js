@@ -10,16 +10,23 @@ import Textarea from "./Textarea";
 import TextView from './TextView'
 import UrlView from './UrlView'
 
-const UserField = ({
+const clip = require("clipboardy");
+
+const ContentField = ({
   content,
   handleContentChange,
   type,
   handleTypeChange,
-  pasteContentToClipboard,
-  copyContentToClipboard,
   isCreatePage,
   zeroContentFlag,
 }) => {
+  const pasteContentToClipboard = async () => {
+    const text = await clip.read();
+    handleContentChange({ target: { value: text } });
+  };
+  const copyContentToClipboard = () => {
+    clip.write(content);
+  };
   return (
     <Box width={1} pb={3}>
       <Flex width={1} justifyContent="space-between">
@@ -71,15 +78,13 @@ const UserField = ({
   );
 };
 
-UserField.propTypes = {
+ContentField.propTypes = {
   content: PropTypes.string.isRequired,
   handleContentChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   handleTypeChange: PropTypes.func.isRequired,
-  pasteContentToClipboard: PropTypes.func.isRequired,
-  copyContentToClipboard: PropTypes.func.isRequired,
   isCreatePage: PropTypes.bool.isRequired,
   zeroContentFlag: PropTypes.bool.isRequired,
 };
 
-export default UserField;
+export default ContentField;

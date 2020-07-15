@@ -12,6 +12,7 @@ import Template from '../components/Template'
 import Clock from '../components/Clock'
 import UserField from '../components/UserField'
 import ContentField from '../components/ContentField'
+import ControlBar from '../components/ControlBar'
 import Button from "../components/Button";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
@@ -20,20 +21,6 @@ import QRCodeView from "../components/QRCodeView";
 const clip = require("clipboardy");
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
-
-const getTruncatedUrl = (url) => {
-  const path = window.location.host;
-  const wwwIdx = window.location.host.indexOf("www.");
-  const localhostIdx = window.location.host.indexOf("localhost");
-  let substringIdx = 0;
-  if (wwwIdx !== -1) {
-    substringIdx = wwwIdx + 4;
-  }
-  if (localhostIdx !== -1) {
-    substringIdx = localhostIdx;
-  }
-  return `${path.substring(substringIdx)}/${url}`
-};
 
 const AppDisplay = ({
   pathname,
@@ -56,26 +43,6 @@ const AppDisplay = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [displayQRCode, setDisplayQRCode] = useState(false);
-  const handleClickBack = () => {
-    setCopied(false);
-    handleBack();
-  };
-  const pasteContentToClipboard = async () => {
-    const text = await clip.read();
-    handleContentChange({ target: { value: text } });
-  };
-  const copyContentToClipboard = () => {
-    clip.write(content);
-  };
-  const copyPathToClipboard = () => {
-    const truncatedUrl = getTruncatedUrl(window.location.href)
-    clip.write(truncatedUrl);
-    document.getElementById("pathField").focus();
-    setCopied(true);
-  };
-  const handleSelect = () => {
-    document.getElementById("pathField").select();
-  };
   const showQRCode = () => {
     setDisplayQRCode(true);
   };
@@ -117,98 +84,20 @@ const AppDisplay = ({
             handleContentChange={handleContentChange}
             type={type}
             handleTypeChange={handleTypeChange}
-            pasteContentToClipboard={pasteContentToClipboard}
-            copyContentToClipboard={copyContentToClipboard}
             zeroContentFlag={zeroContentFlag}
             isCreatePage={isCreatePage}
           />
-          <Flex
-            width={1}
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            {isCreatePage && !submissionProcessing && (
-              <Button variant="primary" width={1} mb={1} onClick={handleSubmit}>
-                <Flex
-                  flexDirection="row"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text pr={2}>Submit</Text>
-                  <StarIcon />
-                </Flex>
-              </Button>
-            )}
-            {isCreatePage && submissionProcessing && !showRecaptcha && (
-              <Loader />
-            )}
-            {!isCreatePage && !notFoundPage && (
-              <Fragment>
-                <Flex width={1} pb={2}>
-                  <Input
-                    id="pathField"
-                    width={1}
-                    type="text"
-                    onClick={handleSelect}
-                    value={getTruncatedUrl(url)}
-                    readOnly
-                  />
-                </Flex>
-                <Flex width={1} justifyContent="space-around">
-                  <Button
-                    variant="primary"
-                    width={1}
-                    mb={1}
-                    onClick={handleClickBack}
-                  >
-                    <Flex
-                      flexDirection="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Text pr={2}>Back</Text>
-                      <FiCornerUpLeft />
-                    </Flex>
-                  </Button>
-                  <Button
-                    variant="primary"
-                    width={1}
-                    mb={1}
-                    mx={1}
-                    onClick={copyPathToClipboard}
-                  >
-                    <Flex
-                      flexDirection="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Text pr={2}>Copy</Text>
-                      <FiCopy />
-                    </Flex>
-                  </Button>
-                  <Button
-                    variant="primary"
-                    width={1}
-                    mb={1}
-                    onClick={showQRCode}
-                  >
-                    <Flex
-                      flexDirection="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <Text pr={2}>QR</Text>
-                      <FaQrcode />
-                    </Flex>
-                  </Button>
-                </Flex>
-              </Fragment>
-            )}
-            {!isCreatePage && notFoundPage && (
-              <Heading color="primary">Not Found</Heading>
-            )}
-          </Flex>
+          <ControlBar 
+            isCreatePage={isCreatePage}
+            handleSubmit={handleSubmit}
+            submissionProcessing={submissionProcessing}
+            notFoundPage={notFoundPage}
+            url={url}
+            handleBack={handleBack}
+            setCopied={setCopied}
+            showRecaptcha={showRecaptcha}
+            showQRCode={showQRCode}
+          />
           <Flex
             width={1}
             justifyContent="center"
