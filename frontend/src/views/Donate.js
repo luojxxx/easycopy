@@ -14,8 +14,7 @@ import Button from "../components/Button";
 import StarIcon from "../components/StarIcon";
 import Loader from "../components/Loader";
 import { sleep } from "../lib";
-import constants from "../constants";
-const { api } = constants;
+import { api } from "../constants";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {

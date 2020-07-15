@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { Box, Flex, Text } from "rebass";
 import { Label } from "@rebass/forms";
 
-import constants from "./../constants";
-import Selector from './Selector'
+import { contentLimit } from "./../constants";
+import Selector from "./Selector";
 import Textarea from "./Textarea";
 
-import TextView from './TextView'
-import UrlView from './UrlView'
+import TextView from "./TextView";
+import UrlView from "./UrlView";
 
 const clip = require("clipboardy");
 
@@ -56,7 +56,7 @@ const ContentField = ({
           </Box>
         </Flex>
         <span>
-          <Text color="primary">{`${constants.contentLimit - content.length}`}</Text>
+          <Text color="primary">{`${contentLimit - content.length}`}</Text>
         </span>
       </Flex>
       {isCreatePage && (

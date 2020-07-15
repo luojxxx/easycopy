@@ -5,14 +5,13 @@ import axios from "axios";
 
 import AppDisplay from "./AppDisplay";
 import { sleep } from "../lib";
-import constants from "../constants";
-const {
+import {
   api,
-  contentLimit,
   userLimit,
+  contentLimit,
   acceptedTypes,
   recaptchaSiteKey,
-} = constants;
+} from "../constants";
 
 const App = (props) => {
   const { history, location } = props;

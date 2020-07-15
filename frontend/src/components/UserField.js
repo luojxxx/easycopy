@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { Box, Flex, Text } from "rebass";
 import { Label } from "@rebass/forms";
 
-import constants from "./../constants";
+import { userLimit } from "./../constants";
 import Input from "../components/Input";
 
-const UserField = ({user, handleUserChange, isCreatePage}) => {
+const UserField = ({ user, handleUserChange, isCreatePage }) => {
   return (
     <Box width={1} pb={3}>
       <Flex
@@ -16,7 +16,7 @@ const UserField = ({user, handleUserChange, isCreatePage}) => {
       >
         <Label htmlFor="user">User (optional)</Label>
         <span>
-          <Text color="primary">{`${constants.userLimit - user.length}`}</Text>
+          <Text color="primary">{`${userLimit - user.length}`}</Text>
         </span>
       </Flex>
       <Input
