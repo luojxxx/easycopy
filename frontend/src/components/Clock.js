@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import { Text } from "rebass";
 
 const Clock = ({ format }) => {
   const [date, setDate] = useState(dayjs().valueOf());

@@ -21,9 +21,8 @@ const Selector = ({ items, selected, handleSelect }) => {
         <Text color="primary">[</Text>
       </span>
       {items.map((ele, idx) => (
-        <Fragment>
+        <Fragment key={ele}>
           <Selection
-            key={ele}
             highlight={ele === selected}
             onClick={() => handleSelect(ele)}
           >

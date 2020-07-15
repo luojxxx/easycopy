@@ -132,13 +132,13 @@ const ControlBar = ({
 ControlBar.propTypes = {
   isCreatePage: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submissionProcessing: PropTypes.func.isRequired,
+  submissionProcessing: PropTypes.bool.isRequired,
   notFoundPage: PropTypes.bool.isRequired,
   url: PropTypes.string.isRequired,
   handleBack: PropTypes.func.isRequired,
   setCopied: PropTypes.func.isRequired,
-  showRecaptcha: PropTypes.func.isRequired,
   showQRCode: PropTypes.func.isRequired,
+  showRecaptcha: PropTypes.bool.isRequired,
 };
 
 export default ControlBar;

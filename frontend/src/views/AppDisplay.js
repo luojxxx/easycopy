@@ -2,20 +2,12 @@ import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { Box, Flex, Heading, Text } from "rebass";
-import { Label } from "@rebass/forms";
-import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
-import { FaQrcode } from "react-icons/fa";
 
-import theme from "../theme";
-import Input from "../components/Input";
 import Template from '../components/Template'
-import Clock from '../components/Clock'
+import DateField from '../components/DateField'
 import UserField from '../components/UserField'
 import ContentField from '../components/ContentField'
 import ControlBar from '../components/ControlBar'
-import Button from "../components/Button";
-import StarIcon from "../components/StarIcon";
-import Loader from "../components/Loader";
 import QRCodeView from "../components/QRCodeView";
 
 const clip = require("clipboardy");
@@ -69,11 +61,7 @@ const AppDisplay = ({
     <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
       {!displayQRCode && (
         <Fragment>
-          <Box width={1} pb={3}>
-            <Text color="primary">
-              Date: {isCreatePage ? <Clock format={dateFormat} /> : dateDisplay}
-            </Text>
-          </Box>
+          <DateField dateFormat={dateFormat} dateDisplay={dateDisplay} isCreatePage={isCreatePage} />
           <UserField
             user={user}
             handleUserChange={handleUserChange}
