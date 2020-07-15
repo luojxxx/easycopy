@@ -41,7 +41,6 @@ export const createUrl = async (content, user, type) => {
   return {
     status: 200,
     body: {
-      msg: "",
       url: url
     }
   };

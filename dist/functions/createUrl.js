@@ -71,7 +71,6 @@ var createUrl = /*#__PURE__*/function () {
             return _context.abrupt("return", {
               status: 200,
               body: {
-                msg: "",
                 url: url
               }
             });
