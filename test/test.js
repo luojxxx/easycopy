@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-import { DBSetup, DBClear } from './DBStub'
+import { DBSetup, DBClear } from './MockDB'
 
 describe("Account Management", function () {
   before(async function() {
