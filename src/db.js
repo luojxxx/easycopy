@@ -12,6 +12,7 @@ const db = new Sequelize(process.env.DB_STRING, {
   dialect: "postgres",
   protocol: "postgres",
   dialectOptions: SSL,
+  logging: false,
 });
 
 const dbCheck = async () => {
