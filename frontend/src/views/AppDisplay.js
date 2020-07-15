@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { Box, Flex } from "rebass";
 
-import Template from '../components/Template'
-import DateField from '../components/DateField'
-import UserField from '../components/UserField'
-import ContentField from '../components/ContentField'
-import ControlBar from '../components/ControlBar'
-import MessageField from '../components/MessageField'
+import Template from "../components/Template";
+import DateField from "../components/DateField";
+import UserField from "../components/UserField";
+import ContentField from "../components/ContentField";
+import ControlBar from "../components/ControlBar";
+import MessageField from "../components/MessageField";
 import QRCodeView from "../components/QRCodeView";
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
@@ -39,20 +39,23 @@ const AppDisplay = ({
   const closeQRCode = () => {
     setDisplayQRCode(false);
   };
-  
   const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
     <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
       {!displayQRCode && (
         <Fragment>
-          <DateField dateFormat={dateFormat} dateDisplay={dateDisplay} isCreatePage={isCreatePage} />
+          <DateField
+            dateFormat={dateFormat}
+            dateDisplay={dateDisplay}
+            isCreatePage={isCreatePage}
+          />
           <UserField
             user={user}
             handleUserChange={handleUserChange}
             isCreatePage={isCreatePage}
           />
-          <ContentField 
+          <ContentField
             content={content}
             handleContentChange={handleContentChange}
             type={type}
@@ -60,7 +63,7 @@ const AppDisplay = ({
             zeroContentFlag={zeroContentFlag}
             isCreatePage={isCreatePage}
           />
-          <ControlBar 
+          <ControlBar
             isCreatePage={isCreatePage}
             handleSubmit={handleSubmit}
             submissionProcessing={submissionProcessing}
@@ -71,7 +74,11 @@ const AppDisplay = ({
             showRecaptcha={showRecaptcha}
             showQRCode={showQRCode}
           />
-          <MessageField isCreatePage={isCreatePage} copied={copied} submissionError={submissionError} />
+          <MessageField
+            isCreatePage={isCreatePage}
+            copied={copied}
+            submissionError={submissionError}
+          />
         </Fragment>
       )}
       {displayQRCode && (
