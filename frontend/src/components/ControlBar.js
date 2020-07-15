@@ -44,7 +44,7 @@ const ControlBar = ({
     handleBack();
   };
   const copyPathToClipboard = () => {
-    const truncatedUrl = getTruncatedUrl(window.location.href);
+    const truncatedUrl = getTruncatedUrl(url);
     clip.write(truncatedUrl);
     document.getElementById("pathField").focus();
     setCopied(true);
