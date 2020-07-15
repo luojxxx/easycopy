@@ -8,6 +8,7 @@ const EmailVerificationTokenSchema = db.define(
     // Model attributes are defined here
     verificationId: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     userId: {

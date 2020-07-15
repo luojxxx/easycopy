@@ -24,7 +24,7 @@ export const createUrl = async (content, user, type) => {
     }
     );
     url = wordArray.join("");
-    results = await Url.findOne({ where: { UrlRaw : url.toLowerCase() } });
+    results = await Url.findOne({ where: { urlRaw : url.toLowerCase() } });
   }
 
   await Url.create({

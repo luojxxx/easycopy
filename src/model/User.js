@@ -8,6 +8,7 @@ const UserSchema = db.define(
     // Model attributes are defined here
     userId: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     userName: {

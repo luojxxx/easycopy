@@ -7,6 +7,7 @@ const UrlSchema = db.define(
   {
     urlId: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     url: {

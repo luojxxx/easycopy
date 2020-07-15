@@ -8,6 +8,7 @@ const UserTokenSchema = db.define(
     // Model attributes are defined here
     userTokenId: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     userId: {
