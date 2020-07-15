@@ -1,15 +1,17 @@
 require("dotenv").config();
 import { Sequelize } from "sequelize";
 
+const SSL = process.env.DB_SSL_OFF ? {} : {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
+}
+
 const db = new Sequelize(process.env.DB_STRING, {
   dialect: "postgres",
   protocol: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
+  dialectOptions: SSL,
 });
 
 const dbCheck = async () => {

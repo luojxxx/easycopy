@@ -15,15 +15,16 @@ var _sequelize = require("sequelize");
 
 require("dotenv").config();
 
+var SSL = process.env.DB_SSL_OFF ? {} : {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false
+  }
+};
 var db = new _sequelize.Sequelize(process.env.DB_STRING, {
   dialect: "postgres",
   protocol: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  }
+  dialectOptions: SSL
 });
 
 var dbCheck = /*#__PURE__*/function () {
