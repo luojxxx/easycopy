@@ -71,8 +71,7 @@ var lessThanLength = function lessThanLength(limit, actual) {
     return {
       status: 400,
       body: {
-        msg: "".concat(limitName, " is longer than the ").concat(limitValue, " limit"),
-        url: ""
+        msg: "".concat(limitName, " is longer than the ").concat(limitValue, " limit")
       }
     };
   }
@@ -85,8 +84,7 @@ var oneOfType = function oneOfType(expectedTypes, actual) {
     return {
       status: 400,
       body: {
-        msg: "Type needs to be (".concat(expectedTypes, "), got ").concat(actual, " instead"),
-        url: ""
+        msg: "Type needs to be (".concat(expectedTypes, "), got ").concat(actual, " instead")
       }
     };
   }

@@ -13,7 +13,6 @@ export const verifyRecaptcha = async (token) => {
   return {
     status: 200,
     body: {
-      msg: "",
       data: recaptchaResult.data,
     },
   };

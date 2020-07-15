@@ -35,7 +35,6 @@ var verifyRecaptcha = /*#__PURE__*/function () {
             return _context.abrupt("return", {
               status: 200,
               body: {
-                msg: "",
                 data: recaptchaResult.data
               }
             });
