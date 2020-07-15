@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
+import { userLimit } from "../constants";
 
 const UrlSchema = db.define(
   "Url",
