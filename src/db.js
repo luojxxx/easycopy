@@ -19,8 +19,13 @@ const dbCheck = async () => {
     await db.authenticate();
     console.log("Connection has been established successfully.");
     if (process.env.DB_SYNC) {
-      await db.sync({ force: true });
-      console.log("Models are synchronized");
+      try {
+        await db.sync({ force: true });
+        console.log("Models are synchronized");
+      } catch (err) {
+        console.log('Error!')
+        console.log(err)
+      }
     }
   } catch (error) {
     console.error("Unable to connect to the database:", error);
