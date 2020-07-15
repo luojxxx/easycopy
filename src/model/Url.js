@@ -38,7 +38,12 @@ const UrlSchema = db.define(
       default: "",
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "Users",
+        key: "userId",
+      },
     },
   },
   {
