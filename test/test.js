@@ -1,13 +1,12 @@
-var assert = require('assert');
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal([1, 2, 3].indexOf(4), -1);
-    });
-  });
-});
+const assert = require('assert');
+
+import { DBSetup, DBClear } from './DBStub'
 
 describe("Account Management", function () {
+  before(async function() {
+    await DBSetup()
+  })
+
   describe("signup", function () {
     it("should return", function () {
       assert.equal([1, 2, 3].indexOf(4), -1);
@@ -43,6 +42,10 @@ describe("Account Management", function () {
       assert.equal([1, 2, 3].indexOf(4), -1);
     });
   });
+
+  after(async function() {
+    await DBClear()
+  })
 });
 
 describe("Account Features", function () {
