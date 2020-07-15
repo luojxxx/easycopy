@@ -1,81 +1,24 @@
 import asyncHandler from "express-async-handler";
 
 import { contentLimit, userLimit, acceptedTypes } from "./constants";
+import {
+  bodyContains,
+  bodyContainsStrings,
+  bodyContainsInt,
+  isString,
+  lessThanLength,
+  oneOfType,
+} from "./verification";
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
-import { verifyRecaptcha } from './functions/verifyRecaptcha'
+import { verifyRecaptcha } from "./functions/verifyRecaptcha";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 
 const sendResponse = (result, res) => {
   if (result) {
-    const { status, body } = result
+    const { status, body } = result;
     res.status(status).send(body);
-  }
-}
-
-const bodyContains = (expected, actual) => {
-  if (!expected.every(key => Object.keys(actual).includes(key))) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Missing arguments'
-      }
-    }
-  }
-};
-const bodyContainsStrings = (expected, actual) => {
-  if (!expected.every(key => typeof actual[key] === "string")) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    }
-  }
-};
-const bodyContainsInt = (expected, actual) => {
-  if (!expected.every(key => Number.isInteger(actual[key]))) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    }
-  }
-};
-const isString = (actual) => {
-  if (typeof actual !== "string") {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    }
-  }
-};
-const lessThanLength = (limit, actual) => {
-  const limitName = Object.keys(limit);
-  const limitValue = limit[limitName[0]];
-  if (actual.length > limitValue) {
-    return {
-      status: 400,
-      body: {
-        msg: `${limitName} is longer than the ${limitValue} limit`,
-        url: ""
-      }
-    }
-  }
-};
-const oneOfType = (expectedTypes, actual) => {
-  if (!expectedTypes.includes(actual)) {
-    return {
-      status: 400,
-      body: {
-        msg: `Type needs to be (${expectedTypes}), got ${actual} instead`,
-        url: ""
-      }
-    }
   }
 };
 
@@ -106,9 +49,9 @@ export const getUrlRoute = asyncHandler(async (req, res, next) => {
 export const verifyRecaptchaRoute = asyncHandler(async (req, res, next) => {
   const token = req.body.token;
 
-  const { status, body } = await verifyRecaptcha(token)
-  res.status(status).send(body)
-})
+  const { status, body } = await verifyRecaptcha(token);
+  res.status(status).send(body);
+});
 
 export const stripePaymentRoute = asyncHandler(async (req, res, next) => {
   const expectedArgs = ["amount"];

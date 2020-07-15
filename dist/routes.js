@@ -15,6 +15,8 @@ var _expressAsyncHandler = _interopRequireDefault(require("express-async-handler
 
 var _constants = require("./constants");
 
+var _verification = require("./verification");
+
 var _createUrl = require("./functions/createUrl");
 
 var _getUrl = require("./functions/getUrl");
@@ -33,83 +35,6 @@ var sendResponse = function sendResponse(result, res) {
   }
 };
 
-var bodyContains = function bodyContains(expected, actual) {
-  if (!expected.every(function (key) {
-    return Object.keys(actual).includes(key);
-  })) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Missing arguments'
-      }
-    };
-  }
-};
-
-var bodyContainsStrings = function bodyContainsStrings(expected, actual) {
-  if (!expected.every(function (key) {
-    return typeof actual[key] === "string";
-  })) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    };
-  }
-};
-
-var bodyContainsInt = function bodyContainsInt(expected, actual) {
-  if (!expected.every(function (key) {
-    return Number.isInteger(actual[key]);
-  })) {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    };
-  }
-};
-
-var isString = function isString(actual) {
-  if (typeof actual !== "string") {
-    return {
-      status: 400,
-      body: {
-        msg: 'Invalid arguments'
-      }
-    };
-  }
-};
-
-var lessThanLength = function lessThanLength(limit, actual) {
-  var limitName = Object.keys(limit);
-  var limitValue = limit[limitName[0]];
-
-  if (actual.length > limitValue) {
-    return {
-      status: 400,
-      body: {
-        msg: "".concat(limitName, " is longer than the ").concat(limitValue, " limit"),
-        url: ""
-      }
-    };
-  }
-};
-
-var oneOfType = function oneOfType(expectedTypes, actual) {
-  if (!expectedTypes.includes(actual)) {
-    return {
-      status: 400,
-      body: {
-        msg: "Type needs to be (".concat(expectedTypes, "), got ").concat(actual, " instead"),
-        url: ""
-      }
-    };
-  }
-};
-
 var createUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var expectedArgs, content, user, type, _yield$createUrl, status, body;
@@ -119,18 +44,18 @@ var createUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function
         switch (_context.prev = _context.next) {
           case 0:
             expectedArgs = ["content", "user", "type"];
-            sendResponse(bodyContains(expectedArgs, req.body), res);
-            sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
+            sendResponse((0, _verification.bodyContains)(expectedArgs, req.body), res);
+            sendResponse((0, _verification.bodyContainsStrings)(expectedArgs, req.body), res);
             content = req.body.content;
             user = req.body.user;
             type = req.body.type;
-            sendResponse(lessThanLength({
+            sendResponse((0, _verification.lessThanLength)({
               Content: _constants.contentLimit
             }, content), res);
-            sendResponse(lessThanLength({
+            sendResponse((0, _verification.lessThanLength)({
               User: _constants.userLimit
             }, user), res);
-            sendResponse(oneOfType(_constants.acceptedTypes, type), res);
+            sendResponse((0, _verification.oneOfType)(_constants.acceptedTypes, type), res);
             _context.next = 11;
             return (0, _createUrl.createUrl)(content, user, type);
 
@@ -163,7 +88,7 @@ var getUrlRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/function ()
           case 0:
             path = req.path;
             url = path.slice(1, path.length);
-            sendResponse(isString(url), res);
+            sendResponse((0, _verification.isString)(url), res);
             _context2.next = 5;
             return (0, _getUrl.getUrl)(url);
 
@@ -226,8 +151,8 @@ var stripePaymentRoute = (0, _expressAsyncHandler["default"])( /*#__PURE__*/func
         switch (_context4.prev = _context4.next) {
           case 0:
             expectedArgs = ["amount"];
-            sendResponse(bodyContains(expectedArgs, req.body), res);
-            sendResponse(bodyContainsInt(expectedArgs, req.body), res);
+            sendResponse((0, _verification.bodyContains)(expectedArgs, req.body), res);
+            sendResponse((0, _verification.bodyContainsInt)(expectedArgs, req.body), res);
             amount = ctx.request.body.amount;
             _context4.next = 6;
             return (0, _stripePayment.stripePayment)(amount);
