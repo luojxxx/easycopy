@@ -108,11 +108,7 @@ const AppDisplay = ({
         <Fragment>
           <Box width={1} pb={3}>
             <Text color="primary">
-              {isCreatePage ? (
-                <Clock format={dateFormat} />
-              ) : (
-                `Date: ${dateDisplay}`
-              )}
+              Date: {isCreatePage ? <Clock format={dateFormat} /> : dateDisplay}
             </Text>
           </Box>
           <Box width={1} pb={3}>

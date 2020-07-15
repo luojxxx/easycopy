@@ -13,7 +13,7 @@ const Clock = ({ format }) => {
       clearInterval(clearIntervalId);
     };
   }, []);
-  return <Text color="primary">{`Date: ${dayjs(date).format(format)}`}</Text>;
+  return `${dayjs(date).format(format)}`;
 };
 
 Clock.propTypes = {
