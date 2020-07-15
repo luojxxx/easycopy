@@ -7,9 +7,10 @@ import { FiXSquare, FiCornerUpLeft, FiCopy } from "react-icons/fi";
 import { FaQrcode } from "react-icons/fa";
 
 import theme from "../theme";
-import Template from "../components/Template";
-import Clock from "../components/Clock";
 import Input from "../components/Input";
+import Template from '../components/Template'
+import Clock from '../components/Clock'
+import UserField from '../components/UserField'
 import Selector from "../components/Selector";
 import Textarea from "../components/Textarea";
 import Button from "../components/Button";
@@ -22,8 +23,6 @@ import QRCodeView from "../components/QRCodeView";
 const clip = require("clipboardy");
 
 const dateFormat = "YYYY-MM-DD hh:mm:ss A";
-const userCharLimit = 256;
-const contentCharLimit = 10000;
 
 const getTruncatedUrl = (url) => {
   const path = window.location.host;
@@ -112,23 +111,10 @@ const AppDisplay = ({
             </Text>
           </Box>
           <Box width={1} pb={3}>
-            <Flex
-              flexDirection="row"
-              justifyContent="space-between"
-              style={{ userSelect: "None" }}
-            >
-              <Label htmlFor="user">User (optional)</Label>
-              <span>
-                <Text color="primary">{`${userCharLimit - user.length}`}</Text>
-              </span>
-            </Flex>
-            <Input
-              id="user"
-              name="user"
-              type="text"
-              onChange={handleUserChange}
-              value={user}
-              readOnly={!isCreatePage}
+            <UserField
+              user={user}
+              handleUserChange={handleUserChange}
+              isCreatePage={isCreatePage}
             />
           </Box>
           <Box width={1} pb={3}>
@@ -163,9 +149,7 @@ const AppDisplay = ({
                 </Box>
               </Flex>
               <span>
-                <Text color="primary">{`${
-                  contentCharLimit - content.length
-                }`}</Text>
+                <Text color="primary">{`${10000 - content.length}`}</Text>
               </span>
             </Flex>
             {isCreatePage && (
@@ -202,7 +186,9 @@ const AppDisplay = ({
                 </Flex>
               </Button>
             )}
-            {isCreatePage && submissionProcessing && !showRecaptcha && <Loader />}
+            {isCreatePage && submissionProcessing && !showRecaptcha && (
+              <Loader />
+            )}
             {!isCreatePage && !notFoundPage && (
               <Fragment>
                 <Flex width={1} pb={2}>
@@ -286,9 +272,9 @@ const AppDisplay = ({
         <QRCodeView text={window.location.href} handleClose={closeQRCode} />
       )}
       {showRecaptcha && (
-      <Flex width={1} justifyContent="center" alignItems="center">
-        <Box id="recaptchaContainer" />
-      </Flex>
+        <Flex width={1} justifyContent="center" alignItems="center">
+          <Box id="recaptchaContainer" />
+        </Flex>
       )}
     </Template>
   );
