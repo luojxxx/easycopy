@@ -1,4 +1,4 @@
-const assert = require('assert');
+require("dotenv").config();
 
 import { DBSetup, DBClear } from './MockDB'
 import AccountManagementTests from './testSuites/AccountManagement'

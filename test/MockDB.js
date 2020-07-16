@@ -1,7 +1,5 @@
-require("dotenv").config();
-import CryptoJS from "crypto-js";
-
-import db from './../src/db'
+import { encryptString } from '../src/lib'
+import db from '../src/db'
 import User from '../src/model/User'
 import UserToken from '../src/model/UserToken'
 import EmailVerificationToken from '../src/model/EmailVerificationToken'
@@ -9,14 +7,11 @@ import Url from '../src/model/Url'
 
 export const DBSetup = async () => {
   await Url.create({
-    url: 'HappenRockEffortTrain',
-    urlRaw: 'HappenRockEffortTrain'.toLowerCase(),
-    content: CryptoJS.AES.encrypt(
-      'Test Content',
-      process.env.ENCRYPTION_KEY
-    ).toString(),
-    userName: 'TestUser',
-    type: 'text',
+    url: "HappenRockEffortTrain",
+    urlRaw: "HappenRockEffortTrain".toLowerCase(),
+    content: encryptString('Test Content'),
+    userName: "TestUser",
+    type: "text",
   });
   await User.create({
     userName: "cloudlife",

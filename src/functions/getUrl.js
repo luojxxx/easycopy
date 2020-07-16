@@ -1,5 +1,4 @@
-import CryptoJS from "crypto-js";
-
+import { decryptString } from "../lib";
 import Url from "../model/Url";
 
 export const getUrl = async (url) => {
@@ -18,11 +17,7 @@ export const getUrl = async (url) => {
   }
 
   const data = result.dataValues
-  const byteContent = CryptoJS.AES.decrypt(
-    data.content,
-    process.env.ENCRYPTION_KEY
-  );
-  const content = byteContent.toString(CryptoJS.enc.Utf8);
+  const content = decryptString(data.content)
   return {
     status: 200,
     body: {

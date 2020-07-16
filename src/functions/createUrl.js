@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import CryptoJS from "crypto-js";
 
+import { encryptString } from '../lib'
 import Url from "../model/Url";
 
 const text = fs.readFileSync(
@@ -30,10 +30,7 @@ export const createUrl = async (content, userName, type) => {
   await Url.create({
     url: url,
     urlRaw: url.toLowerCase(),
-    content: CryptoJS.AES.encrypt(
-      content,
-      process.env.ENCRYPTION_KEY
-    ).toString(),
+    content: encryptString(content),
     userName: userName,
     type: type,
   });
