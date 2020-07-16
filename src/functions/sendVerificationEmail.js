@@ -33,7 +33,7 @@ export const sendVerificationEmail = async (userId, email) => {
     `,
   };
 
-  await sgMail.send(msg);
+  // await sgMail.send(msg);
 
   return true;
 };
