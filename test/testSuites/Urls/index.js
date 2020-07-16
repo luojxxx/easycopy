@@ -1,9 +1,10 @@
 const expect = require("chai").expect;
 
-import { DBSetup, DBClear } from "../../MockDB";
+import { DBSetup, DBClear, UrlNoAccount } from "../../MockDB";
 
 import { getUrl } from '../../../src/functions/getUrl'
 import { createUrl } from "../../../src/functions/createUrl";
+import { encryptString, decryptString } from '../../../src/lib'
 
 const UrlTestSuite = () => {
   describe("Url creation/retrieval", function () {
@@ -13,13 +14,13 @@ const UrlTestSuite = () => {
 
     describe("retrieve url", function () {
       it("should be able to retrieve the url in the mock DB (case insensitive)", async function () {
-        const url = "HappenRockEffortTRAIN";
+        const url = UrlNoAccount.url.toUpperCase()
         const { body } = await getUrl(url)
         expect(body).to.be.a("object");
-        expect(body).to.have.property("url").equal("HappenRockEffortTrain");
-        expect(body).to.have.property("userName").equal('TestUser');
-        expect(body).to.have.property("content").equal('Test Content');
-        expect(body).to.have.property("type").equal('text');
+        expect(body).to.have.property("url").equal(UrlNoAccount.url);
+        expect(body).to.have.property("userName").equal(UrlNoAccount.userName);
+        expect(body).to.have.property("content").equal(UrlNoAccount.content);
+        expect(body).to.have.property("type").equal(UrlNoAccount.type);
       });
     });
     describe("create text url and retrieve it", function () {

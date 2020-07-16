@@ -2,6 +2,7 @@ const assert = require("assert");
 
 import { DBSetup, DBClear } from "../../MockDB";
 import signup from './signup'
+import login from './login'
 
 const AccountManagementTests = () => {
   describe("Url creation/retrieval", function () {
@@ -10,11 +11,7 @@ const AccountManagementTests = () => {
     });
 
     signup();
-    describe("login", function () {
-      it("should return", function () {
-        assert.equal([1, 2, 3].indexOf(4), -1);
-      });
-    });
+    login();
     describe("verifyEmail", function () {
       it("should return", function () {
         assert.equal([1, 2, 3].indexOf(4), -1);
