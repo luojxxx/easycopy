@@ -1,8 +1,8 @@
 const assert = require("assert");
 
-import { DBSetup, DBClear } from "./../MockDB";
+import { DBSetup, DBClear } from "../../MockDB";
 
-const UrlTestSuite = () => {
+const RecaptchaTests = () => {
   describe("Recaptcha", function () {
     before(async function () {
       await DBSetup();
@@ -20,4 +20,4 @@ const UrlTestSuite = () => {
   });
 };
 
-export default UrlTestSuite;
+export default RecaptchaTests;

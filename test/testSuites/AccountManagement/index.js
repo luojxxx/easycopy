@@ -1,8 +1,8 @@
 const assert = require("assert");
 
-import { DBSetup, DBClear } from "./../MockDB";
+import { DBSetup, DBClear } from "../../MockDB";
 
-const UrlTestSuite = () => {
+const AccountManagementTests = () => {
   describe("Url creation/retrieval", function () {
     before(async function () {
       await DBSetup();
@@ -33,7 +33,7 @@ const UrlTestSuite = () => {
         assert.equal([1, 2, 3].indexOf(4), -1);
       });
     });
-    describe('changePassword', function () {
+    describe("changePassword", function () {
       it("should return", function () {
         assert.equal([1, 2, 3].indexOf(4), -1);
       });
@@ -50,4 +50,4 @@ const UrlTestSuite = () => {
   });
 };
 
-export default UrlTestSuite;
+export default AccountManagementTests;

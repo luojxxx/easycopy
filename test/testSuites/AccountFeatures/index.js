@@ -1,19 +1,19 @@
 const assert = require("assert");
 
-import { DBSetup, DBClear } from "./../MockDB";
+import { DBSetup, DBClear } from "../../MockDB";
 
-const UrlTestSuite = () => {
-  describe("Url creation/retrieval", function () {
+const AccountFeaturesTests = () => {
+  describe("Account Features", function () {
     before(async function () {
       await DBSetup();
     });
 
-    describe("create", function () {
+    describe("getUserUrls", function () {
       it("should return", function () {
         assert.equal([1, 2, 3].indexOf(4), -1);
       });
     });
-    describe("*", function () {
+    describe("deleteUserUrl", function () {
       it("should return", function () {
         assert.equal([1, 2, 3].indexOf(4), -1);
       });
@@ -25,4 +25,4 @@ const UrlTestSuite = () => {
   });
 };
 
-export default UrlTestSuite;
+export default AccountFeaturesTests;
