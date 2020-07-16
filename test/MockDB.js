@@ -14,6 +14,7 @@ export const UrlNoAccount = {
 };
 
 export const UserVerified = {
+  userId: 100,
   userName: "pacific",
   email: "luojx2010@gmail.com",
   password: "luckypassword123",
@@ -23,6 +24,7 @@ export const UserVerified = {
 };
 
 export const UserUnverified = {
+  userId: 101,
   userName: "atlantic",
   email: null,
   password: "luckypassword321",
