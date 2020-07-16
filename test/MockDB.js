@@ -1,4 +1,4 @@
-import { encryptString } from "../src/lib";
+import { encryptString, hashString } from "../src/lib";
 import db from "../src/db";
 import User from "../src/model/User";
 import UserToken from "../src/model/UserToken";
@@ -13,18 +13,8 @@ export const UrlNoAccount = {
   type: "text",
 };
 
-export const UserVerified = {
-  userId: 100,
-  userName: "pacific",
-  email: "luojx2010@gmail.com",
-  password: "luckypassword123",
-  emailVerifying: null,
-  emailVerified: true,
-  createdAt: Date.now(),
-};
-
 export const UserUnverified = {
-  userId: 101,
+  userId: 100,
   userName: "atlantic",
   email: null,
   password: "luckypassword321",
@@ -33,10 +23,26 @@ export const UserUnverified = {
   createdAt: Date.now(),
 };
 
+export const UserVerified = {
+  userId: 101,
+  userName: "pacific",
+  email: "luojx2010@gmail.com",
+  password: "luckypassword123",
+  emailVerifying: null,
+  emailVerified: true,
+  createdAt: Date.now(),
+};
+
 export const DBSetup = async () => {
   await Url.create({...UrlNoAccount, content: encryptString(UrlNoAccount.content)});
-  await User.create(UserVerified);
-  await User.create(UserUnverified);
+  await User.create({
+    ...UserUnverified,
+    password: hashString(UserUnverified.password),
+  });
+  await User.create({
+    ...UserVerified,
+    password: hashString(UserVerified.password),
+  });
 };
 
 export const DBClear = async () => {

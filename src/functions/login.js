@@ -32,16 +32,18 @@ export const login = async (email, password) => {
     };
   }
 
+  const userId = user.dataValues.userId
   const randomToken = generateRandomString(100);
   await UserToken.destroy({
     where: {
-      userId: user.userId,
+      userId: userId,
     },
   });
   const newUserToken = await UserToken.create({
     userId: userId,
     userToken: randomToken,
   });
+
   return {
     status: 200,
     body: {
