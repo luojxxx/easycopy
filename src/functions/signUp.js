@@ -1,8 +1,8 @@
-import { generateRandomString, hashString } from '../lib'
+import { generateRandomString, hashString } from "../lib";
 
-import User from '../model/User'
-import UserToken from '../model/UserToken'
-import EmailVerificationToken from '../model/EmailVerificationToken'
+import User from "../model/User";
+import UserToken from "../model/UserToken";
+import { sendVerificationEmail } from "../functions/sendVerificationEmail";
 
 export const signUp = async (email, password, userName) => {
   const newUser = await User.create({
@@ -14,20 +14,20 @@ export const signUp = async (email, password, userName) => {
     createdAt: Date.now(),
   });
 
-  const newEmailVerificationToken = await EmailVerificationToken.create({
-    userId: newUser.userId,
-    verificationToken: generateRandomString(100)
-  })
+  const newEmailVerificationToken = await sendVerificationEmail(
+    newUser.userId,
+    email
+  );
 
   const newUserToken = await UserToken.create({
     userId: newUser.userId,
-    userToken: generateRandomString(100)
-  })
+    userToken: generateRandomString(100),
+  });
 
   return {
     status: 200,
     body: {
-      userToken: newUserToken.userToken
+      userToken: newUserToken.userToken,
     },
   };
 };
