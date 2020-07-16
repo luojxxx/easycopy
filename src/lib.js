@@ -1,6 +1,8 @@
 require("dotenv").config();
 import crypto from "crypto";
 import CryptoJS from "crypto-js";
+import sgMail from '@sendgrid/mail'
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export const generateRandomString = (length) => {
   return crypto.randomBytes(9999).toString("hex").slice(0, length);
