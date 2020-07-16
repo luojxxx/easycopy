@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 import { sendVerificationEmail } from "../../../src/functions/sendVerificationEmail";
-import { UserVerified, UserUnverified } from "../../MockDB";
+import { UserUnverified } from "../../MockDB";
 import EmailVerificationToken from "../../../src/model/EmailVerificationToken";
 
 const SendVerificationEmailTests = () => {

@@ -1,8 +1,6 @@
 import { Op } from "sequelize";
 
-import { generateRandomString, hashString } from "../lib";
 import User from "../model/User";
-import UserToken from "../model/UserToken";
 import { sendVerificationEmail } from "./sendVerificationEmail";
 
 export const changeEmail = async (userId, newEmail) => {

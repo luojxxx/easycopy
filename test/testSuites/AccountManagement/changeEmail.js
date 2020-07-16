@@ -2,16 +2,12 @@ import { expect } from 'chai'
 
 import { changeEmail } from "../../../src/functions/changeEmail";
 import User from "../../../src/model/User";
-import EmailVerificationToken from "../../../src/model/EmailVerificationToken";
-import { hashString } from '../../../src/lib'
 import { UserVerified, UserUnverified } from '../../MockDB'
 
 const ChangeEmailTests = () => {
   describe("changeEmail", async function () {
     const newEmail = "jl0087@gmail.com";
 
-    let userToken;
-    let userId;
     it("should error when changing to email already in DB under 'email' column", async function () {
       const { status } = await changeEmail(UserVerified.userId, UserVerified.email);
       expect(status).to.be.equal(400)
