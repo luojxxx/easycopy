@@ -36,7 +36,7 @@ app.use(cookieParser());
 
 app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
-app.post("/payment", stripePaymentRoute);
+// app.post("/payment", stripePaymentRoute);
 app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
 
 // catch 404 and forward to error handler
