@@ -12,22 +12,22 @@ const SignUpTests = () => {
     const newPassword = "earth";
     const newUserName = "MegaBytes";
 
-    let userToken;
-    let userId;
-    it("should run signup", async function () {
+    const signup = async function() {
       const { body } = await signUp(newEmail, newPassword, newUserName);
-      userToken = body.userToken;
-    });
-    it("should create a new user token", async function () {
+      const userToken = body.userToken;
       const newUserToken = await UserToken.findOne({
         where: { userToken: userToken },
       });
-      userId = newUserToken.userId;
+      return newUserToken
+    }
+    it("should create a new user token", async function () {
+      const newUserToken = await signup()
       expect(newUserToken).to.be.a("object");
       expect(newUserToken).to.have.property("userId").to.be.a("number");
       expect(newUserToken).to.have.property("userToken").to.be.a("string");
     });
     it("should create a new user", async function () {
+      const { userId } = await signup()
       const newUser = await User.findOne({
         where: { userId: userId },
       });
@@ -42,6 +42,7 @@ const SignUpTests = () => {
       expect(newUser).to.have.property("subscribed").equal(null);
     });
     it("should create a new email verification token", async function () {
+      const { userId } = await signup()
       const newEmailVerificationToken = await EmailVerificationToken.findOne({
         where: { userId: userId },
       });

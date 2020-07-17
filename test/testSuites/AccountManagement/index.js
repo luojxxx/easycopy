@@ -11,7 +11,7 @@ import verifyEmail from './verifyEmail'
 
 const AccountManagementTests = () => {
   describe("Account Management", function () {
-    before(async function () {
+    beforeEach(async function () {
       await DBSetup();
     });
 
@@ -23,7 +23,7 @@ const AccountManagementTests = () => {
     deleteAccount();
     verifyEmail();
 
-    after(async function () {
+    afterEach(async function () {
       await DBClear();
     });
   });

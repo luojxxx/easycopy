@@ -5,7 +5,6 @@ export const verifyEmail = async (verificationToken) => {
   const emailVerificationToken = await EmailVerificationToken.findOne({
     where: { verificationToken: verificationToken },
   });
-  console.log(verificationToken, emailVerificationToken)
   if (!emailVerificationToken) {
     return {
       status: 400,
