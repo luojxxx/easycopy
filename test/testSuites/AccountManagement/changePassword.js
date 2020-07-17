@@ -12,21 +12,21 @@ const ChangePasswordTests = () => {
 
     it("should error when given wrong old password", async function () {
       const { status } = await changePassword(
-        UserVerified.userId,
-        'wrongPassword',
+        UserUnverified.userId,
+        "wrongPassword",
         newPassword
       );
       expect(status).to.be.equal(401);
     });
-    it("should successfully change password", async function () {
+    it("should successfully change password when given correct password", async function () {
       const { status } = await changePassword(
-        UserVerified.userId,
-        UserVerified.password,
+        UserUnverified.userId,
+        UserUnverified.password,
         newPassword
       );
       const result = await User.findOne({
-        where: { userId: UserVerified.userId }
-      })
+        where: { userId: UserUnverified.userId },
+      });
       expect(status).to.be.equal(200);
       expect(result.password).to.be.equal(hashString(newPassword))
     });

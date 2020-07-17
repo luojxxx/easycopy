@@ -33,6 +33,16 @@ export const UserVerified = {
   createdAt: Date.now(),
 };
 
+export const UserVerifiedUserToken = {
+  userId: 101,
+  userToken: 'randomCharString'
+}
+
+export const UserVerifiedEmailVerificationToken = {
+  userId: 101,
+  verificationToken: 'randomCharString'
+}
+
 export const DBSetup = async () => {
   await Url.create({...UrlNoAccount, content: encryptString(UrlNoAccount.content)});
   await User.create({
@@ -43,6 +53,8 @@ export const DBSetup = async () => {
     ...UserVerified,
     password: hashString(UserVerified.password),
   });
+  await UserToken.create(UserVerifiedUserToken);
+  await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
 };
 
 export const DBClear = async () => {

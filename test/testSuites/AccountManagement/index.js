@@ -1,11 +1,12 @@
 const assert = require("assert");
 
 import { DBSetup, DBClear } from "../../MockDB";
-import signup from './signup'
-import login from './login'
-import sendVerifyEmail from './sendVerifyEmail'
-import changeEmail from './changeEmail'
-import changePassword from './changePassword'
+import signup from "./signup";
+import login from "./login";
+import sendVerifyEmail from "./sendVerifyEmail";
+import changeEmail from "./changeEmail";
+import changePassword from "./changePassword";
+import deleteAccount from "./deleteAccount";
 
 const AccountManagementTests = () => {
   describe("Account Management", function () {
@@ -16,14 +17,10 @@ const AccountManagementTests = () => {
     signup();
     login();
     sendVerifyEmail();
-    changeEmail()
-    changePassword()
+    changeEmail();
+    changePassword();
+    deleteAccount();
     describe("verifyEmail", function () {
-      it("should return", function () {
-        assert.equal([1, 2, 3].indexOf(4), -1);
-      });
-    });
-    describe("deleteAccount", function () {
       it("should return", function () {
         assert.equal([1, 2, 3].indexOf(4), -1);
       });
