@@ -42,6 +42,11 @@ export const UserVerifiedEmailVerificationToken = {
   userId: 101,
   verificationToken: 'randomCharString'
 }
+export const UserUnverifiedEmailVerificationToken = {
+  userId: 100,
+  verificationToken: 'Greenland'
+}
+
 
 export const DBSetup = async () => {
   await Url.create({...UrlNoAccount, content: encryptString(UrlNoAccount.content)});
@@ -55,6 +60,7 @@ export const DBSetup = async () => {
   });
   await UserToken.create(UserVerifiedUserToken);
   await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
+  await EmailVerificationToken.create(UserUnverifiedEmailVerificationToken);
 };
 
 export const DBClear = async () => {

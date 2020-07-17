@@ -7,6 +7,7 @@ import sendVerifyEmail from "./sendVerifyEmail";
 import changeEmail from "./changeEmail";
 import changePassword from "./changePassword";
 import deleteAccount from "./deleteAccount";
+import verifyEmail from './verifyEmail'
 
 const AccountManagementTests = () => {
   describe("Account Management", function () {
@@ -20,11 +21,7 @@ const AccountManagementTests = () => {
     changeEmail();
     changePassword();
     deleteAccount();
-    describe("verifyEmail", function () {
-      it("should return", function () {
-        assert.equal([1, 2, 3].indexOf(4), -1);
-      });
-    });
+    verifyEmail();
 
     after(async function () {
       await DBClear();
