@@ -2,8 +2,8 @@ import { Op } from "sequelize";
 
 import { hashString } from "../lib";
 import User from "../model/User";
-import UserToken from '../model/UserToken'
-import EmailVerificationToken from '../model/EmailVerificationToken'
+import UserToken from "../model/UserToken";
+import EmailVerificationToken from "../model/EmailVerificationToken";
 
 export const deleteAccount = async (userId, password) => {
   const user = await User.findOne({
@@ -26,7 +26,7 @@ export const deleteAccount = async (userId, password) => {
     where: { userId: user.userId },
   });
   await User.destroy({
-    where: { userId: user.userId }
+    where: { userId: user.userId },
   });
 
   return {
