@@ -44,7 +44,7 @@ app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
 app.post("/signup", signUpRoute);
 app.post("/login", loginRoute);
-app.get("/verifyemail", verifyEmailRoute);
+app.get("/verifyemail/*", verifyEmailRoute);
 app.post("/sendverifyemail", sendVerifyEmailRoute);
 app.post("/changeemail", changeEmailRoute);
 app.post("/changepassword", changePasswordRoute);
