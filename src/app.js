@@ -10,10 +10,16 @@ const Sentry = require("@sentry/node");
 import {
   createUrlRoute,
   getUrlRoute,
+  signUpRoute,
+  loginRoute,
+  verifyEmailRoute,
+  sendVerifyEmailRoute,
+  changeEmailRoute,
+  changePasswordRoute,
+  deleteAccountRoute,
   stripePaymentRoute,
   verifyRecaptchaRoute,
 } from "./routes";
-import { verifyRecaptcha } from "./functions/verifyRecaptcha";
 
 const app = express();
 Sentry.init({
@@ -36,6 +42,13 @@ app.use(cookieParser());
 
 app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
+app.post("/signup", signUpRoute);
+app.post("/login", loginRoute);
+app.get("/verifyemail", verifyEmailRoute);
+app.post("/sendverifyemail", sendVerifyEmailRoute);
+app.post("/changeemail", changeEmailRoute);
+app.post("/changepassword", changePasswordRoute);
+app.post("/deleteaccount", deleteAccountRoute);
 // app.post("/payment", stripePaymentRoute);
 app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
 
