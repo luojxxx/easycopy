@@ -2,7 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
 import Users from './User'
-import { userNameLimit } from "../constants";
+import { userNameLimit, contentLimit } from "../constants";
 
 const UrlSchema = db.define(
   "Url",
@@ -21,7 +21,7 @@ const UrlSchema = db.define(
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING(10000),
+      type: DataTypes.STRING(contentLimit),
       allowNull: false,
     },
     type: {
