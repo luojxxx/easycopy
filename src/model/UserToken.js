@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
+import Users from './User'
 
 const UserTokenSchema = db.define(
   "UserToken",
@@ -15,7 +16,7 @@ const UserTokenSchema = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Users",
+        model: Users,
         key: "userId",
       },
     },

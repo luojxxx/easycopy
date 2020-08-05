@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from "./../db";
+import Users from './User'
 
 const EmailVerificationTokenSchema = db.define(
   "EmailVerificationToken",
@@ -15,7 +16,7 @@ const EmailVerificationTokenSchema = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Users",
+        model: Users,
         key: "userId",
       },
     },

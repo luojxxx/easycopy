@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
+import Users from './User'
 import { userNameLimit } from "../constants";
 
 const UrlSchema = db.define(
@@ -42,7 +43,7 @@ const UrlSchema = db.define(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: "Users",
+        model: Users,
         key: "userId",
       },
     },
