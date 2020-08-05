@@ -85,7 +85,6 @@ export const loginRoute = asyncHandler(async (req, res, next) => {
 
 export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
   const verificationToken = req.path.replace("/verifyemail/", "");
-  console.log('verification token', verificationToken)
 
   const { status, body } = await verifyEmail(verificationToken);
   res.status(status).send(body);
