@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
 
-import theme from "../theme";
-import AppContainer from './AppContainer'
+import AccountBar from './AccountBar'
 
 const Header = styled.div`
   display: flex;
@@ -45,20 +44,11 @@ const Template = ({ subheading, children }) => {
       window.removeEventListener("resize", resetHeight);
     };
   }, []);
+  
   return (
     <Fragment>
       <Header>
-        <Link to="/signup">
-          <Text px={1} color="primary">
-            SignUp
-          </Text>
-        </Link>
-        <Text color="primary">/</Text>
-        <Link to="/login">
-          <Text px={1} color="primary">
-            Login
-          </Text>
-        </Link>
+        <AccountBar />
       </Header>
       {subheading && (
         <Link to="/">
