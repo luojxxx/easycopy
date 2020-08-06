@@ -6,7 +6,7 @@ import UserToken from "../model/UserToken";
 import { sendVerificationEmail } from "../functions/sendVerificationEmail";
 
 export const signUp = async (email, password, userName) => {
-  const user = await User.findOne({
+  const checkUser = await User.findOne({
     where: {
       [Op.or]: [
         {
@@ -19,11 +19,11 @@ export const signUp = async (email, password, userName) => {
     },
   });
 
-  if (user) {
+  if (checkUser) {
     return {
       status: 400,
-      body: 'Email already exists'
-    }
+      body: "Email already exists",
+    };
   }
 
   const newUser = await User.create({
