@@ -51,6 +51,7 @@ export const signUp = async (email, password, userName) => {
       userToken: newUserToken.userToken,
       user: {
         email: newUser.emailVerifying,
+        emailVerified: newUser.emailVerified,
         userName: newUser.userName,
       },
     },
