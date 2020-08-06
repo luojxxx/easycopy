@@ -1,71 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
 
 import theme from "../theme";
+import AppContainer from './AppContainer'
 
-const AppContainer = styled.div`
+const Header = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
-  position: relative;
+  flex-wrap: wrap;
 
-  font-family: Source Code Pro;
-
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  div::-webkit-scrollbar {
-    width: 9px;
-  }
-  div::-webkit-scrollbar-track {
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0);
-  }
-  div::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.4);
-  }
-  div::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.6);
-  }
-  div::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  a:link {
-    text-decoration: none;
-  }
-  a:visited {
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-    text-decoration-color: ${theme.colors.primary};
-  }
-  a:active {
-    text-decoration: none;
-  }
+  width: 100%;
+  position: absolute;
+  top: 1em;
+  right: 1em;
 `;
 
 const Footer = styled.div`
@@ -94,12 +46,21 @@ const Template = ({ subheading, children }) => {
     };
   }, []);
   return (
-    <AppContainer id="appContainer">
+    <Fragment>
+      <Header>
+        <Link to="/login">
+          <Text px={1} color="primary">
+            Login
+          </Text>
+        </Link>
+      </Header>
+      {subheading && (
       <Link to="/">
         <Heading color="primary" pb={3}>
           EasyCopy.io
         </Heading>
       </Link>
+      )}
       <Box width={[0.95, 0.7, 0.5]}>
         <Flex width={1} justifyContent="center">
           <Box width={0.8} style={{ textAlign: "center" }}>
@@ -137,7 +98,7 @@ const Template = ({ subheading, children }) => {
           </Text>
         </Link> */}
       </Footer>
-    </AppContainer>
+    </Fragment>
   );
 };
 

@@ -5,11 +5,13 @@ import * as Sentry from "@sentry/browser";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
+import AppContainer from "./components/AppContainer";
 import App from "./views/App";
 import Contact from "./views/Contact";
 import Privacy from "./views/Privacy";
 import TermsOfService from "./views/TermsOfService";
 import Donate from "./views/Donate";
+import Login from "./views/Login";
 
 import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";
@@ -17,7 +19,7 @@ import theme from "./theme";
 import * as serviceWorker from "./serviceWorker";
 
 Sentry.init({
-  dsn: "https://83b0d8e1cf934f2aa72aa89f194a5732@sentry.io/5169583"
+  dsn: "https://83b0d8e1cf934f2aa72aa89f194a5732@sentry.io/5169583",
 });
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
@@ -25,13 +27,16 @@ const Index = (
   <Elements stripe={stripePromise}>
     <Router>
       <ThemeProvider theme={theme}>
-        <Switch>
-          <Route path="/contact" component={Contact} />
-          <Route path="/privacy" component={Privacy} />
-          <Route path="/termsofservice" component={TermsOfService} />
-          <Route path="/donate" component={Donate} />
-          <Route path="/" component={App} />
-        </Switch>
+        <AppContainer>
+          <Switch>
+            <Route path="/contact" component={Contact} />
+            <Route path="/privacy" component={Privacy} />
+            <Route path="/termsofservice" component={TermsOfService} />
+            <Route path="/donate" component={Donate} />
+            <Route path="/login" component={Login} />
+            <Route path="/" component={App} />
+          </Switch>
+        </AppContainer>
       </ThemeProvider>
     </Router>
   </Elements>
