@@ -6,6 +6,7 @@ import login from "./login";
 import sendVerifyEmail from "./sendVerifyEmail";
 import changeEmail from "./changeEmail";
 import changePassword from "./changePassword";
+import changeUserName from './changeUserName'
 import deleteAccount from "./deleteAccount";
 import verifyEmail from './verifyEmail'
 
@@ -20,6 +21,7 @@ const AccountManagementTests = () => {
     sendVerifyEmail();
     changeEmail();
     changePassword();
+    changeUserName();
     deleteAccount();
     verifyEmail();
 

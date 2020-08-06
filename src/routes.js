@@ -18,14 +18,19 @@ import { verifyEmail } from './functions/verifyEmail'
 import { sendVerificationEmail } from "./functions/sendVerificationEmail";
 import { changeEmail } from './functions/changeEmail'
 import { changePassword } from './functions/changePassword'
+import { changeUserName } from './functions/changeUserName'
 import { deleteAccount } from './functions/deleteAccount'
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 import User from "./model/UserToken";
 
 const auth = async (req) => {
-  const user = await User.findOne({ where: { userToken: req.body.userToken }});
-  return user.userId
+  try {
+    const user = await User.findOne({ where: { userToken: req.body.userToken }});
+    return user.userId
+  } catch (err) {
+    return null
+  }
 }
 
 const sendResponse = (result, res) => {
@@ -111,6 +116,19 @@ export const changePasswordRoute = asyncHandler(async (req, res, next) => {
   const newPassword = req.body.newPassword;
 
   const { status, body } = await changePassword(userId, oldPassword, newPassword);
+  res.status(status).send(body);
+});
+
+export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
+  const userId = await auth(req);
+  const newUserName = req.body.newUserName;
+
+  console.log(userId, newUserName)
+
+  const { status, body } = await changeUserName(
+    userId,
+    newUserName
+  );
   res.status(status).send(body);
 });
 

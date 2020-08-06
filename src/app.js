@@ -16,6 +16,7 @@ import {
   sendVerifyEmailRoute,
   changeEmailRoute,
   changePasswordRoute,
+  changeUserNameRoute,
   deleteAccountRoute,
   stripePaymentRoute,
   verifyRecaptchaRoute,
@@ -48,6 +49,7 @@ app.get("/verifyemail/*", verifyEmailRoute);
 app.post("/sendverifyemail", sendVerifyEmailRoute);
 app.post("/changeemail", changeEmailRoute);
 app.post("/changepassword", changePasswordRoute);
+app.post("/changeusername", changeUserNameRoute);
 app.post("/deleteaccount", deleteAccountRoute);
 // app.post("/payment", stripePaymentRoute);
 app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
