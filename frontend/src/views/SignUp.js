@@ -33,7 +33,9 @@ const SignUp = () => {
             userName: userName,
           },
         });
-        console.log(result.data.userToken);
+        localStorage.setItem("userToken", result.data.userToken);
+        localStorage.setItem("userName", result.data.user.userName);
+        localStorage.setItem("email", result.data.user.email);
       } catch (err) {
         console.log(err);
       }

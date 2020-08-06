@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
+import { Redirect } from 'react-router-dom'
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -12,6 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const handleSubmit = async () => {
     try {
       const result = await axios({
@@ -22,10 +24,14 @@ const Login = () => {
           password: password,
         },
       });
-      console.log(result.data.userToken);
+      localStorage.setItem("userToken", result.data.userToken);
+      localStorage.setItem("userName", result.data.user.userName);
+      localStorage.setItem("email", result.data.user.email);
+
+      setRedirect(true)
     } catch (err) {
       console.log(err);
-      setMessage('Bad login')
+      setMessage("Bad login");
     }
   };
   return (
@@ -59,6 +65,9 @@ const Login = () => {
         </Button>
         <Text color="primary">{message}</Text>
       </Flex>
+      {redirect && (
+        <Redirect to='urls' />
+      )}
     </Template>
   );
 };
