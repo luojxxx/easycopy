@@ -50,9 +50,9 @@ export const signUp = async (email, password, userName) => {
     body: {
       userToken: newUserToken.userToken,
       user: {
-        email: newUser.email,
+        email: newUser.emailVerifying,
         userName: newUser.userName,
-      }
+      },
     },
   };
 };

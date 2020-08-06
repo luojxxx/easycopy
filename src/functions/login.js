@@ -49,7 +49,7 @@ export const login = async (email, password) => {
     body: {
       userToken: newUserToken.userToken,
       user: {
-        email: user.email,
+        email: user.email || user.emailVerifying,
         userName: user.userName,
       },
     },
