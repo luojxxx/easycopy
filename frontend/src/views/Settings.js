@@ -98,7 +98,7 @@ const Settings = () => {
   };
   return (
     <Template>
-      <Flex flexDirection="column" alignItems="center" width={1}>
+      <Flex flexDirection="column" alignItems="center" width={1} style={{ maxHeight: '400px', overflowY: 'scroll'}}>
         <Heading color="primary" pb={3}>
           Settings
         </Heading>
