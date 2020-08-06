@@ -48,6 +48,12 @@ const Template = ({ subheading, children }) => {
   return (
     <Fragment>
       <Header>
+        <Link to="/signup">
+          <Text px={1} color="primary">
+            SignUp
+          </Text>
+        </Link>
+        <Text color="primary">/</Text>
         <Link to="/login">
           <Text px={1} color="primary">
             Login
@@ -55,11 +61,11 @@ const Template = ({ subheading, children }) => {
         </Link>
       </Header>
       {subheading && (
-      <Link to="/">
-        <Heading color="primary" pb={3}>
-          EasyCopy.io
-        </Heading>
-      </Link>
+        <Link to="/">
+          <Heading color="primary" pb={3}>
+            EasyCopy.io
+          </Heading>
+        </Link>
       )}
       <Box width={[0.95, 0.7, 0.5]}>
         <Flex width={1} justifyContent="center">

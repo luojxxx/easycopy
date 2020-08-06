@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Flex, Box, Heading } from "rebass";
+import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
-import axios from 'axios'
+import axios from "axios";
 
-import { api } from '../constants'
+import { api } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -11,21 +11,23 @@ import Button from "../components/Button";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const handleSubmit = async () => {
-    try{
+    try {
       const result = await axios({
         method: "post",
         url: api + "/login",
         data: {
           email: email,
           password: password,
-        }
+        },
       });
-      console.log(result.data.userToken)
+      console.log(result.data.userToken);
     } catch (err) {
-      console.log(err)
+      console.log(err);
+      setMessage('Bad login')
     }
-  }
+  };
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>
@@ -52,7 +54,10 @@ const Login = () => {
             value={password}
           />
         </Box>
-        <Button width={0.75} onClick={handleSubmit}>Submit</Button>
+        <Button width={0.75} onClick={handleSubmit} mb={2}>
+          Submit
+        </Button>
+        <Text color="primary">{message}</Text>
       </Flex>
     </Template>
   );

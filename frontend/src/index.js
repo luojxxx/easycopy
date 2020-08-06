@@ -12,6 +12,7 @@ import Privacy from "./views/Privacy";
 import TermsOfService from "./views/TermsOfService";
 import Donate from "./views/Donate";
 import Login from "./views/Login";
+import SignUp from "./views/SignUp";
 
 import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";
@@ -34,6 +35,7 @@ const Index = (
             <Route path="/termsofservice" component={TermsOfService} />
             <Route path="/donate" component={Donate} />
             <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
             <Route path="/" component={App} />
           </Switch>
         </AppContainer>
