@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
+import { Redirect } from 'react-router-dom'
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -14,6 +15,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const handleSubmit = async () => {
     setMessage("");
     if (email === "") {
@@ -36,6 +38,7 @@ const SignUp = () => {
         localStorage.setItem("userToken", result.data.userToken);
         localStorage.setItem("userName", result.data.user.userName);
         localStorage.setItem("email", result.data.user.email);
+        setRedirect(true);
       } catch (err) {
         console.log(err);
       }
@@ -58,17 +61,16 @@ const SignUp = () => {
           />
         </Box>
         <Box width={0.75} pb={3}>
-          <Label htmlFor="user">Password</Label>
-          <Input
-            id="user"
-            name="user"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </Box>
-        <Box width={0.75} pb={3}>
-          <Label htmlFor="user">Repeat password to confirm</Label>
+          <Label htmlFor="user">Password (repeat twice to confirm)</Label>
+          <Box pb={2}>
+            <Input
+              id="user"
+              name="user"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+          </Box>
           <Input
             id="user"
             name="user"
@@ -91,6 +93,7 @@ const SignUp = () => {
           Submit
         </Button>
         <Text color="primary">{message}</Text>
+        {redirect && <Redirect to="/" />}
       </Flex>
     </Template>
   );
