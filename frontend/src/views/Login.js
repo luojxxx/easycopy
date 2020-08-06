@@ -1,0 +1,61 @@
+import React, { useState } from "react";
+import { Flex, Box, Heading } from "rebass";
+import { Label } from "@rebass/forms";
+import axios from 'axios'
+
+import { api } from '../constants'
+import Template from "../components/Template";
+import Input from "../components/Input";
+import Button from "../components/Button";
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async () => {
+    try{
+      const result = await axios({
+        method: "post",
+        url: api + "/login",
+        data: {
+          email: email,
+          password: password,
+        }
+      });
+      console.log(result.data.userToken)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  return (
+    <Template>
+      <Flex flexDirection="column" alignItems="center" width={1}>
+        <Heading color="primary" pb={3}>
+          Login
+        </Heading>
+        <Box width={0.75} pb={3}>
+          <Label htmlFor="user">Email</Label>
+          <Input
+            id="user"
+            name="user"
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+        </Box>
+        <Box width={0.75} pb={4}>
+          <Label htmlFor="user">Password</Label>
+          <Input
+            id="user"
+            name="user"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+        </Box>
+        <Button width={0.75} onClick={handleSubmit}>Submit</Button>
+      </Flex>
+    </Template>
+  );
+};
+
+export default Login;
