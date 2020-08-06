@@ -48,6 +48,10 @@ export const login = async (email, password) => {
     status: 200,
     body: {
       userToken: newUserToken.userToken,
+      user: {
+        email: user.email,
+        userName: user.userName,
+      },
     },
   };
 };
