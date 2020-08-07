@@ -6,11 +6,22 @@ import EmailVerificationToken from "../src/model/EmailVerificationToken";
 import Url from "../src/model/Url";
 
 export const UrlNoAccount = {
+  urlId: 1000,
   url: "HappenRockEffortTrain",
   urlRaw: "HappenRockEffortTrain".toLowerCase(),
   content: "Test Content",
   userName: "TestUser",
   type: "text",
+};
+
+export const UrlAccount = {
+  urlId: 1001,
+  url: "BabelSpaceJavaSort",
+  urlRaw: "BabelSpaceJavaSort".toLowerCase(),
+  content: "Test Contents",
+  userName: "Verified Test User",
+  type: "text",
+  userId: 101,
 };
 
 export const UserUnverified = {
@@ -35,21 +46,19 @@ export const UserVerified = {
 
 export const UserVerifiedUserToken = {
   userId: 101,
-  userToken: 'randomCharString'
-}
+  userToken: "randomCharString",
+};
 
 export const UserVerifiedEmailVerificationToken = {
   userId: 101,
-  verificationToken: 'randomCharString'
-}
+  verificationToken: "randomCharString",
+};
 export const UserUnverifiedEmailVerificationToken = {
   userId: 100,
-  verificationToken: 'Greenland'
-}
-
+  verificationToken: "Greenland",
+};
 
 export const DBSetup = async () => {
-  await Url.create({...UrlNoAccount, content: encryptString(UrlNoAccount.content)});
   await User.create({
     ...UserUnverified,
     password: hashString(UserUnverified.password),
@@ -57,6 +66,14 @@ export const DBSetup = async () => {
   await User.create({
     ...UserVerified,
     password: hashString(UserVerified.password),
+  });
+  await Url.create({
+    ...UrlNoAccount,
+    content: encryptString(UrlNoAccount.content),
+  });
+  await Url.create({
+    ...UrlAccount,
+    content: encryptString(UrlAccount.content),
   });
   await UserToken.create(UserVerifiedUserToken);
   await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
