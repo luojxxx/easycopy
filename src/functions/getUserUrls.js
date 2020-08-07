@@ -12,6 +12,9 @@ export const getUserUrls = async (userId) => {
 
   return {
     status: 200,
-    body: result.map((ele) => (ele.dataValues)),
+    body: result.map((ele) => ({
+      ...ele.dataValues,
+      content: decryptString(ele.dataValues.content)
+    })),
   };
 };

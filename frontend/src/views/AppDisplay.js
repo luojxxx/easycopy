@@ -11,7 +11,7 @@ import ControlBar from "../components/ControlBar";
 import MessageField from "../components/MessageField";
 import QRCodeView from "../components/QRCodeView";
 
-const dateFormat = "YYYY-MM-DD hh:mm:ss A";
+import { dateFormat } from '../constants'
 
 const AppDisplay = ({
   pathname,

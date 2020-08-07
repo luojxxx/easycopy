@@ -13,7 +13,7 @@ import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
 import { verifyRecaptcha } from "./functions/verifyRecaptcha";
 import { getUserUrls } from "./functions/getUserUrls";
-import { deleteUserUrls } from "./functions/deleteUserUrls";
+import { deleteUserUrl } from "./functions/deleteUserUrl";
 import { signUp } from "./functions/signUp";
 import { login } from "./functions/login";
 import { verifyEmail } from "./functions/verifyEmail";
