@@ -18,6 +18,22 @@ const Settings = () => {
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
   const [message, setMessage] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const handleSendVerifyEmail = async () => {
+    setMessage("");
+    try {
+      const result = await axios({
+        method: "post",
+        url: api + "/sendverifyemail",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        data: {},
+      });
+      setMessage("Successfully changed email");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleChangeEmail = async () => {
     setMessage("");
     if (email === "") {
@@ -111,76 +127,76 @@ const Settings = () => {
           Settings
         </Heading>
         <Box width={1} style={{ maxHeight: "400px", overflowY: "scroll" }}>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">Email Verification</Label>
-              <Text color="primary">
-                {localStorage.getItem("emailVerified") === true
-                  ? "verified"
-                  : "unverified"}
-              </Text>
-              <Button mt={2} onClick={handleChangeEmail}>
-                Send verification email
-              </Button>
-            </Box>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">Email</Label>
-              <Input
-                id="user"
-                name="user"
-                type="text"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-              <Button mt={2} onClick={handleChangeEmail}>
-                Change Email
-              </Button>
-            </Box>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">UserName (can be blank)</Label>
-              <Input
-                id="user"
-                name="user"
-                type="text"
-                onChange={(e) => setUserName(e.target.value)}
-                value={userName}
-              />
-              <Button mt={2} onClick={handleChangeUserName}>
-                Change Username
-              </Button>
-            </Box>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">Old Password</Label>
-              <Input
-                id="user"
-                name="user"
-                type="password"
-                onChange={(e) => setOldPassword(e.target.value)}
-                value={oldPassword}
-              />
-            </Box>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">New Password (twice to confirm)</Label>
-              <Box pb={2}>
-                <Input
-                  id="user"
-                  name="user"
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-              </Box>
+          <Box width={0.75} pb={3}>
+            <Label htmlFor="user">Email Verification</Label>
+            <Text color="primary">
+              {localStorage.getItem("emailVerified") === true
+                ? "verified"
+                : "unverified"}
+            </Text>
+            <Button mt={2} onClick={handleSendVerifyEmail}>
+              Send verification email
+            </Button>
+          </Box>
+          <Box width={0.75} pb={3}>
+            <Label htmlFor="user">Email</Label>
+            <Input
+              id="user"
+              name="user"
+              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <Button mt={2} onClick={handleChangeEmail}>
+              Change Email
+            </Button>
+          </Box>
+          <Box width={0.75} pb={3}>
+            <Label htmlFor="user">UserName (can be blank)</Label>
+            <Input
+              id="user"
+              name="user"
+              type="text"
+              onChange={(e) => setUserName(e.target.value)}
+              value={userName}
+            />
+            <Button mt={2} onClick={handleChangeUserName}>
+              Change Username
+            </Button>
+          </Box>
+          <Box width={0.75} pb={3}>
+            <Label htmlFor="user">Old Password</Label>
+            <Input
+              id="user"
+              name="user"
+              type="password"
+              onChange={(e) => setOldPassword(e.target.value)}
+              value={oldPassword}
+            />
+          </Box>
+          <Box width={0.75} pb={3}>
+            <Label htmlFor="user">New Password (twice to confirm)</Label>
+            <Box pb={2}>
               <Input
                 id="user"
                 name="user"
                 type="password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                value={confirmPassword}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
-              <Button mt={2} onClick={handleChangePassword}>
-                Change Password
-              </Button>
             </Box>
-            {/* <Box width={0.75} pb={3}>
+            <Input
+              id="user"
+              name="user"
+              type="password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
+            />
+            <Button mt={2} onClick={handleChangePassword}>
+              Change Password
+            </Button>
+          </Box>
+          {/* <Box width={0.75} pb={3}>
               <Label htmlFor="user">Delete Account (enter password)</Label>
               <Input
                 id="user"
