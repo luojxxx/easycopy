@@ -24,7 +24,7 @@ const AccountManagementTests = () => {
     changePassword();
     changeUserName();
     signOut();
-    deleteAccount();
+    // deleteAccount();
     verifyEmail();
 
     afterEach(async function () {

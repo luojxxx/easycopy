@@ -172,7 +172,7 @@ const Settings = () => {
                 Change Username
               </Button>
             </Box>
-            <Box width={0.75} pb={3}>
+            {/* <Box width={0.75} pb={3}>
               <Label htmlFor="user">Delete Account (enter password)</Label>
               <Input
                 id="user"
@@ -184,7 +184,7 @@ const Settings = () => {
               <Button mt={2} onClick={handleDeleteAcount}>
                 Delete Account
               </Button>
-            </Box>
+            </Box> */}
         </Box>
         <Text color="primary" onClick={handleChangeUserName}>
           {message}
