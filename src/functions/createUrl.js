@@ -11,7 +11,7 @@ const text = fs.readFileSync(
 const wordBank = text.trim("\n").split(",");
 
 const generateWordArray = () => {
-  return [0, 0, 0, 0].map((_) => {
+  return [0, 0, 0, 0, 0].map((_) => {
     const idx = Math.floor(Math.random() * wordBank.length);
     const word = wordBank[idx];
     return word[0].toUpperCase() + word.substring(1);
