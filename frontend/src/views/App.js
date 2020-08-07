@@ -75,6 +75,7 @@ const App = (props) => {
             method: "post",
             url: api + "/create",
             data: {
+              userToken: localStorage.getItem('userToken'),
               userName: userName.toString(10),
               content: content.toString(10),
               type: type.toString(10),
