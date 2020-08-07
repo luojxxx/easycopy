@@ -42,6 +42,8 @@ const sendResponse = (result, res) => {
 };
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
+  const userId = await auth(req);
+
   const expectedArgs = ["content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
   sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
@@ -52,7 +54,7 @@ export const createUrlRoute = asyncHandler(async (req, res, next) => {
   sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
-  const { status, body } = await createUrl(content, userName, type);
+  const { status, body } = await createUrl(content, userName, type, userId);
   res.status(status).send(body);
 });
 

@@ -18,7 +18,7 @@ const generateWordArray = () => {
   });
 };
 
-export const createUrl = async (content, userName, type) => {
+export const createUrl = async (content, userName, type, userId) => {
   // make sure url doesn't already exist
   let url;
   let results = true;
@@ -33,6 +33,7 @@ export const createUrl = async (content, userName, type) => {
     content: encryptString(content),
     userName: userName,
     type: type,
+    userId: userId,
   });
 
   return {
