@@ -71,14 +71,17 @@ const App = (props) => {
 
         // if (score >= 0) {
           setShowRecaptcha(false);
+          const userToken = localStorage.getItem("userToken");
           const response = await axios({
             method: "post",
             url: api + "/create",
             data: {
-              userToken: localStorage.getItem('userToken'),
               userName: userName.toString(10),
               content: content.toString(10),
               type: type.toString(10),
+            },
+            headers: {
+              ...(userToken ? {Authorization: `Bearer ${userToken}`} : {})
             },
           });
           setSubmissionProcessing(false);

@@ -21,9 +21,10 @@ const Urls = () => {
       const result = axios({
         method: "post",
         url: api + "/getuserurls",
-        data: {
-          userToken: localStorage.getItem("userToken"),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
+        data: {},
       }).then((result) => {
         setUrls(result.data);
       });
@@ -36,8 +37,10 @@ const Urls = () => {
       await axios({
         method: "post",
         url: api + "/deleteuserurl",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
         data: {
-          userToken: localStorage.getItem("userToken"),
           urlId: urlId,
         },
       });
@@ -58,9 +61,10 @@ const Urls = () => {
               flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
+              width={1}
             >
               <Link to={ele.url}>
-                <Flex flexDirection="row" alignItems="center">
+                <Flex flexDirection="row" alignItems="center" width={1}>
                   <Text color="primary">
                     {dayjs(ele.createdAt).format(dateFormat)}
                   </Text>

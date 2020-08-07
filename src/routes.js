@@ -25,18 +25,6 @@ import { signOut } from "./functions/signOut";
 import { deleteAccount } from "./functions/deleteAccount";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
-import User from "./model/UserToken";
-
-const auth = async (req) => {
-  try {
-    const user = await User.findOne({
-      where: { userToken: req.body.userToken },
-    });
-    return user.userId;
-  } catch (err) {
-    return null;
-  }
-};
 
 const sendResponse = (result, res) => {
   if (result) {
@@ -46,7 +34,7 @@ const sendResponse = (result, res) => {
 };
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
 
   const expectedArgs = ["content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
@@ -79,14 +67,14 @@ export const verifyRecaptchaRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const getUserUrlsRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
 
   const { status, body } = await getUserUrls(userId);
   res.status(status).send(body);
 });
 
 export const deleteUserUrlRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
   const urlId = req.body.urlId;
 
   const { status, body } = await deleteUserUrl(userId, urlId);
@@ -118,14 +106,14 @@ export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
 
   const { status, body } = await sendVerificationEmail(userId);
   res.status(status).send(body);
 });
 
 export const changeEmailRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
   const newEmail = req.body.newEmail;
 
   const { status, body } = await changeEmail(userId, newEmail);
@@ -133,7 +121,7 @@ export const changeEmailRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const changePasswordRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
 
@@ -146,7 +134,7 @@ export const changePasswordRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
   const newUserName = req.body.newUserName;
 
   const { status, body } = await changeUserName(userId, newUserName);
@@ -154,14 +142,14 @@ export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const signOutRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
 
   const { status, body } = await signOut(userId);
   res.status(status).send(body);
 });
 
 export const deleteAccountRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req);
+  const userId = req.userId;
   const password = req.body.password;
 
   const { status, body } = await deleteAccount(userId, password);

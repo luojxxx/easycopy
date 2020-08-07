@@ -27,8 +27,10 @@ const Settings = () => {
         const result = await axios({
           method: "post",
           url: api + "/changeemail",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
           data: {
-            userToken: localStorage.getItem("userToken"),
             newEmail: email,
           },
         });
@@ -49,8 +51,10 @@ const Settings = () => {
         const result = await axios({
           method: "post",
           url: api + "/changepassword",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
           data: {
-            userToken: localStorage.getItem("userToken"),
             oldPassword: oldPassword,
             newPassword: password,
           },
@@ -67,8 +71,10 @@ const Settings = () => {
       const result = await axios({
         method: "post",
         url: api + "/changeusername",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
         data: {
-          userToken: localStorage.getItem("userToken"),
           newUserName: userName,
         },
       });
@@ -83,8 +89,10 @@ const Settings = () => {
       const result = await axios({
         method: "post",
         url: api + "/deleteaccount",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
         data: {
-          userToken: localStorage.getItem("userToken"),
           password: deleteAccountPassword,
         },
       });
@@ -128,6 +136,19 @@ const Settings = () => {
               </Button>
             </Box>
             <Box width={0.75} pb={3}>
+              <Label htmlFor="user">UserName (can be blank)</Label>
+              <Input
+                id="user"
+                name="user"
+                type="text"
+                onChange={(e) => setUserName(e.target.value)}
+                value={userName}
+              />
+              <Button mt={2} onClick={handleChangeUserName}>
+                Change Username
+              </Button>
+            </Box>
+            <Box width={0.75} pb={3}>
               <Label htmlFor="user">Old Password</Label>
               <Input
                 id="user"
@@ -157,19 +178,6 @@ const Settings = () => {
               />
               <Button mt={2} onClick={handleChangePassword}>
                 Change Password
-              </Button>
-            </Box>
-            <Box width={0.75} pb={3}>
-              <Label htmlFor="user">UserName (can be blank)</Label>
-              <Input
-                id="user"
-                name="user"
-                type="text"
-                onChange={(e) => setUserName(e.target.value)}
-                value={userName}
-              />
-              <Button mt={2} onClick={handleChangeUserName}>
-                Change Username
               </Button>
             </Box>
             {/* <Box width={0.75} pb={3}>
