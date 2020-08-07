@@ -1,14 +1,28 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Text } from "rebass";
+import axios from 'axios'
+import { Redirect } from "react-router-dom";
+
+import { api } from '../constants'
 
 const AccountBar = () => {
   const [loggedin, setLoggedin] = useState(localStorage.getItem("email") !== null)
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    try {
+      const result = await axios({
+        method: "post",
+        url: api + "/signout",
+        data: {
+          userToken: localStorage.getItem('userToken'),
+        },
+      });
+    } catch (err) {
+      console.log(err)
+    }
     localStorage.removeItem("userToken");
     localStorage.removeItem("userName");
     localStorage.removeItem("email");
-
     setLoggedin(false)
   };
   return loggedin === false ? (

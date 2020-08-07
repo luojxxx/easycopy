@@ -19,6 +19,7 @@ import { sendVerificationEmail } from "./functions/sendVerificationEmail";
 import { changeEmail } from './functions/changeEmail'
 import { changePassword } from './functions/changePassword'
 import { changeUserName } from './functions/changeUserName'
+import { signOut } from './functions/signOut'
 import { deleteAccount } from './functions/deleteAccount'
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
@@ -123,12 +124,17 @@ export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
   const userId = await auth(req);
   const newUserName = req.body.newUserName;
 
-  console.log(userId, newUserName)
-
   const { status, body } = await changeUserName(
     userId,
     newUserName
   );
+  res.status(status).send(body);
+});
+
+export const signOutRoute = asyncHandler(async (req, res, next) => {
+  const userId = await auth(req);
+
+  const { status, body } = await signOut(userId);
   res.status(status).send(body);
 });
 

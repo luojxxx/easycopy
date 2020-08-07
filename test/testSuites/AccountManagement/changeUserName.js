@@ -4,8 +4,8 @@ import { changeUserName } from "../../../src/functions/changeUserName";
 import User from "../../../src/model/User";
 import { UserVerified, UserUnverified } from '../../MockDB'
 
-const ChangeEmailTests = () => {
-  describe("changeEmail", async function () {
+const ChangeUserNameTests = () => {
+  describe("changeUserName", async function () {
     const newUserName = "EasyCopier";
 
     it("should change username", async function () {
@@ -17,4 +17,4 @@ const ChangeEmailTests = () => {
   });
 };
 
-export default ChangeEmailTests;
+export default ChangeUserNameTests;
