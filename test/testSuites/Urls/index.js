@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 
-import { DBSetup, DBClear, UrlNoAccount } from "../../MockDB";
+import { DBSetup, DBClear, UrlNoAccount, UrlAccount } from "../../MockDB";
 
 import { getUrl } from '../../../src/functions/getUrl'
 import { createUrl } from "../../../src/functions/createUrl";

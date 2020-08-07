@@ -12,27 +12,31 @@ import {
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
 import { verifyRecaptcha } from "./functions/verifyRecaptcha";
+import { getUserUrls } from "./functions/getUserUrls";
+import { deleteUserUrls } from "./functions/deleteUserUrls";
 import { signUp } from "./functions/signUp";
-import { login } from './functions/login';
-import { verifyEmail } from './functions/verifyEmail'
+import { login } from "./functions/login";
+import { verifyEmail } from "./functions/verifyEmail";
 import { sendVerificationEmail } from "./functions/sendVerificationEmail";
-import { changeEmail } from './functions/changeEmail'
-import { changePassword } from './functions/changePassword'
-import { changeUserName } from './functions/changeUserName'
-import { signOut } from './functions/signOut'
-import { deleteAccount } from './functions/deleteAccount'
+import { changeEmail } from "./functions/changeEmail";
+import { changePassword } from "./functions/changePassword";
+import { changeUserName } from "./functions/changeUserName";
+import { signOut } from "./functions/signOut";
+import { deleteAccount } from "./functions/deleteAccount";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 import User from "./model/UserToken";
 
 const auth = async (req) => {
   try {
-    const user = await User.findOne({ where: { userToken: req.body.userToken }});
-    return user.userId
+    const user = await User.findOne({
+      where: { userToken: req.body.userToken },
+    });
+    return user.userId;
   } catch (err) {
-    return null
+    return null;
   }
-}
+};
 
 const sendResponse = (result, res) => {
   if (result) {
@@ -74,6 +78,21 @@ export const verifyRecaptchaRoute = asyncHandler(async (req, res, next) => {
   res.status(status).send(body);
 });
 
+export const getUserUrlsRoute = asyncHandler(async (req, res, next) => {
+  const userId = await auth(req);
+
+  const { status, body } = await getUserUrls(userId);
+  res.status(status).send(body);
+});
+
+export const deleteUserUrlRoute = asyncHandler(async (req, res, next) => {
+  const userId = await auth(req);
+  const urlId = req.body.urlId;
+
+  const { status, body } = await deleteUserUrl(userId, urlId);
+  res.status(status).send(body);
+});
+
 export const signUpRoute = asyncHandler(async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -99,7 +118,7 @@ export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
-  const userId = await auth(req)
+  const userId = await auth(req);
 
   const { status, body } = await sendVerificationEmail(userId);
   res.status(status).send(body);
@@ -107,7 +126,7 @@ export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
 
 export const changeEmailRoute = asyncHandler(async (req, res, next) => {
   const userId = await auth(req);
-  const newEmail = req.body.newEmail
+  const newEmail = req.body.newEmail;
 
   const { status, body } = await changeEmail(userId, newEmail);
   res.status(status).send(body);
@@ -118,7 +137,11 @@ export const changePasswordRoute = asyncHandler(async (req, res, next) => {
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
 
-  const { status, body } = await changePassword(userId, oldPassword, newPassword);
+  const { status, body } = await changePassword(
+    userId,
+    oldPassword,
+    newPassword
+  );
   res.status(status).send(body);
 });
 
@@ -126,10 +149,7 @@ export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
   const userId = await auth(req);
   const newUserName = req.body.newUserName;
 
-  const { status, body } = await changeUserName(
-    userId,
-    newUserName
-  );
+  const { status, body } = await changeUserName(userId, newUserName);
   res.status(status).send(body);
 });
 

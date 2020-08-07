@@ -10,6 +10,8 @@ const Sentry = require("@sentry/node");
 import {
   createUrlRoute,
   getUrlRoute,
+  getUserUrlsRoute,
+  deleteUserUrlRoute,
   signUpRoute,
   loginRoute,
   verifyEmailRoute,
@@ -44,6 +46,8 @@ app.use(cookieParser());
 
 app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
+app.post("/getuserurls", getUserUrlsRoute);
+app.post("/deleteuserurl", deleteUserUrlRoute);
 app.post("/signup", signUpRoute);
 app.post("/login", loginRoute);
 app.get("/verifyemail/*", verifyEmailRoute);
