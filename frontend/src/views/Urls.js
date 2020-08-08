@@ -17,20 +17,22 @@ const Urls = () => {
   const [urls, setUrls] = useState([]);
   const [page, setPage] = useState(0);
   useEffect(() => {
-    try {
-      const result = axios({
-        method: "post",
-        url: api + "/getuserurls",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        },
-        data: {},
-      }).then((result) => {
+    const getUrls = async () => {
+      try {
+        const result = await axios({
+          method: "post",
+          url: api + "/getuserurls",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+          data: {},
+        })
         setUrls(result.data);
-      });
-    } catch (err) {
-      console.log(err);
+      } catch (err) {
+        console.log(err);
+      }
     }
+    getUrls()
   }, [page]);
   const handleDelete = async (urlId) => {
     try {
@@ -55,7 +57,7 @@ const Urls = () => {
         <Heading color="primary" pb={3}>
           Urls
         </Heading>
-        <Flex flexDirection="column" width={1}>
+        <Flex flexDirection="column" alignItems="center" width={1}>
           {urls.length === 0 && (
             <Heading color="primary" fontSize={3}>
               [New links you create will show up here]
