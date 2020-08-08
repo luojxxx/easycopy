@@ -132,9 +132,9 @@ const Settings = () => {
         <Box width={1} style={{ maxHeight: "400px", overflowY: "scroll" }}>
           <Box width={0.75} pb={3}>
             <Label htmlFor="user">Email Verification</Label>
-            <Text color="primary">
-              {emailVerified ? "verified" : "unverified"}
-            </Text>
+            <Heading color="primary" fontSize={3}>
+              {emailVerified ? "Verified" : "unverified"}
+            </Heading>
             {!emailVerified && (
               <Button mt={2} onClick={handleSendVerifyEmail}>
                 Send verification email

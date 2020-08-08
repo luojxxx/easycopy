@@ -15,7 +15,7 @@ export const sendVerificationEmail = async (userId, email) => {
     verificationToken: randomToken,
   });
 
-  const verificationLink = `${host}/verifyEmail/${randomToken}`
+  const verificationLink = `${host}verifyEmail/${randomToken}`
 
   const msg = {
     to: email,
