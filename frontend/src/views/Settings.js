@@ -31,7 +31,7 @@ const Settings = () => {
           email: email,
         },
       });
-      setMessage("Successfully changed email");
+      setMessage("Successfully sent verification email");
     } catch (err) {
       console.log(err);
     }
