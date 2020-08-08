@@ -56,6 +56,11 @@ const Urls = () => {
           Urls
         </Heading>
         <Flex flexDirection="column">
+          {urls.length === 0 && (
+            <Heading color="primary" fontSize={3}>
+              [New links you create will show up here]
+            </Heading>
+          )}
           {urls.map((ele) => (
             <Flex
               flexDirection="row"
