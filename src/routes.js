@@ -107,8 +107,9 @@ export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
 
 export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
+  const email = req.body.email;
 
-  const { status, body } = await sendVerificationEmail(userId);
+  const { status, body } = await sendVerificationEmail(userId, email);
   res.status(status).send(body);
 });
 

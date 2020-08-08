@@ -27,7 +27,9 @@ const Settings = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
-        data: {},
+        data: {
+          email: email,
+        },
       });
       setMessage("Successfully changed email");
     } catch (err) {
@@ -120,6 +122,7 @@ const Settings = () => {
       console.log(err);
     }
   };
+  const emailVerified = localStorage.getItem("emailVerified");
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>
@@ -130,13 +133,13 @@ const Settings = () => {
           <Box width={0.75} pb={3}>
             <Label htmlFor="user">Email Verification</Label>
             <Text color="primary">
-              {localStorage.getItem("emailVerified") === true
-                ? "verified"
-                : "unverified"}
+              {emailVerified ? "verified" : "unverified"}
             </Text>
-            <Button mt={2} onClick={handleSendVerifyEmail}>
-              Send verification email
-            </Button>
+            {!emailVerified && (
+              <Button mt={2} onClick={handleSendVerifyEmail}>
+                Send verification email
+              </Button>
+            )}
           </Box>
           <Box width={0.75} pb={3}>
             <Label htmlFor="user">Email</Label>
