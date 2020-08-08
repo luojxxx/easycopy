@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -10,6 +10,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const Settings = () => {
+  const history = useHistory();
   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +18,6 @@ const Settings = () => {
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const handleSendVerifyEmail = async () => {
     setMessage("");
     try {
@@ -117,7 +117,7 @@ const Settings = () => {
       localStorage.removeItem("userToken");
       localStorage.removeItem("userName");
       localStorage.removeItem("email");
-      setRedirect(true);
+      history.push('/')
     } catch (err) {
       console.log(err);
     }
@@ -217,7 +217,6 @@ const Settings = () => {
           {message}
         </Text>
       </Flex>
-      {redirect && <Redirect to="/" />}
     </Template>
   );
 };

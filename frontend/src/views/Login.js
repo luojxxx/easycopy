@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
-import { Redirect } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -10,10 +10,10 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const Login = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const handleSubmit = async () => {
     try {
       const result = await axios({
@@ -28,8 +28,7 @@ const Login = () => {
       localStorage.setItem("userName", result.data.user.userName);
       localStorage.setItem("email", result.data.user.email);
       localStorage.setItem("emailVerified", result.data.emailVerified);
-
-      setRedirect(true)
+      history.push('/urls')
     } catch (err) {
       console.log(err);
       setMessage("Bad login");
@@ -66,9 +65,6 @@ const Login = () => {
         </Button>
         <Text color="primary">{message}</Text>
       </Flex>
-      {redirect && (
-        <Redirect to='urls' />
-      )}
     </Template>
   );
 };

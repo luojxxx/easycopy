@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -10,12 +10,12 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const SignUp = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
   const handleSubmit = async () => {
     setMessage("");
     if (email === "") {
@@ -39,7 +39,7 @@ const SignUp = () => {
         localStorage.setItem("userName", result.data.user.userName);
         localStorage.setItem("email", result.data.user.email);
         localStorage.setItem("emailVerified", result.data.emailVerified);
-        setRedirect(true);
+        history.push('/')
       } catch (err) {
         console.log(err);
       }
@@ -94,7 +94,6 @@ const SignUp = () => {
           Submit
         </Button>
         <Text color="primary">{message}</Text>
-        {redirect && <Redirect to="/" />}
       </Flex>
     </Template>
   );
