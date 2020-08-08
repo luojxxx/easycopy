@@ -71,12 +71,12 @@ const AccountBar = () => {
         </Text>
       </Link>
       <Text color="primary">/</Text>
-      <Link to="/premium">
+      {/* <Link to="/premium">
         <Text px={1} color="primary">
           Premium
         </Text>
       </Link>
-      <Text color="primary">/</Text>
+      <Text color="primary">/</Text> */}
       <Link to="/settings">
         <Text px={1} color="primary">
           Settings
