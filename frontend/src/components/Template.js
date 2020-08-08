@@ -57,7 +57,7 @@ const Template = ({ subheading, children }) => {
           </Heading>
         </Link>
       )}
-      <Box width={[0.95, 0.8, 0.6]}>
+      <Box width={[0.95, 0.8, 0.7]}>
         <Flex width={1} justifyContent="center">
           <Box width={0.8} style={{ textAlign: "center" }}>
             <Text color="primary" pb={3}>
