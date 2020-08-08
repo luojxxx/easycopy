@@ -19,7 +19,7 @@ export const sendVerificationEmail = async (userId, email) => {
 
   const msg = {
     to: email,
-    from: "admin@easycopy.io",
+    from: "admin@quickshift.io",
     subject: "EasyCopy.io Email Verification",
     html: `
       Hi!
@@ -33,7 +33,7 @@ export const sendVerificationEmail = async (userId, email) => {
     `,
   };
 
-  // await sgMail.send(msg);
+  await sgMail.send(msg);
 
   return true;
 };
