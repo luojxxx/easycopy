@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import CryptoJS from "crypto-js";
 
+import { encryptString } from '../lib'
 import Url from "../model/Url";
 
 const text = fs.readFileSync(
@@ -10,38 +10,35 @@ const text = fs.readFileSync(
 );
 const wordBank = text.trim("\n").split(",");
 
-export const createUrl = async (content, user, type) => {
+const generateWordArray = () => {
+  return [0, 0, 0, 0, 0].map((_) => {
+    const idx = Math.floor(Math.random() * wordBank.length);
+    const word = wordBank[idx];
+    return word[0].toUpperCase() + word.substring(1);
+  });
+};
+
+export const createUrl = async (content, userName, type, userId) => {
   // make sure url doesn't already exist
-  let wordArray
   let url;
   let results = true;
   while (results) {
-    wordArray = [0, 0, 0, 0].map(
-      _ => {
-        const idx = Math.floor(Math.random() * wordBank.length)
-        const word = wordBank[idx]
-        return word[0].toUpperCase() + word.substring(1,)
-    }
-    );
-    url = wordArray.join("");
-    results = await Url.findOne({ where: { urlChar: url.toLowerCase() } });
+    url = generateWordArray().join("");
+    results = await Url.findOne({ where: { urlRaw : url.toLowerCase() } });
   }
 
   await Url.create({
     url: url,
-    urlChar: url.toLowerCase(),
-    content: CryptoJS.AES.encrypt(
-      content,
-      process.env.ENCRYPTION_KEY
-    ).toString(),
-    user: user,
+    urlRaw: url.toLowerCase(),
+    content: encryptString(content),
+    userName: userName,
     type: type,
+    userId: userId,
   });
 
   return {
     status: 200,
     body: {
-      msg: "",
       url: url
     }
   };

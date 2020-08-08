@@ -50,7 +50,6 @@ export const lessThanLength = (limit, actual) => {
       status: 400,
       body: {
         msg: `${limitName} is longer than the ${limitValue} limit`,
-        url: "",
       },
     };
   }
@@ -62,7 +61,6 @@ export const oneOfType = (expectedTypes, actual) => {
       status: 400,
       body: {
         msg: `Type needs to be (${expectedTypes}), got ${actual} instead`,
-        url: "",
       },
     };
   }

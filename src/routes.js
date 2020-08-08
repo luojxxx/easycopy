@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 
-import { contentLimit, userLimit, acceptedTypes } from "./constants";
+import { contentLimit, userNameLimit, acceptedTypes } from "./constants";
 import {
   bodyContains,
   bodyContainsStrings,
@@ -12,6 +12,17 @@ import {
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
 import { verifyRecaptcha } from "./functions/verifyRecaptcha";
+import { getUserUrls } from "./functions/getUserUrls";
+import { deleteUserUrl } from "./functions/deleteUserUrl";
+import { signUp } from "./functions/signUp";
+import { login } from "./functions/login";
+import { verifyEmail } from "./functions/verifyEmail";
+import { sendVerificationEmail } from "./functions/sendVerificationEmail";
+import { changeEmail } from "./functions/changeEmail";
+import { changePassword } from "./functions/changePassword";
+import { changeUserName } from "./functions/changeUserName";
+import { signOut } from "./functions/signOut";
+import { deleteAccount } from "./functions/deleteAccount";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 
@@ -23,17 +34,19 @@ const sendResponse = (result, res) => {
 };
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
-  const expectedArgs = ["content", "user", "type"];
+  const userId = req.userId;
+
+  const expectedArgs = ["content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
   sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
   const content = req.body.content;
-  const user = req.body.user;
+  const userName = req.body.userName;
   const type = req.body.type;
-  sendResponse(lessThanLength({ Content: contentLimit }, content), res);
-  sendResponse(lessThanLength({ User: userLimit }, user), res);
+  sendResponse(lessThanLength({ content: contentLimit }, content), res);
+  sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
-  const { status, body } = await createUrl(content, user, type);
+  const { status, body } = await createUrl(content, userName, type, userId);
   res.status(status).send(body);
 });
 
@@ -50,6 +63,101 @@ export const verifyRecaptchaRoute = asyncHandler(async (req, res, next) => {
   const token = req.body.token;
 
   const { status, body } = await verifyRecaptcha(token);
+  res.status(status).send(body);
+});
+
+export const getUserUrlsRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+
+  const { status, body } = await getUserUrls(userId);
+  res.status(status).send(body);
+});
+
+export const deleteUserUrlRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const urlId = req.body.urlId;
+
+  const { status, body } = await deleteUserUrl(userId, urlId);
+  res.status(status).send(body);
+});
+
+export const signUpRoute = asyncHandler(async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const userName = req.body.userName;
+
+  const { status, body } = await signUp(email, password, userName);
+  res.status(status).send(body);
+});
+
+export const loginRoute = asyncHandler(async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const { status, body } = await login(email, password);
+  res.status(status).send(body);
+});
+
+export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
+  const verificationToken = req.path.replace("/verifyemail/", "");
+
+  const { status, body } = await verifyEmail(verificationToken);
+  if (status === 200) {
+    res.redirect("https://www.easycopy.io/EmailVerified");
+  } else {
+    res.status(status).send(body);
+  }
+});
+
+export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const email = req.body.email;
+
+  const { status, body } = await sendVerificationEmail(userId, email);
+  res.status(status).send(body);
+});
+
+export const changeEmailRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const newEmail = req.body.newEmail;
+
+  const { status, body } = await changeEmail(userId, newEmail);
+  res.status(status).send(body);
+});
+
+export const changePasswordRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const oldPassword = req.body.oldPassword;
+  const newPassword = req.body.newPassword;
+
+  const { status, body } = await changePassword(
+    userId,
+    oldPassword,
+    newPassword
+  );
+  res.status(status).send(body);
+});
+
+export const changeUserNameRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const newUserName = req.body.newUserName;
+
+  const { status, body } = await changeUserName(userId, newUserName);
+  res.status(status).send(body);
+});
+
+export const signOutRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+
+  const { status, body } = await signOut(userId);
+  res.status(status).send(body);
+});
+
+export const deleteAccountRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const password = req.body.password;
+
+  const { status, body } = await deleteAccount(userId, password);
   res.status(status).send(body);
 });
 

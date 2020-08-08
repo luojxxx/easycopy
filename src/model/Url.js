@@ -1,21 +1,27 @@
 import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
+import Users from './User'
+import { userNameLimit, contentLimit } from "../constants";
 
 const UrlSchema = db.define(
   "Url",
   {
-    // Model attributes are defined here
+    urlId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     url: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    urlChar: {
+    urlRaw: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING(10000),
+      type: DataTypes.STRING(contentLimit),
       allowNull: false,
     },
     type: {
@@ -26,13 +32,20 @@ const UrlSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-    user: {
-      type: DataTypes.STRING(256),
+    expiredAt: {
+      type: DataTypes.DATE,
+    },
+    userName: {
+      type: DataTypes.STRING(userNameLimit),
       default: "",
     },
     userId: {
-      type: DataTypes.STRING,
-      default: "",
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: Users,
+        key: "userId",
+      },
     },
   },
   {
