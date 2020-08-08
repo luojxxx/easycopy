@@ -122,7 +122,7 @@ const Settings = () => {
       console.log(err);
     }
   };
-  const emailVerified = localStorage.getItem("emailVerified");
+  const emailVerified = localStorage.getItem("emailVerified") === 'true';
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>
