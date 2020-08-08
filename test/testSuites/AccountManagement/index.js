@@ -3,6 +3,7 @@ const assert = require("assert");
 import { DBSetup, DBClear } from "../../MockDB";
 import signup from "./signup";
 import login from "./login";
+import checkUser from './checkUser'
 import sendVerifyEmail from "./sendVerifyEmail";
 import changeEmail from "./changeEmail";
 import changePassword from "./changePassword";
@@ -19,6 +20,7 @@ const AccountManagementTests = () => {
 
     signup();
     login();
+    checkUser();
     sendVerifyEmail();
     changeEmail();
     changePassword();

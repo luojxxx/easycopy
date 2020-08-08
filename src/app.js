@@ -6,7 +6,7 @@ import logger from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 const Sentry = require("@sentry/node");
-import UserToken from './model/UserToken'
+import UserToken from "./model/UserToken";
 
 import {
   createUrlRoute,
@@ -15,6 +15,7 @@ import {
   deleteUserUrlRoute,
   signUpRoute,
   loginRoute,
+  checkUserRoute,
   verifyEmailRoute,
   sendVerifyEmailRoute,
   changeEmailRoute,
@@ -46,15 +47,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(async function (req, res, next) {
-  if ('authorization' in req.headers) {
-    const userToken = req.headers.authorization.replace('Bearer ', '')
+  if ("authorization" in req.headers) {
+    const userToken = req.headers.authorization.replace("Bearer ", "");
     const user = await UserToken.findOne({
       where: { userToken: userToken },
     });
     if (user) {
       req.userId = user.userId;
     } else {
-      res.status(401).send('Unauthorized')
+      res.status(401).send("Unauthorized");
     }
   }
   next();
@@ -66,6 +67,7 @@ app.post("/getuserurls", getUserUrlsRoute);
 app.post("/deleteuserurl", deleteUserUrlRoute);
 app.post("/signup", signUpRoute);
 app.post("/login", loginRoute);
+app.post("/checkuser", checkUserRoute);
 app.get("/verifyemail/*", verifyEmailRoute);
 app.post("/sendverifyemail", sendVerifyEmailRoute);
 app.post("/changeemail", changeEmailRoute);

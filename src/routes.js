@@ -16,6 +16,7 @@ import { getUserUrls } from "./functions/getUserUrls";
 import { deleteUserUrl } from "./functions/deleteUserUrl";
 import { signUp } from "./functions/signUp";
 import { login } from "./functions/login";
+import { checkUser } from './functions/checkUser';
 import { verifyEmail } from "./functions/verifyEmail";
 import { sendVerificationEmail } from "./functions/sendVerificationEmail";
 import { changeEmail } from "./functions/changeEmail";
@@ -95,6 +96,13 @@ export const loginRoute = asyncHandler(async (req, res, next) => {
   const password = req.body.password;
 
   const { status, body } = await login(email, password);
+  res.status(status).send(body);
+});
+
+export const checkUserRoute = asyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+
+  const { status, body } = await checkUser(userId);
   res.status(status).send(body);
 });
 
