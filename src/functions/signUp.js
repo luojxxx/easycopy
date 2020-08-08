@@ -35,7 +35,7 @@ export const signUp = async (email, password, userName) => {
     createdAt: Date.now(),
   });
 
-  const newEmailVerificationToken = await sendVerificationEmail(
+  const { status, body } = await sendVerificationEmail(
     newUser.userId,
     email
   );

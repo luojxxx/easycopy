@@ -35,5 +35,8 @@ export const sendVerificationEmail = async (userId, email) => {
 
   await sgMail.send(msg);
 
-  return true;
+  return {
+    status: 200,
+    body: 'Successfully sent verification email'
+  };
 };
