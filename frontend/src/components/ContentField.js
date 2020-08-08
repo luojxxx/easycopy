@@ -22,7 +22,7 @@ const ContentField = ({
 }) => {
   const pasteContentToClipboard = async () => {
     const text = await clip.read();
-    handleContentChange({ target: { value: text } });
+    handleContentChange({ target: { value: content+text+'\n' } });
   };
   const copyContentToClipboard = () => {
     clip.write(content);
