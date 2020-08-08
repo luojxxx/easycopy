@@ -18,6 +18,12 @@ export const verifyEmail = async (verificationToken) => {
       userId: emailVerificationToken.userId
     }
   })
+  if (user.emailVerified) {
+    return {
+      status: 200,
+      body: 'Email already verified',
+    }
+  }
   await User.update({
     email: user.emailVerifying,
     emailVerifying: null,
@@ -35,8 +41,6 @@ export const verifyEmail = async (verificationToken) => {
 
   return {
     status: 200,
-    body: {
-      msg: 'Successfully verified email',
-    },
+    body: "Successfully verified email",
   };
 };

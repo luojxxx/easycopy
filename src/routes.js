@@ -102,7 +102,11 @@ export const verifyEmailRoute = asyncHandler(async (req, res, next) => {
   const verificationToken = req.path.replace("/verifyemail/", "");
 
   const { status, body } = await verifyEmail(verificationToken);
-  res.status(status).send(body);
+  if (status === 200) {
+    res.redirect("https://www.easycopy.io/EmailVerified");
+  } else {
+    res.status(status).send(body);
+  }
 });
 
 export const sendVerifyEmailRoute = asyncHandler(async (req, res, next) => {
