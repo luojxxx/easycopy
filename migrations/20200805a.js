@@ -6,38 +6,38 @@ module.exports = {
     return Promise.all([
       queryInterface.createTable("Users", {
         userId: {
-          type: Sequelize.Sequelize.DataTypes.INTEGER,
+          type: Sequelize.DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true,
         },
         userName: {
-          type: Sequelize.Sequelize.DataTypes.STRING(userNameLimit),
+          type: Sequelize.DataTypes.STRING(userNameLimit),
           allowNull: false,
         },
         email: {
-          type: Sequelize.Sequelize.DataTypes.STRING,
+          type: Sequelize.DataTypes.STRING,
         },
         password: {
-          type: Sequelize.Sequelize.DataTypes.STRING,
+          type: Sequelize.DataTypes.STRING,
           allowNull: false,
         },
         emailVerifying: {
-          type: Sequelize.Sequelize.DataTypes.STRING,
+          type: Sequelize.DataTypes.STRING,
         },
         emailVerified: {
-          type: Sequelize.Sequelize.DataTypes.BOOLEAN,
+          type: Sequelize.DataTypes.BOOLEAN,
           allowNull: false,
         },
         subscribed: {
-          type: Sequelize.Sequelize.DataTypes.BOOLEAN,
+          type: Sequelize.DataTypes.BOOLEAN,
           default: false,
         },
         createdAt: {
-          type: Sequelize.Sequelize.DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
         updatedAt: {
-          type: DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
       }),
@@ -68,7 +68,7 @@ module.exports = {
           default: Date.now,
         },
         updatedAt: {
-          type: DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
         expiredAt: {
@@ -106,11 +106,11 @@ module.exports = {
           allowNull: false,
         },
         createdAt: {
-          type: Sequelize.Sequelize.DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
         updatedAt: {
-          type: DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
       }),
@@ -133,11 +133,11 @@ module.exports = {
           allowNull: false,
         },
         createdAt: {
-          type: Sequelize.Sequelize.DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
         updatedAt: {
-          type: DataTypes.DATE,
+          type: Sequelize.DataTypes.DATE,
           default: Date.now,
         },
       }),
