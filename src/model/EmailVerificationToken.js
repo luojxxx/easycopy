@@ -24,6 +24,14 @@ const EmailVerificationTokenSchema = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
   },
   {
     // Other model options go here

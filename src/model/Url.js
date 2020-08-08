@@ -32,6 +32,10 @@ const UrlSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
+    updatedAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
     expiredAt: {
       type: DataTypes.DATE,
     },

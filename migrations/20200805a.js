@@ -36,6 +36,10 @@ module.exports = {
           type: Sequelize.Sequelize.DataTypes.DATE,
           default: Date.now,
         },
+        updatedAt: {
+          type: DataTypes.DATE,
+          default: Date.now,
+        },
       }),
       queryInterface.createTable("Urls", {
         urlId: {
@@ -61,6 +65,10 @@ module.exports = {
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
+          default: Date.now,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
           default: Date.now,
         },
         expiredAt: {
@@ -97,6 +105,14 @@ module.exports = {
           type: Sequelize.DataTypes.STRING,
           allowNull: false,
         },
+        createdAt: {
+          type: Sequelize.Sequelize.DataTypes.DATE,
+          default: Date.now,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          default: Date.now,
+        },
       }),
       queryInterface.createTable("UserTokens", {
         userTokenId: {
@@ -115,6 +131,14 @@ module.exports = {
         userToken: {
           type: Sequelize.DataTypes.STRING,
           allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.Sequelize.DataTypes.DATE,
+          default: Date.now,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          default: Date.now,
         },
       }),
     ]);
