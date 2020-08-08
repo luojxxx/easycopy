@@ -35,10 +35,11 @@ const SignUp = () => {
             userName: userName,
           },
         });
-        localStorage.setItem("userToken", result.data.userToken);
-        localStorage.setItem("userName", result.data.user.userName);
-        localStorage.setItem("email", result.data.user.email);
-        localStorage.setItem("emailVerified", result.data.emailVerified);
+        const { data } = result;
+        localStorage.setItem("userToken", data.userToken);
+        localStorage.setItem("userName", data.user.userName);
+        localStorage.setItem("email", data.user.email);
+        localStorage.setItem("emailVerified", data.user.emailVerified);
         history.push('/')
       } catch (err) {
         console.log(err);
