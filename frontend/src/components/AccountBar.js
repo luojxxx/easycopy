@@ -14,9 +14,10 @@ const AccountBar = () => {
       const result = await axios({
         method: "post",
         url: api + "/signout",
-        data: {
-          userToken: localStorage.getItem('userToken'),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
+        data: {},
       });
     } catch (err) {
       console.log(err)
