@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import dayjs from 'dayjs'
 
 import { encryptString } from '../lib'
 import Url from "../model/Url";
@@ -46,6 +47,7 @@ export const createUrl = async (recaptchaToken, content, userName, type, userId)
     userName: userName,
     type: type,
     userId: userId,
+    expiredAt: dayjs().add(1, 'month').toISOString(),
   });
 
   return {
