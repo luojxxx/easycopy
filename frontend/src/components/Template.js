@@ -48,7 +48,7 @@ const Template = ({ subheading, children }) => {
   return (
     <Fragment>
       <Header>
-        <AccountBar />
+        {/* <AccountBar /> */}
       </Header>
       {subheading && (
         <Link to="/">

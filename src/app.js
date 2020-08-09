@@ -63,18 +63,18 @@ app.use(async function (req, res, next) {
 
 app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
-app.post("/getuserurls", getUserUrlsRoute);
-app.post("/deleteuserurl", deleteUserUrlRoute);
-app.post("/signup", signUpRoute);
-app.post("/login", loginRoute);
-app.post("/checkuser", checkUserRoute);
-app.get("/verifyemail/*", verifyEmailRoute);
-app.post("/sendverifyemail", sendVerifyEmailRoute);
-app.post("/changeemail", changeEmailRoute);
-app.post("/changepassword", changePasswordRoute);
-app.post("/changeusername", changeUserNameRoute);
-app.post("/signout", signOutRoute);
-app.post("/deleteaccount", deleteAccountRoute);
+// app.post("/getuserurls", getUserUrlsRoute);
+// app.post("/deleteuserurl", deleteUserUrlRoute);
+// app.post("/signup", signUpRoute);
+// app.post("/login", loginRoute);
+// app.post("/checkuser", checkUserRoute);
+// app.get("/verifyemail/*", verifyEmailRoute);
+// app.post("/sendverifyemail", sendVerifyEmailRoute);
+// app.post("/changeemail", changeEmailRoute);
+// app.post("/changepassword", changePasswordRoute);
+// app.post("/changeusername", changeUserNameRoute);
+// app.post("/signout", signOutRoute);
+// app.post("/deleteaccount", deleteAccountRoute);
 // app.post("/payment", stripePaymentRoute);
 app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
 
