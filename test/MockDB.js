@@ -4,25 +4,7 @@ import User from "../src/model/User";
 import UserToken from "../src/model/UserToken";
 import EmailVerificationToken from "../src/model/EmailVerificationToken";
 import Url from "../src/model/Url";
-
-export const UrlNoAccount = {
-  urlId: 1000,
-  url: "HappenRockEffortTrain",
-  urlRaw: "HappenRockEffortTrain".toLowerCase(),
-  content: "Test Content",
-  userName: "TestUser",
-  type: "text",
-};
-
-export const UrlAccount = {
-  urlId: 1001,
-  url: "BabelSpaceJavaSort",
-  urlRaw: "BabelSpaceJavaSort".toLowerCase(),
-  content: "Test Contents",
-  userName: "Verified Test User",
-  type: "text",
-  userId: 101,
-};
+import RecaptchaToken from '../src/model/RecaptchaToken'
 
 export const UserUnverified = {
   userId: 100,
@@ -44,6 +26,25 @@ export const UserVerified = {
   createdAt: Date.now(),
 };
 
+export const UrlNoAccount = {
+  urlId: 1000,
+  url: "HappenRockEffortTrain",
+  urlRaw: "HappenRockEffortTrain".toLowerCase(),
+  content: "Test Content",
+  userName: "TestUser",
+  type: "text",
+};
+
+export const UrlAccount = {
+  urlId: 1001,
+  url: "BabelSpaceJavaSort",
+  urlRaw: "BabelSpaceJavaSort".toLowerCase(),
+  content: "Test Contents",
+  userName: "Verified Test User",
+  type: "text",
+  userId: 101,
+};
+
 export const UserVerifiedUserToken = {
   userId: 101,
   userToken: "randomCharString",
@@ -56,6 +57,10 @@ export const UserVerifiedEmailVerificationToken = {
 export const UserUnverifiedEmailVerificationToken = {
   userId: 100,
   verificationToken: "Greenland",
+};
+
+export const sampleRecaptchaToken = {
+  recaptchaToken: 'randomString'
 };
 
 export const DBSetup = async () => {
@@ -78,6 +83,7 @@ export const DBSetup = async () => {
   await UserToken.create(UserVerifiedUserToken);
   await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
   await EmailVerificationToken.create(UserUnverifiedEmailVerificationToken);
+  await RecaptchaToken.create(sampleRecaptchaToken);
 };
 
 export const DBClear = async () => {

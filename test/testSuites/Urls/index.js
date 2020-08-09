@@ -1,6 +1,12 @@
 const expect = require("chai").expect;
 
-import { DBSetup, DBClear, UrlNoAccount, UrlAccount } from "../../MockDB";
+import {
+  DBSetup,
+  DBClear,
+  UrlNoAccount,
+  UrlAccount,
+  sampleRecaptchaToken,
+} from "../../MockDB";
 
 import { getUrl } from '../../../src/functions/getUrl'
 import { createUrl } from "../../../src/functions/createUrl";
@@ -29,7 +35,12 @@ const UrlTestSuite = () => {
       const type = 'text'
       let url
       it("should create a url", async function () {
-        const { body } = await createUrl(content, userName, type);
+        const { body } = await createUrl(
+          sampleRecaptchaToken.recaptchaToken,
+          content,
+          userName,
+          type
+        );
         url = body.url
         expect(url).to.be.a('string')
       });
