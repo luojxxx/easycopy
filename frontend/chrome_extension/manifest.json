@@ -2,15 +2,9 @@
     "name": "EasyCopy.io Chrome Extension",
     "version": "1.0",
     "description": "Copy stuff to human readable urls or camera scannable QR codes",
-    "permissions": ["declarativeContent"],
-    "page_action": {
+    "browser_action": {
       "default_popup": "index.html",
-      "default_icon": {
-        "16": "favicon-16x16.png",
-        "32": "favicon-32x32.png",
-        "48": "android-icon-48x48.png",
-        "128": "favicon-96x96.png"
-      }
+      "default_title": "Open the popup"
     },
     "icons": {
       "16": "favicon-16x16.png",
@@ -18,5 +12,6 @@
       "48": "android-icon-48x48.png",
       "128": "favicon-96x96.png"
     },
+    "permissions": [],
     "manifest_version": 2
   }
