@@ -47,7 +47,7 @@ export const createUrl = async (recaptchaToken, content, userName, type, userId)
     userName: userName,
     type: type,
     userId: userId,
-    expiredAt: dayjs().add(1, 'month').toISOString(),
+    expiredAt: dayjs().add(1, 'hour').toISOString(),
   });
 
   return {
