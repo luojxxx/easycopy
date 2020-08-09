@@ -26,6 +26,7 @@ const App = (props) => {
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
+  let threshold = 1
   const handleUserNameChange = (e) => {
     const userName = e.target.value.slice(0, userNameLimit);
     setUserName(userName);
@@ -70,7 +71,8 @@ const App = (props) => {
         const score = recaptchaResult.data.data.score;
         const recaptchaToken = recaptchaResult.data.recaptchaToken
 
-        // if (score >= 0) {
+        threshold = threshold * 0.5
+        if (score >= threshold) {
           setShowRecaptcha(false);
           const userToken = localStorage.getItem("userToken");
           const response = await axios({
@@ -89,16 +91,16 @@ const App = (props) => {
           setSubmissionProcessing(false);
           const url = response.data.url;
           history.push(url);
-        // } else {
-        //   setShowRecaptcha(true);
-        //   const recaptchaContainer = document.getElementById(
-        //     "recaptchaContainer"
-        //   );
-        //   const id = window.grecaptcha.render(recaptchaContainer, {
-        //     sitekey: recaptchaSiteKey,
-        //     callback: handleSubmit
-        //   });
-        // }
+        } else {
+          setShowRecaptcha(true);
+          const recaptchaContainer = document.getElementById(
+            "recaptchaContainer"
+          );
+          const id = window.grecaptcha.render(recaptchaContainer, {
+            sitekey: "6LeRm7wZAAAAAFunidWbJu4apHdzQ_fweS1wrQu0",
+            callback: handleSubmit,
+          });
+        }
       });
     } catch (err) {
       console.error("CreateUrl error");
