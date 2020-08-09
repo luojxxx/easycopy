@@ -3,6 +3,7 @@ import path from "path";
 
 import { encryptString } from '../lib'
 import Url from "../model/Url";
+import RecaptchaToken from '../model/RecaptchaToken'
 
 const text = fs.readFileSync(
   path.resolve(__dirname, "../wordbank.txt"),
@@ -18,7 +19,18 @@ const generateWordArray = () => {
   });
 };
 
-export const createUrl = async (content, userName, type, userId) => {
+export const createUrl = async (recaptchaToken, content, userName, type, userId) => {
+  const consumeToken = await RecaptchaToken.destroy({
+    where: {
+      recaptchaToken: recaptchaToken,
+    }
+  });
+  if (!consumeToken) {
+    return {
+      status: 401,
+      body: 'Bad recaptcha token'
+    }
+  }
   // make sure url doesn't already exist
   let url;
   let results = true;

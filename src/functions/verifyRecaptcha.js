@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+import RecaptchaToken from '../model/RecaptchaToken'
+import { generateRandomString } from '../lib'
+
 export const verifyRecaptcha = async (token) => {
   const recaptchaResult = await axios({
     method: "get",
@@ -10,10 +13,17 @@ export const verifyRecaptcha = async (token) => {
     },
   });
 
+  const randomString = generateRandomString(100)
+
+  await RecaptchaToken.create({
+    recaptchaToken: randomString
+  })
+
   return {
     status: 200,
     body: {
       data: recaptchaResult.data,
+      recaptchaToken: randomString
     },
   };
 };

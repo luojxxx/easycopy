@@ -36,10 +36,11 @@ const sendResponse = (result, res) => {
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
-
-  const expectedArgs = ["content", "userName", "type"];
+  
+  const expectedArgs = ["recaptchaToken", "content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
   sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
+  const recaptchaToken = req.body.recaptchaToken
   const content = req.body.content;
   const userName = req.body.userName;
   const type = req.body.type;
@@ -47,7 +48,7 @@ export const createUrlRoute = asyncHandler(async (req, res, next) => {
   sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
-  const { status, body } = await createUrl(content, userName, type, userId);
+  const { status, body } = await createUrl(recaptchaToken, content, userName, type, userId);
   res.status(status).send(body);
 });
 

@@ -68,6 +68,7 @@ const App = (props) => {
           },
         });
         const score = recaptchaResult.data.data.score;
+        const recaptchaToken = recaptchaResult.data.recaptchaToken
 
         // if (score >= 0) {
           setShowRecaptcha(false);
@@ -76,6 +77,7 @@ const App = (props) => {
             method: "post",
             url: api + "/create",
             data: {
+              recaptchaToken: recaptchaToken,
               userName: userName.toString(10),
               content: content.toString(10),
               type: type.toString(10),
