@@ -25,10 +25,7 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.dropTable("Users"),
-      queryInterface.dropTable("Urls"),
-      queryInterface.dropTable("EmailVerificationTokens"),
-      queryInterface.dropTable("UserTokens"),
-    ])
+      queryInterface.dropTable("RecaptchaTokens"),
+    ]);
   },
 };
