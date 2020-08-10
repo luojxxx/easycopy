@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { api } from "../constants";
 import Template from "../components/Template";
@@ -54,7 +54,11 @@ const Login = () => {
             />
           </Box>
           <Box width={0.75} pb={4}>
-            <Label htmlFor="user">Password</Label>
+            <Flex flexDirection="row" justifyContent="flex-start">
+              <Text color="primary">Password</Text>
+              &nbsp;
+              <Link to='sendpasswordreset'><Text color="primary">(Reset password)</Text></Link>
+            </Flex>
             <Input
               id="user"
               name="user"

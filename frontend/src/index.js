@@ -16,6 +16,7 @@ import SignUp from "./views/SignUp";
 import Urls from './views/Urls';
 import Settings from './views/Settings';
 import EmailVerified from './views/EmailVerified'
+import SendPasswordReset from "./views/SendPasswordReset";
 import ResetPassword from './views/ResetPassword'
 
 import { ThemeProvider } from "emotion-theming";
@@ -43,6 +44,7 @@ const Index = (
             <Route path="/urls" component={Urls} />
             <Route path="/settings" component={Settings} />
             <Route path="/emailverified" component={EmailVerified} />
+            <Route path="/sendpasswordreset" component={SendPasswordReset} />
             <Route path="/resetpassword" component={ResetPassword} />
             <Route path="/" component={App} />
           </Switch>
