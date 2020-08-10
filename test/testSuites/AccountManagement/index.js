@@ -8,6 +8,7 @@ import sendVerifyEmail from "./sendVerifyEmail";
 import changeEmail from "./changeEmail";
 import changePassword from "./changePassword";
 import changeUserName from './changeUserName'
+import resetPassword from './resetPassword'
 import signOut from './signOut'
 import deleteAccount from "./deleteAccount";
 import verifyEmail from './verifyEmail'
@@ -25,6 +26,7 @@ const AccountManagementTests = () => {
     changeEmail();
     changePassword();
     changeUserName();
+    resetPassword();
     signOut();
     // deleteAccount();
     verifyEmail();

@@ -5,6 +5,7 @@ import UserToken from "../src/model/UserToken";
 import EmailVerificationToken from "../src/model/EmailVerificationToken";
 import Url from "../src/model/Url";
 import RecaptchaToken from '../src/model/RecaptchaToken'
+import ResetPasswordToken from '../src/model/ResetPasswordToken'
 
 export const UserUnverified = {
   userId: 100,
@@ -63,6 +64,11 @@ export const sampleRecaptchaToken = {
   recaptchaToken: 'randomString'
 };
 
+export const sampleResetPasswordToken = {
+  email: UserVerified.email,
+  resetPasswordToken: "randomString",
+};
+
 export const DBSetup = async () => {
   await User.create({
     ...UserUnverified,
@@ -84,6 +90,7 @@ export const DBSetup = async () => {
   await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
   await EmailVerificationToken.create(UserUnverifiedEmailVerificationToken);
   await RecaptchaToken.create(sampleRecaptchaToken);
+  await ResetPasswordToken.create(sampleResetPasswordToken);
 };
 
 export const DBClear = async () => {

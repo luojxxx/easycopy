@@ -16,13 +16,15 @@ import { getUserUrls } from "./functions/getUserUrls";
 import { deleteUserUrl } from "./functions/deleteUserUrl";
 import { signUp } from "./functions/signUp";
 import { login } from "./functions/login";
-import { checkUser } from './functions/checkUser';
+import { checkUser } from "./functions/checkUser";
 import { verifyEmail } from "./functions/verifyEmail";
 import { sendVerificationEmail } from "./functions/sendVerificationEmail";
 import { changeEmail } from "./functions/changeEmail";
 import { changePassword } from "./functions/changePassword";
 import { changeUserName } from "./functions/changeUserName";
 import { signOut } from "./functions/signOut";
+import { sendResetPasswordEmail } from "./functions/sendResetPasswordEmail";
+import { resetPassword } from "./functions/resetPassword";
 import { deleteAccount } from "./functions/deleteAccount";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
@@ -36,11 +38,11 @@ const sendResponse = (result, res) => {
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
-  
+
   const expectedArgs = ["recaptchaToken", "content", "userName", "type"];
   sendResponse(bodyContains(expectedArgs, req.body), res);
   sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
-  const recaptchaToken = req.body.recaptchaToken
+  const recaptchaToken = req.body.recaptchaToken;
   const content = req.body.content;
   const userName = req.body.userName;
   const type = req.body.type;
@@ -48,7 +50,13 @@ export const createUrlRoute = asyncHandler(async (req, res, next) => {
   sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
-  const { status, body } = await createUrl(recaptchaToken, content, userName, type, userId);
+  const { status, body } = await createUrl(
+    recaptchaToken,
+    content,
+    userName,
+    type,
+    userId
+  );
   res.status(status).send(body);
 });
 
@@ -159,6 +167,23 @@ export const signOutRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
 
   const { status, body } = await signOut(userId);
+  res.status(status).send(body);
+});
+
+export const sendResetPasswordEmailRoute = asyncHandler(
+  async (req, res, next) => {
+    const email = req.body.email;
+
+    const { status, body } = await sendResetPasswordEmail(email);
+    res.status(status).send(body);
+  }
+);
+
+export const resetPasswordRoute = asyncHandler(async (req, res, next) => {
+  const resetPasswordToken = req.body.resetPasswordToken;
+  const newPassword = req.body.newPassword;
+
+  const { status, body } = await resetPassword(resetPasswordToken, newPassword);
   res.status(status).send(body);
 });
 
