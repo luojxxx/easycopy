@@ -1,9 +1,29 @@
+import { Op } from 'sequelize'
 import { webhost } from '../constants'
 import { generateRandomString, sgMail } from "../lib";
 
+import User from '../model/User'
 import ResetPasswordToken from "../model/ResetPasswordToken";
 
 export const sendResetPasswordEmail = async (email) => {
+  const user = await User.findOne({
+    where: {
+      [Op.or]: [
+        {
+          email: email,
+        },
+        {
+          emailVerifying: email,
+        },
+      ],
+    },
+  });
+  if (!user) {
+    return {
+      status: 400,
+      body: 'Email not found in database'
+    }
+  }
   await ResetPasswordToken.destroy({
     where: {
       email: email,
