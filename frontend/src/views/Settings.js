@@ -18,6 +18,7 @@ const Settings = () => {
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [showSendEmailButton, setShowSendEmailButton] = useState(true);
   const handleSendVerifyEmail = async () => {
     setMessage("");
     try {
@@ -32,6 +33,7 @@ const Settings = () => {
         },
       });
       setMessage("Successfully sent verification email");
+      setShowSendEmailButton(false);
     } catch (err) {
       console.log(err);
     }
@@ -135,7 +137,7 @@ const Settings = () => {
             <Heading color="primary" fontSize={3}>
               {emailVerified ? "Verified" : "unverified"}
             </Heading>
-            {!emailVerified && (
+            {!emailVerified && showSendEmailButton && (
               <Button mt={2} onClick={handleSendVerifyEmail}>
                 Send verification email
               </Button>

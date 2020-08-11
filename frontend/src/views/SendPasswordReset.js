@@ -13,6 +13,7 @@ const SendResetPassword = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [showButton, setShowButton] = useState(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
@@ -27,6 +28,7 @@ const SendResetPassword = () => {
           },
         });
         setMessage("Successfully sent password reset, please check email");
+        setShowButton(false);
       } catch (err) {
         console.log(err);
         setMessage("Error");
@@ -50,9 +52,11 @@ const SendResetPassword = () => {
               value={email}
             />
           </Box>
-          <Button width={0.75} mb={2} type="submit">
-            Submit
-          </Button>
+          {showButton && (
+            <Button width={0.75} mb={2} type="submit">
+              Submit
+            </Button>
+          )}
           <Text color="primary">{message}</Text>
         </Flex>
       </form>
