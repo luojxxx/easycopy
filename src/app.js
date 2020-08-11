@@ -56,11 +56,11 @@ app.use(async function (req, res, next) {
     });
     if (user) {
       req.userId = user.userId;
+      next();
     } else {
       res.status(401).send("Unauthorized");
     }
   }
-  next();
 });
 
 app.post("/create", createUrlRoute);
