@@ -15,11 +15,11 @@ const ResetPasswordTests = () => {
 
     it("sendResetPasswordEmail should create new ResetPasswordToken", async function () {
       const { status } = await sendResetPasswordEmail(
-        UserUnverified.email,
+        UserUnverified.emailVerifying,
       );
       const result = await ResetPasswordToken.findOne({
         where: {
-          email: UserUnverified.email
+          email: UserUnverified.emailVerifying
         }
       })
       expect(status).to.be.equal(200);
