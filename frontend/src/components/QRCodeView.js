@@ -8,6 +8,7 @@ const QRCodeViewContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 300px;
 `;
 
 const QRCodeView = ({ text, handleClose }) => {
@@ -20,7 +21,7 @@ const QRCodeView = ({ text, handleClose }) => {
       {
         errorCorrectionLevel: "H",
         color: { light: "red", dark: "#ffffff" },
-        scale: 10,
+        scale: 7,
       },
       function (err, url) {
         setQrCode(url);
