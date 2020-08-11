@@ -8,7 +8,6 @@ const QRCodeViewContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 300px;
 `;
 
 const QRCodeView = ({ text, handleClose }) => {
