@@ -101,6 +101,11 @@ export const deleteUserUrlRoute = asyncHandler(async (req, res, next) => {
 });
 
 export const signUpRoute = asyncHandler(async (req, res, next) => {
+  const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
+  if (!tokenStatus) {
+    return res.status(401).send("Bad token");
+  }
+
   const email = req.body.email;
   const password = req.body.password;
   const userName = req.body.userName;
@@ -181,6 +186,11 @@ export const signOutRoute = asyncHandler(async (req, res, next) => {
 
 export const sendResetPasswordEmailRoute = asyncHandler(
   async (req, res, next) => {
+    const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
+    if (!tokenStatus) {
+      return res.status(401).send("Bad token");
+    }
+    
     const email = req.body.email;
 
     const { status, body } = await sendResetPasswordEmail(email);

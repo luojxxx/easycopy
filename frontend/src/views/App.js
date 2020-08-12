@@ -10,7 +10,8 @@ import {
   userNameLimit,
   contentLimit,
   acceptedTypes,
-  recaptchaSiteKey,
+  recaptchaSiteKeyV3,
+  recaptchaSiteKeyV2,
 } from "../constants";
 
 const App = (props) => {
@@ -58,7 +59,7 @@ const App = (props) => {
       setShowRecaptcha(false);
 
       window.grecaptcha.ready(async function () {
-        const token = await window.grecaptcha.execute(recaptchaSiteKey, {
+        const token = await window.grecaptcha.execute(recaptchaSiteKeyV3, {
           action: "submit",
         });
         const recaptchaResult = await axios({
@@ -98,7 +99,7 @@ const App = (props) => {
             "recaptchaContainer"
           );
           const id = window.grecaptcha.render(recaptchaContainer, {
-            sitekey: "6LeRm7wZAAAAAFunidWbJu4apHdzQ_fweS1wrQu0",
+            sitekey: recaptchaSiteKeyV2,
             callback: handleSubmit,
           });
         }

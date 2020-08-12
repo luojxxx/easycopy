@@ -4,7 +4,7 @@ import { Label } from "@rebass/forms";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import { api } from "../constants";
+import { api, recaptchaSiteKeyV3, recaptchaSiteKeyV2 } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -16,8 +16,12 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
+  const [showRecaptcha, setShowRecaptcha] = useState(false);
+  let threshold = 1;
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e instanceof Object) {
+      e.preventDefault();
+    }
     setMessage("");
     if (email === "") {
       setMessage("Email can't be blank");
@@ -27,21 +31,51 @@ const SignUp = () => {
       setMessage("Passwords don't match");
     } else {
       try {
-        const result = await axios({
-          method: "post",
-          url: api + "/signup",
-          data: {
-            email: email,
-            password: password,
-            userName: userName,
-          },
+        window.grecaptcha.ready(async function () {
+          const token = await window.grecaptcha.execute(recaptchaSiteKeyV3, {
+            action: "submit",
+          });
+          const recaptchaResult = await axios({
+            method: "post",
+            url: api + "/verifyRecaptcha",
+            data: {
+              token: token,
+            },
+          });
+          const score = recaptchaResult.data.data.score;
+          const recaptchaToken = recaptchaResult.data.recaptchaToken;
+
+          threshold = threshold * 0.5;
+          if (score >= threshold) {
+            setShowRecaptcha(false);
+            const result = await axios({
+              method: "post",
+              url: api + "/signup",
+              data: {
+                recaptchaToken: recaptchaToken,
+                email: email,
+                password: password,
+                userName: userName,
+              },
+            });
+            const { data } = result;
+            localStorage.setItem("userToken", data.userToken);
+            localStorage.setItem("userName", data.user.userName);
+            localStorage.setItem("email", data.user.email);
+            localStorage.setItem("emailVerified", data.user.emailVerified);
+            history.push("/");
+            threshold = 1;
+          } else {
+            setShowRecaptcha(true);
+            const recaptchaContainer = document.getElementById(
+              "recaptchaContainer"
+            );
+            const id = window.grecaptcha.render(recaptchaContainer, {
+              sitekey: recaptchaSiteKeyV2,
+              callback: handleSubmit,
+            });
+          }
         });
-        const { data } = result;
-        localStorage.setItem("userToken", data.userToken);
-        localStorage.setItem("userName", data.user.userName);
-        localStorage.setItem("email", data.user.email);
-        localStorage.setItem("emailVerified", data.user.emailVerified);
-        history.push("/");
       } catch (err) {
         console.log(err);
       }
@@ -97,6 +131,11 @@ const SignUp = () => {
             Submit
           </Button>
           <Text color="primary">{message}</Text>
+          {showRecaptcha && (
+            <Flex width={1} justifyContent="center" alignItems="center">
+              <Box id="recaptchaContainer" />
+            </Flex>
+          )}
         </Flex>
       </form>
     </Template>
