@@ -1,9 +1,22 @@
+import dayjs from 'dayjs'
 import { host } from '../constants'
 import { generateRandomString, sgMail } from "../lib";
 
 import EmailVerificationToken from "../model/EmailVerificationToken";
 
 export const sendVerificationEmail = async (userId, email) => {
+  const checkToken = await EmailVerificationToken.findOne({
+    where: {
+      userId: userId,
+    }
+  })
+  if (checkToken && dayjs(checkToken.createdAt).add(15, 'minutes').valueOf() > dayjs().valueOf()) {
+    return {
+      status: 400,
+      body: "Please wait 15 minutes before sending an additional verification email"
+    }
+  }
+
   const randomToken = generateRandomString(100);
   await EmailVerificationToken.destroy({
     where: {
@@ -16,7 +29,6 @@ export const sendVerificationEmail = async (userId, email) => {
   });
 
   const verificationLink = `${host}/verifyemail/${randomToken}`
-
   const msg = {
     to: email,
     from: "admin@quickshift.io",

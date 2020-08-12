@@ -6,6 +6,7 @@ import EmailVerificationToken from "../src/model/EmailVerificationToken";
 import Url from "../src/model/Url";
 import RecaptchaToken from '../src/model/RecaptchaToken'
 import ResetPasswordToken from '../src/model/ResetPasswordToken'
+import dayjs from "dayjs";
 
 export const UserUnverified = {
   userId: 100,
@@ -51,17 +52,14 @@ export const UserVerifiedUserToken = {
   userToken: "randomCharString",
 };
 
-export const UserVerifiedEmailVerificationToken = {
-  userId: 101,
-  verificationToken: "randomCharString",
-};
 export const UserUnverifiedEmailVerificationToken = {
   userId: 100,
   verificationToken: "Greenland",
 };
 
 export const sampleRecaptchaToken = {
-  recaptchaToken: 'randomString'
+  recaptchaToken: 'randomString',
+  createdAt: dayjs().subtract(30, 'minutes').valueOf()
 };
 
 export const sampleResetPasswordToken = {
@@ -87,7 +85,6 @@ export const DBSetup = async () => {
     content: encryptString(UrlAccount.content),
   });
   await UserToken.create(UserVerifiedUserToken);
-  await EmailVerificationToken.create(UserVerifiedEmailVerificationToken);
   await EmailVerificationToken.create(UserUnverifiedEmailVerificationToken);
   await RecaptchaToken.create(sampleRecaptchaToken);
   await ResetPasswordToken.create(sampleResetPasswordToken);
