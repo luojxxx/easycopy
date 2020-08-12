@@ -36,7 +36,6 @@ const UrlTestSuite = () => {
       let url
       it("should create a url", async function () {
         const { body } = await createUrl(
-          sampleRecaptchaToken.recaptchaToken,
           content,
           userName,
           type

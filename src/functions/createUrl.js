@@ -20,18 +20,7 @@ const generateWordArray = () => {
   });
 };
 
-export const createUrl = async (recaptchaToken, content, userName, type, userId) => {
-  const consumeToken = await RecaptchaToken.destroy({
-    where: {
-      recaptchaToken: recaptchaToken,
-    }
-  });
-  if (!consumeToken) {
-    return {
-      status: 401,
-      body: 'Bad recaptcha token'
-    }
-  }
+export const createUrl = async (content, userName, type, userId) => {
   // make sure url doesn't already exist
   let url;
   let results = true;

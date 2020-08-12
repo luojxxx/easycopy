@@ -28,6 +28,7 @@ import { resetPassword } from "./functions/resetPassword";
 import { deleteAccount } from "./functions/deleteAccount";
 import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
+import RecaptchaToken from "./model/RecaptchaToken";
 
 const sendResponse = (result, res) => {
   if (result) {
@@ -35,6 +36,15 @@ const sendResponse = (result, res) => {
     res.status(status).send(body);
   }
 };
+
+const consumeRecaptchaToken = async (token) => {
+  const consumeToken = await RecaptchaToken.destroy({
+    where: {
+      recaptchaToken: token,
+    },
+  });
+  return consumeToken == true
+}
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
@@ -50,8 +60,12 @@ export const createUrlRoute = asyncHandler(async (req, res, next) => {
   sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
 
+  const tokenStatus = await consumeRecaptchaToken(recaptchaToken);
+  if (!tokenStatus) {
+    return res.status(401).send("Bad token");
+  }
+
   const { status, body } = await createUrl(
-    recaptchaToken,
     content,
     userName,
     type,
