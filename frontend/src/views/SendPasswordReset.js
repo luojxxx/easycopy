@@ -4,7 +4,7 @@ import { Label } from "@rebass/forms";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import { api } from "../constants";
+import { api, recaptchaSiteKeyV3, recaptchaSiteKeyV2 } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -14,21 +14,52 @@ const SendResetPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [showButton, setShowButton] = useState(true);
+  const [showRecaptcha, setShowRecaptcha] = useState(false);
+  let threshold = 1;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
       setMessage("Email can't be blank");
     } else {
       try {
-        const result = await axios({
-          method: "post",
-          url: api + "/sendresetpasswordemail",
-          data: {
-            email: email,
-          },
+        window.grecaptcha.ready(async function () {
+          const token = await window.grecaptcha.execute(recaptchaSiteKeyV3, {
+            action: "submit",
+          });
+          const recaptchaResult = await axios({
+            method: "post",
+            url: api + "/verifyRecaptcha",
+            data: {
+              token: token,
+            },
+          });
+          const score = recaptchaResult.data.data.score;
+          const recaptchaToken = recaptchaResult.data.recaptchaToken;
+
+          threshold = threshold * 0.5;
+          if (score >= threshold) {
+            setShowRecaptcha(false);
+            const result = await axios({
+              method: "post",
+              url: api + "/sendresetpasswordemail",
+              data: {
+                email: email,
+              },
+            });
+            setMessage("Successfully sent password reset, please check email");
+            setShowButton(false);
+            threshold = 1;
+          } else {
+            setShowRecaptcha(true);
+            const recaptchaContainer = document.getElementById(
+              "recaptchaContainer"
+            );
+            const id = window.grecaptcha.render(recaptchaContainer, {
+              sitekey: recaptchaSiteKeyV2,
+              callback: handleSubmit,
+            });
+          }
         });
-        setMessage("Successfully sent password reset, please check email");
-        setShowButton(false);
       } catch (err) {
         console.log(err);
         setMessage("Error");
@@ -58,6 +89,11 @@ const SendResetPassword = () => {
             </Button>
           )}
           <Text color="primary">{message}</Text>
+          {showRecaptcha && (
+            <Flex width={1} justifyContent="center" alignItems="center">
+              <Box id="recaptchaContainer" />
+            </Flex>
+          )}
         </Flex>
       </form>
     </Template>
