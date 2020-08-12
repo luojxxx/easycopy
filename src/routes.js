@@ -47,23 +47,18 @@ const consumeRecaptchaToken = async (token) => {
 }
 
 export const createUrlRoute = asyncHandler(async (req, res, next) => {
-  const userId = req.userId;
+  const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
+  if (!tokenStatus) {
+    return res.status(401).send("Bad token");
+  }
 
-  const expectedArgs = ["recaptchaToken", "content", "userName", "type"];
-  sendResponse(bodyContains(expectedArgs, req.body), res);
-  sendResponse(bodyContainsStrings(expectedArgs, req.body), res);
-  const recaptchaToken = req.body.recaptchaToken;
+  const userId = req.userId;
   const content = req.body.content;
   const userName = req.body.userName;
   const type = req.body.type;
   sendResponse(lessThanLength({ content: contentLimit }, content), res);
   sendResponse(lessThanLength({ userName: userNameLimit }, userName), res);
   sendResponse(oneOfType(acceptedTypes, type), res);
-
-  const tokenStatus = await consumeRecaptchaToken(recaptchaToken);
-  if (!tokenStatus) {
-    return res.status(401).send("Bad token");
-  }
 
   const { status, body } = await createUrl(
     content,
