@@ -91,6 +91,7 @@ const App = (props) => {
           setSubmissionProcessing(false);
           const url = response.data.url;
           history.push(url);
+          threshold = 1
         } else {
           setShowRecaptcha(true);
           const recaptchaContainer = document.getElementById(
