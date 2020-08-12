@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
 
-import RecaptchaToken from '../model/RecaptchaToken'
-import { generateRandomString } from '../lib'
+import RecaptchaToken from "../model/RecaptchaToken";
+import { generateRandomString } from "../lib";
 
 export const verifyRecaptcha = async (token) => {
   const recaptchaResult = await axios({
@@ -12,18 +12,24 @@ export const verifyRecaptcha = async (token) => {
       response: token,
     },
   });
+  if (!recaptchaResult.data.success) {
+    return {
+      status: 401,
+      body: "Bad recaptcha token",
+    };
+  } else {
+    const randomString = generateRandomString(100);
 
-  const randomString = generateRandomString(100)
+    await RecaptchaToken.create({
+      recaptchaToken: randomString,
+    });
 
-  await RecaptchaToken.create({
-    recaptchaToken: randomString
-  })
-
-  return {
-    status: 200,
-    body: {
-      data: recaptchaResult.data,
-      recaptchaToken: randomString
-    },
-  };
+    return {
+      status: 200,
+      body: {
+        data: recaptchaResult.data,
+        recaptchaToken: randomString,
+      },
+    };
+  }
 };
