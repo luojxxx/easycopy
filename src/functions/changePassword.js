@@ -30,8 +30,6 @@ export const changePassword = async (userId, oldPassword, newPassword) => {
 
   return {
     status: 200,
-    body: {
-      msg: "Successfully changed password!",
-    },
+    body: "Successfully changed password!",
   };
 };

@@ -7,8 +7,6 @@ export const signOut = async (userId) => {
 
   return {
     status: 200,
-    body: {
-      msg: 'Success!',
-    },
+    body: "Success!",
   };
 };

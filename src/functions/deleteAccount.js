@@ -31,8 +31,6 @@ export const deleteAccount = async (userId, password) => {
 
   return {
     status: 200,
-    body: {
-      msg: "Successfully deleted account!",
-    },
+    body: "Successfully deleted account!",
   };
 };

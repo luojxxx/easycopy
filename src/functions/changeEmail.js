@@ -19,10 +19,8 @@ export const changeEmail = async (userId, newEmail) => {
   if (checkExistingEmail) {
     return {
       status: 400,
-      body: {
-        msg: 'Email is already taken'
-      }
-    }
+      body: "Email is already taken",
+    };
   }
 
   await User.update({
@@ -38,8 +36,6 @@ export const changeEmail = async (userId, newEmail) => {
 
   return {
     status: 200,
-    body: {
-      msg: 'Success!',
-    },
+    body: "Successfully verified email!",
   };
 };

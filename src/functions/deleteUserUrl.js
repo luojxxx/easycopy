@@ -12,7 +12,7 @@ export const deleteUserUrl = async (userId, urlId) => {
   if (!result) {
     return {
       status: 404,
-      body: [],
+      body: "Couldn't find url to delete",
     };
   }
 

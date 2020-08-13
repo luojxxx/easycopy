@@ -14,8 +14,6 @@ export const changeUserName = async (userId, newUserName) => {
 
   return {
     status: 200,
-    body: {
-      msg: 'Success!',
-    },
+    body: "Success!",
   };
 };
