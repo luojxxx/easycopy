@@ -33,7 +33,7 @@ const Login = () => {
       history.push("/urls");
     } catch (err) {
       console.log(err);
-      setMessage("Bad login");
+      setMessage(err.response.data);
     }
   };
   return (

@@ -62,7 +62,7 @@ const SendResetPassword = () => {
         });
       } catch (err) {
         console.log(err);
-        setMessage("Error");
+        setMessage(err.response.data);
       }
     }
   };

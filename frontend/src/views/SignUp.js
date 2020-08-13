@@ -78,6 +78,7 @@ const SignUp = () => {
         });
       } catch (err) {
         console.log(err);
+        setMessage(err.response.data);
       }
     }
   };

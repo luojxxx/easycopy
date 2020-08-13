@@ -36,6 +36,7 @@ const Settings = () => {
       setShowSendEmailButton(false);
     } catch (err) {
       console.log(err);
+      setMessage(err.response.data);
     }
   };
   const handleChangeEmail = async () => {
@@ -57,6 +58,7 @@ const Settings = () => {
         setMessage("Successfully changed email");
       } catch (err) {
         console.log(err);
+        setMessage(err.response.data);
       }
     }
   };
@@ -82,6 +84,7 @@ const Settings = () => {
         setMessage("Successfully changed password");
       } catch (err) {
         console.log(err);
+        setMessage(err.response.data);
       }
     }
   };
@@ -101,6 +104,7 @@ const Settings = () => {
       setMessage("Successfully changed username");
     } catch (err) {
       console.log(err);
+      setMessage(err.response.data);
     }
   };
   const handleDeleteAcount = async () => {
@@ -122,6 +126,7 @@ const Settings = () => {
       history.push('/')
     } catch (err) {
       console.log(err);
+      setMessage(err.response.data);
     }
   };
   const emailVerified = localStorage.getItem("emailVerified") === 'true';
