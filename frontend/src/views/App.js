@@ -18,7 +18,7 @@ const App = (props) => {
   const { history, location } = props;
   const { pathname } = location;
   const [url, setUrl] = useState("");
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(localStorage.getItem("userName") ? localStorage.getItem('userName') : "");
   const [content, setContent] = useState("");
   const [type, setType] = useState("text");
   const [date, setDate] = useState("");
