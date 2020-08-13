@@ -26,7 +26,7 @@ const SendVerificationEmailTests = () => {
         where: { userId: userId },
       });
       expect(result2.status).to.be.equal(400);
-      expect(newEmailVerificationToken1.verificationToken).to.not.be.equal(
+      expect(newEmailVerificationToken1.verificationToken).to.be.equal(
         newEmailVerificationToken2.verificationToken
       );
     });

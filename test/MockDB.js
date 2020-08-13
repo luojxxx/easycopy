@@ -4,8 +4,8 @@ import User from "../src/model/User";
 import UserToken from "../src/model/UserToken";
 import EmailVerificationToken from "../src/model/EmailVerificationToken";
 import Url from "../src/model/Url";
-import RecaptchaToken from '../src/model/RecaptchaToken'
-import ResetPasswordToken from '../src/model/ResetPasswordToken'
+import RecaptchaToken from "../src/model/RecaptchaToken";
+import ResetPasswordToken from "../src/model/ResetPasswordToken";
 import dayjs from "dayjs";
 
 export const UserUnverified = {
@@ -15,7 +15,6 @@ export const UserUnverified = {
   password: "luckypassword321",
   emailVerifying: "luo.j2010@gmail.com",
   emailVerified: false,
-  createdAt: Date.now(),
 };
 
 export const UserVerified = {
@@ -25,7 +24,6 @@ export const UserVerified = {
   password: "luckypassword123",
   emailVerifying: null,
   emailVerified: true,
-  createdAt: Date.now(),
 };
 
 export const UrlNoAccount = {
@@ -55,11 +53,11 @@ export const UserVerifiedUserToken = {
 export const UserUnverifiedEmailVerificationToken = {
   userId: 100,
   verificationToken: "Greenland",
+  createdAt: dayjs().subtract(30, "minutes").toISOString(),
 };
 
 export const sampleRecaptchaToken = {
-  recaptchaToken: 'randomString',
-  createdAt: dayjs().subtract(30, 'minutes').valueOf()
+  recaptchaToken: "randomString",
 };
 
 export const sampleResetPasswordToken = {
