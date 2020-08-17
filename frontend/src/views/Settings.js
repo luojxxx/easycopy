@@ -102,6 +102,7 @@ const Settings = () => {
         },
       });
       setMessage("Successfully changed username");
+      localStorage.setItem("userName", userName);
     } catch (err) {
       console.log(err);
       setMessage(err.response.data);
