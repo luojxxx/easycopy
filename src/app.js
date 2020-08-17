@@ -81,7 +81,7 @@ app.post("/signout", signOutRoute);
 app.post("/sendresetpasswordemail", sendResetPasswordEmailRoute);
 app.post("/resetpassword", resetPasswordRoute);
 app.post("/deleteaccount", deleteAccountRoute);
-app.post("/payment", stripePaymentRoute);
+// app.post("/payment", stripePaymentRoute);
 app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
 
 // catch 404 and forward to error handler
