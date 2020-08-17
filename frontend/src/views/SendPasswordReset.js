@@ -43,6 +43,7 @@ const SendResetPassword = () => {
               method: "post",
               url: api + "/sendresetpasswordemail",
               data: {
+                recaptchaToken: recaptchaToken,
                 email: email,
               },
             });
