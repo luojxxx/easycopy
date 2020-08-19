@@ -15,10 +15,12 @@ import Pagination from "../components/Pagination";
 import { dateFormat } from "../constants";
 
 const Urls = () => {
+  const [loading, setLoading] = useState(false)
   const [urls, setUrls] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
   useEffect(() => {
+    setLoading(true)
     const getUrls = async () => {
       try {
         const result = await axios({
@@ -36,6 +38,7 @@ const Urls = () => {
       } catch (err) {
         console.log(err);
       }
+      setLoading(false)
     };
     getUrls();
   }, [page]);
@@ -63,7 +66,7 @@ const Urls = () => {
           Urls
         </Heading>
         <Flex flexDirection="column" alignItems="center" width={1}>
-          {urls.length === 0 && (
+          {!loading && urls.length === 0 && (
             <Heading color="primary" fontSize={3}>
               [New links you create will show up here]
             </Heading>
