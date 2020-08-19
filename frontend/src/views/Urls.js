@@ -6,15 +6,17 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { FiX } from "react-icons/fi";
 
-import { api } from "../constants";
+import { api, pageSize } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Pagination from "../components/Pagination";
 
 import { dateFormat } from "../constants";
 
 const Urls = () => {
   const [urls, setUrls] = useState([]);
+  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
   useEffect(() => {
     const getUrls = async () => {
@@ -25,14 +27,17 @@ const Urls = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           },
-          data: {},
-        })
-        setUrls(result.data);
+          params: {
+            page: page,
+          },
+        });
+        setUrls(result.data.list);
+        setTotal(result.data.total);
       } catch (err) {
         console.log(err);
       }
-    }
-    getUrls()
+    };
+    getUrls();
   }, [page]);
   const handleDelete = async (urlId) => {
     try {
@@ -102,9 +107,9 @@ const Urls = () => {
                     gridColumnEnd: 4,
                     gridRowStart: idx + 1,
                     gridRowEnd: idx + 2,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   <Text color="primary">{ele.content} </Text>
@@ -128,6 +133,7 @@ const Urls = () => {
               </Fragment>
             ))}
           </div>
+          {total !== 0 && <Pagination total={total} pageSize={pageSize} setPage={setPage} />}
         </Flex>
       </Flex>
     </Template>

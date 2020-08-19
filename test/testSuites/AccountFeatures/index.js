@@ -13,8 +13,8 @@ const AccountFeaturesTests = () => {
 
     describe("getUserUrls", function () {
       it("should retrieve the url assigned to a userId", async function () {
-        const results = await getUserUrls(UrlAccount.userId);
-        expect(results).to.have.property("body").lengthOf(1);
+        const results = await getUserUrls(UrlAccount.userId, 0);
+        expect(results.body).to.have.property("list").lengthOf(1);
       });
     });
     describe("deleteUserUrl", function () {

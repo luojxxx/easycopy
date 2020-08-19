@@ -87,8 +87,9 @@ export const verifyRecaptchaRoute = asyncHandler(async (req, res, next) => {
 
 export const getUserUrlsRoute = asyncHandler(async (req, res, next) => {
   const userId = req.userId;
+  const page = req.query.page;
 
-  const { status, body } = await getUserUrls(userId);
+  const { status, body } = await getUserUrls(userId, page);
   res.status(status).send(body);
 });
 
@@ -190,7 +191,7 @@ export const sendResetPasswordEmailRoute = asyncHandler(
     if (!tokenStatus) {
       return res.status(401).send("Bad token");
     }
-    
+
     const email = req.body.email;
 
     const { status, body } = await sendResetPasswordEmail(email);
