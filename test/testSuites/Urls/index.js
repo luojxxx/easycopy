@@ -52,6 +52,14 @@ const UrlTestSuite = () => {
         expect(body).to.have.property("type").equal(type);
       })
     });
+    describe("create url with wrong type", function() {
+      it("should fail", async function() {
+        const userName = "BobTestDummy";
+        const content = "I hope todays test goes well";
+        const { status } = await createUrl(content, userName, "wrongType");
+        expect(status).to.be.equal(400);
+      })
+    })
 
     after(async function () {
       await DBClear();

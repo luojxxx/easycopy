@@ -3,8 +3,8 @@ import path from "path";
 import dayjs from 'dayjs'
 
 import { encryptString } from '../lib'
+import { acceptedTypes } from '../constants'
 import Url from "../model/Url";
-import RecaptchaToken from '../model/RecaptchaToken'
 
 const text = fs.readFileSync(
   path.resolve(__dirname, "../wordbank.txt"),
@@ -21,6 +21,13 @@ const generateWordArray = () => {
 };
 
 export const createUrl = async (content, userName, type, userId) => {
+  if (!acceptedTypes.includes(type)) {
+    return {
+      status: 400,
+      body: 'Incorrect type'
+    }
+  }
+  
   // make sure url doesn't already exist
   let url;
   let results = true;
