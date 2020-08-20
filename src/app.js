@@ -6,8 +6,8 @@ import logger from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 const Sentry = require("@sentry/node");
-import UserToken from "./model/UserToken";
 
+import { authentication } from './middleware/authentication'
 import {
   createUrlRoute,
   getUrlRoute,
@@ -47,23 +47,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use(async function (req, res, next) {
-  if (!("authorization" in req.headers)) {
-    next();
-  } else {
-    const userToken = req.headers.authorization.replace("Bearer ", "");
-    const user = await UserToken.findOne({
-      where: { userToken: userToken },
-    });
-    if (user) {
-      req.userId = user.userId;
-      next();
-    } else {
-      res.status(401).send("Unauthorized");
-    }
-  }
-});
+app.use(authentication);
 
 app.post("/create", createUrlRoute);
 app.post("/verifyRecaptcha", verifyRecaptchaRoute);
