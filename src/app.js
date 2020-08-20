@@ -29,11 +29,11 @@ import {
   verifyRecaptchaRoute,
 } from "./routes";
 
-const app = express();
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
 });
 
+const app = express();
 app.use(Sentry.Handlers.requestHandler());
 app.use(logger("dev"));
 app.use(helmet());

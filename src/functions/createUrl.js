@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
-import { encryptString } from '../lib'
-import { acceptedTypes } from '../constants'
+import { encryptString } from "../lib";
+import { userNameLimit, contentLimit, acceptedTypes } from "../constants";
 import Url from "../model/Url";
 
 const text = fs.readFileSync(
@@ -21,19 +21,31 @@ const generateWordArray = () => {
 };
 
 export const createUrl = async (content, userName, type, userId) => {
+  if (content.length > contentLimit) {
+    return {
+      status: 400,
+      body: "Content is too long",
+    };
+  }
+  if (userName.length > userNameLimit) {
+    return {
+      status: 400,
+      body: "UserName is too long",
+    };
+  }
   if (!acceptedTypes.includes(type)) {
     return {
       status: 400,
-      body: 'Incorrect type'
-    }
+      body: "Incorrect type",
+    };
   }
-  
+
   // make sure url doesn't already exist
   let url;
   let results = true;
   while (results) {
     url = generateWordArray().join("");
-    results = await Url.findOne({ where: { urlRaw : url.toLowerCase() } });
+    results = await Url.findOne({ where: { urlRaw: url.toLowerCase() } });
   }
 
   await Url.create({
@@ -43,13 +55,13 @@ export const createUrl = async (content, userName, type, userId) => {
     userName: userName,
     type: type,
     userId: userId,
-    expiredAt: dayjs().add(1, 'month').toISOString(),
+    expiredAt: dayjs().add(1, "month").toISOString(),
   });
 
   return {
     status: 200,
     body: {
-      url: url
-    }
+      url: url,
+    },
   };
 };
