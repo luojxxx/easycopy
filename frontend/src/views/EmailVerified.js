@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
-import { Label } from "@rebass/forms";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-import { FiX } from "react-icons/fi";
 
-import { api } from "../constants";
 import Template from "../components/Template";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import { AccountContextConsumer } from '../providers/AccountProvider'
 
-import { dateFormat } from "../constants";
-
-const EmailVerified = () => {
+const EmailVerified = ({ accountContext }) => {
+  useEffect(() => {
+    accountContext.setEmailVerified(true)
+  }, [0])
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>
@@ -24,5 +18,11 @@ const EmailVerified = () => {
     </Template>
   );
 };
+
+const WrappedEmailVerified = () => (
+  <AccountContextConsumer>
+    {(accountContext) => (<EmailVerified accountContext={accountContext} />)}
+  </AccountContextConsumer>
+)
 
 export default EmailVerified;

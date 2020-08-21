@@ -8,8 +8,9 @@ import { api, recaptchaSiteKeyV3, recaptchaSiteKeyV2 } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { AccountContextConsumer } from "../providers/AccountProvider";
 
-const SignUp = () => {
+const SignUp = ({ accountContext }) => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,9 +61,9 @@ const SignUp = () => {
             });
             const { data } = result;
             localStorage.setItem("userToken", data.userToken);
-            localStorage.setItem("userName", data.user.userName);
-            localStorage.setItem("email", data.user.email);
-            localStorage.setItem("emailVerified", data.user.emailVerified);
+            accountContext.setEmail(data.user.email);
+            accountContext.setUserName(data.user.userName);
+            accountContext.setEmailVerified(data.user.emailVerified);
             history.push("/");
             threshold = 1;
           } else {
@@ -143,4 +144,10 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const WrappedSignUp = () => (
+  <AccountContextConsumer>
+    {(accountContext) => <SignUp accountContext={accountContext} />}
+  </AccountContextConsumer>
+);
+
+export default WrappedSignUp;

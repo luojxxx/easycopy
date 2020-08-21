@@ -1,35 +1,14 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Text } from "rebass";
-import axios from 'axios'
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import { api } from '../constants'
+import { api } from "../constants";
+import { AccountContextConsumer } from "../providers/AccountProvider";
 
-const AccountBar = () => {
+const AccountBar = ({ accountContext }) => {
   const history = useHistory();
-  const [loggedin, setLoggedin] = useState(localStorage.getItem("email") !== null)
-  useEffect(() => {
-    const updateUserData = async () => {
-      try {
-        const result = await axios({
-          method: "post",
-          url: api + "/checkUser",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
-          data: {},
-        });
-        const { data } = result;
-        localStorage.setItem("userName", data.user.userName);
-        localStorage.setItem("email", data.user.email);
-        localStorage.setItem("emailVerified", data.user.emailVerified);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    updateUserData()
-  }, [0])
   const handleSignOut = async () => {
     try {
       const result = await axios({
@@ -41,15 +20,15 @@ const AccountBar = () => {
         data: {},
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
     localStorage.removeItem("userToken");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("email");
-    setLoggedin(false)
-    history.push('/')
+    accountContext.setEmail(null);
+    accountContext.setUserName(null);
+    accountContext.setEmailVerified(null);
+    history.push("/");
   };
-  return loggedin === false ? (
+  return !accountContext.email ? (
     <Fragment>
       <Link to="/signup">
         <Text px={1} color="primary">
@@ -95,4 +74,10 @@ const AccountBar = () => {
   );
 };
 
-export default AccountBar;
+const WrappedAccountBar = () => (
+  <AccountContextConsumer>
+    {(accountContext) => <AccountBar accountContext={accountContext} />}
+  </AccountContextConsumer>
+);
+
+export default WrappedAccountBar;

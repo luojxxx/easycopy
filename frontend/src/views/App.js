@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import AppDisplay from "./AppDisplay";
@@ -13,12 +13,14 @@ import {
   recaptchaSiteKeyV3,
   recaptchaSiteKeyV2,
 } from "../constants";
+import { AccountContextConsumer } from '../providers/AccountProvider'
 
-const App = (props) => {
-  const { history, location } = props;
+const App = ({ accountContext }) => {
+  const history = useHistory();
+  const location = useLocation();
   const { pathname } = location;
   const [url, setUrl] = useState("");
-  const [userName, setUserName] = useState(localStorage.getItem("userName") ? localStorage.getItem('userName') : "");
+  const [userName, setUserName] = useState(accountContext.userName || '');
   const [content, setContent] = useState("");
   const [type, setType] = useState("text");
   const [date, setDate] = useState("");
@@ -160,9 +162,10 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-};
+const WrappedApp = () => (
+  <AccountContextConsumer>
+    {(accountContext) => (<App accountContext={accountContext} />)}
+  </AccountContextConsumer>
+)
 
-export default withRouter(App);
+export default WrappedApp;

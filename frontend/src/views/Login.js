@@ -8,8 +8,9 @@ import { api } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { AccountContextConsumer } from "../providers/AccountProvider";
 
-const Login = () => {
+const Login = ({ accountContext }) => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,9 +28,9 @@ const Login = () => {
       });
       const { data } = result;
       localStorage.setItem("userToken", data.userToken);
-      localStorage.setItem("userName", data.user.userName);
-      localStorage.setItem("email", data.user.email);
-      localStorage.setItem("emailVerified", data.user.emailVerified);
+      accountContext.setEmail(data.user.email);
+      accountContext.setUserName(data.user.userName);
+      accountContext.setEmailVerified(data.user.emailVerified);
       history.push("/urls");
     } catch (err) {
       console.log(err);
@@ -57,7 +58,9 @@ const Login = () => {
             <Flex flexDirection="row" justifyContent="flex-start">
               <Text color="primary">Password</Text>
               &nbsp;
-              <Link to='sendpasswordreset'><Text color="primary">(Reset password)</Text></Link>
+              <Link to="sendpasswordreset">
+                <Text color="primary">(Reset password)</Text>
+              </Link>
             </Flex>
             <Input
               id="user"
@@ -77,4 +80,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const WrappedLogin = () => (
+  <AccountContextConsumer>
+    {(accountContext) => <Login accountContext={accountContext} />}
+  </AccountContextConsumer>
+);
+
+export default WrappedLogin;

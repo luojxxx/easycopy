@@ -13,14 +13,15 @@ import TermsOfService from "./views/TermsOfService";
 import Donate from "./views/Donate";
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";
-import Urls from './views/Urls';
-import Settings from './views/Settings';
-import EmailVerified from './views/EmailVerified'
+import Urls from "./views/Urls";
+import Settings from "./views/Settings";
+import EmailVerified from "./views/EmailVerified";
 import SendPasswordReset from "./views/SendPasswordReset";
-import ResetPassword from './views/ResetPassword'
+import ResetPassword from "./views/ResetPassword";
 
 import { ThemeProvider } from "emotion-theming";
 import theme from "./theme";
+import { AccountProvider } from "./providers/AccountProvider";
 
 import * as serviceWorker from "./serviceWorker";
 
@@ -33,22 +34,24 @@ const Index = (
   <Elements stripe={stripePromise}>
     <Router>
       <ThemeProvider theme={theme}>
-        <AppContainer>
-          <Switch>
-            <Route path="/contact" component={Contact} />
-            <Route path="/privacy" component={Privacy} />
-            <Route path="/termsofservice" component={TermsOfService} />
-            <Route path="/donate" component={Donate} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/urls" component={Urls} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/emailverified" component={EmailVerified} />
-            <Route path="/sendpasswordreset" component={SendPasswordReset} />
-            <Route path="/resetpassword" component={ResetPassword} />
-            <Route path="/" component={App} />
-          </Switch>
-        </AppContainer>
+        <AccountProvider>
+          <AppContainer>
+            <Switch>
+              <Route path="/contact" component={Contact} />
+              <Route path="/privacy" component={Privacy} />
+              <Route path="/termsofservice" component={TermsOfService} />
+              <Route path="/donate" component={Donate} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/urls" component={Urls} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/emailverified" component={EmailVerified} />
+              <Route path="/sendpasswordreset" component={SendPasswordReset} />
+              <Route path="/resetpassword" component={ResetPassword} />
+              <Route path="/" component={App} />
+            </Switch>
+          </AppContainer>
+        </AccountProvider>
       </ThemeProvider>
     </Router>
   </Elements>

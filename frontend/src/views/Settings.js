@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import { Flex, Box, Heading, Text } from "rebass";
 import { Label } from "@rebass/forms";
 import axios from "axios";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 import { api } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { AccountContextConsumer } from "../providers/AccountProvider";
 
-const Settings = () => {
+const Settings = ({ accountContext }) => {
   const history = useHistory();
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [email, setEmail] = useState(accountContext.email);
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  const [userName, setUserName] = useState(accountContext.userName);
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
   const [message, setMessage] = useState("");
   const [showSendEmailButton, setShowSendEmailButton] = useState(true);
@@ -56,6 +57,7 @@ const Settings = () => {
           },
         });
         setMessage("Successfully changed email");
+        accountContext.setEmail(email);
       } catch (err) {
         console.log(err);
         setMessage(err.response.data);
@@ -102,7 +104,7 @@ const Settings = () => {
         },
       });
       setMessage("Successfully changed username");
-      localStorage.setItem("userName", userName);
+      accountContext.setUserName(userName);
     } catch (err) {
       console.log(err);
       setMessage(err.response.data);
@@ -124,13 +126,12 @@ const Settings = () => {
       localStorage.removeItem("userToken");
       localStorage.removeItem("userName");
       localStorage.removeItem("email");
-      history.push('/')
+      history.push("/");
     } catch (err) {
       console.log(err);
       setMessage(err.response.data);
     }
   };
-  const emailVerified = localStorage.getItem("emailVerified") === 'true';
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>
@@ -141,9 +142,9 @@ const Settings = () => {
           <Box width={0.75} pb={3}>
             <Label htmlFor="user">Email Verification</Label>
             <Heading color="primary" fontSize={3}>
-              {emailVerified ? "Verified" : "unverified"}
+              {accountContext.emailVerified ? "Verified" : "unverified"}
             </Heading>
-            {!emailVerified && showSendEmailButton && (
+            {!accountContext.emailVerified && showSendEmailButton && (
               <Button mt={2} onClick={handleSendVerifyEmail}>
                 Send verification email
               </Button>
@@ -229,4 +230,10 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+const WrappedSettings = () => (
+  <AccountContextConsumer>
+    {(accountContext) => <Settings accountContext={accountContext} />}
+  </AccountContextConsumer>
+);
+
+export default WrappedSettings;
