@@ -5,6 +5,7 @@ import { generateRandomString, sgMail } from "../lib";
 import EmailVerificationToken from "../model/EmailVerificationToken";
 
 export const sendVerificationEmail = async (userId, email) => {
+  email = email.toLowerCase();
   const checkToken = await EmailVerificationToken.findOne({
     where: {
       userId: userId,

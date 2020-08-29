@@ -6,6 +6,7 @@ import User from '../model/User'
 import ResetPasswordToken from "../model/ResetPasswordToken";
 
 export const sendResetPasswordEmail = async (email) => {
+  email = email.toLowerCase();
   const user = await User.findOne({
     where: {
       [Op.or]: [

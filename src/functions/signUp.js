@@ -6,6 +6,7 @@ import UserToken from "../model/UserToken";
 import { sendVerificationEmail } from "../functions/sendVerificationEmail";
 
 export const signUp = async (email, password, userName) => {
+  email = email.toLowerCase();
   const checkUser = await User.findOne({
     where: {
       [Op.or]: [

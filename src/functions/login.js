@@ -5,6 +5,7 @@ import User from "../model/User";
 import UserToken from "../model/UserToken";
 
 export const login = async (email, password) => {
+  email = email.toLowerCase();
   const user = await User.findOne({
     where: {
       [Op.or]: [

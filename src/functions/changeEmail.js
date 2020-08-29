@@ -4,6 +4,7 @@ import User from "../model/User";
 import { sendVerificationEmail } from "./sendVerificationEmail";
 
 export const changeEmail = async (userId, newEmail) => {
+  newEmail = newEmail.toLowerCase();
   const checkExistingEmail = await User.findOne({
     where: {
       [Op.or]: [
