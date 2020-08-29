@@ -32,7 +32,7 @@ const UserField = ({ userName, handleUserNameChange, isCreatePage }) => {
 };
 
 UserField.propTypes = {
-  handleUserChange: PropTypes.func.isRequired,
+  handleUserNameChange: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
   isCreatePage: PropTypes.bool.isRequired,
 };
