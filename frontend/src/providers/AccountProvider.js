@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 
-import { api } from '../constants'
+import { api } from "../constants";
 
 const { Provider, Consumer } = React.createContext();
 
 const AccountProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true)
-  const [email, setEmail] = useState(null)
-  const [userName, setUserName] = useState(null)
-  const [emailVerified, setEmailVerified] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [emailVerified, setEmailVerified] = useState(null);
   useEffect(() => {
     const updateUserData = async () => {
       try {
@@ -28,23 +28,26 @@ const AccountProvider = ({ children }) => {
         setLoading(false);
       } catch (err) {
         console.log(err);
+        setUserName("");
         setLoading(false);
       }
     };
     updateUserData();
   }, [0]);
   return (
-    <Provider value={{
-      email: email,
-      setEmail: setEmail,
-      userName: userName,
-      setUserName: setUserName,
-      emailVerified: emailVerified,
-      setEmailVerified: setEmailVerified,
-    }}>
+    <Provider
+      value={{
+        email: email,
+        setEmail: setEmail,
+        userName: userName,
+        setUserName: setUserName,
+        emailVerified: emailVerified,
+        setEmailVerified: setEmailVerified,
+      }}
+    >
       {!loading && children}
     </Provider>
-  )
-}
+  );
+};
 
 export { AccountProvider, Consumer as AccountContextConsumer };
