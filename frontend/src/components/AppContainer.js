@@ -12,6 +12,7 @@ const AppContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  overflow: hidden;
 
   font-family: Source Code Pro;
 

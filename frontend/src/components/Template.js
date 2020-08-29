@@ -13,10 +13,7 @@ const Header = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  width: 100%;
-  position: absolute;
-  top: 1em;
-  right: 1em;
+  padding: 8px;
 `;
 
 const Footer = styled.div`
@@ -26,9 +23,7 @@ const Footer = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  width: 100%;
-  position: absolute;
-  bottom: 1em;
+  padding: 8px;
 `;
 
 const Template = ({ subheading, children }) => {
@@ -46,27 +41,34 @@ const Template = ({ subheading, children }) => {
   }, []);
   
   return (
-    <Fragment>
+    <Flex
+      width={1}
+      flexDirection="column"
+      justifyContent="space-between"
+      style={{ height: "100%" }}
+    >
       <Header>
         <AccountBar />
       </Header>
-      {subheading && (
-        <Link to="/">
-          <Heading color="primary" pb={3}>
-            EasyCopy.io
-          </Heading>
-        </Link>
-      )}
-      <Box width={[0.95, 0.8, 0.7]}>
-        <Flex width={1} justifyContent="center">
-          <Box width={0.8} style={{ textAlign: "center" }}>
-            <Text color="primary" pb={3}>
-              {subheading}
-            </Text>
-          </Box>
-        </Flex>
-        {children}
-      </Box>
+      <Flex flexDirection="column" alignItems="center">
+        {subheading && (
+          <Link to="/">
+            <Heading color="primary" pb={3}>
+              EasyCopy.io
+            </Heading>
+          </Link>
+        )}
+        <Box width={[0.95, 0.8, 0.7]}>
+          <Flex width={1} justifyContent="center">
+            <Box width={0.8} style={{ textAlign: "center" }}>
+              <Text color="primary" pb={3}>
+                {subheading}
+              </Text>
+            </Box>
+          </Flex>
+          {children}
+        </Box>
+      </Flex>
       <Footer>
         <Link to="/">
           <Text px={1} color="primary">
@@ -94,7 +96,7 @@ const Template = ({ subheading, children }) => {
           </Text>
         </Link> */}
       </Footer>
-    </Fragment>
+    </Flex>
   );
 };
 
