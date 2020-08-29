@@ -25,4 +25,4 @@ const WrappedEmailVerified = () => (
   </AccountContextConsumer>
 )
 
-export default EmailVerified;
+export default WrappedEmailVerified;
