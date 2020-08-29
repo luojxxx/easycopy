@@ -25,9 +25,10 @@ const AccountProvider = ({ children }) => {
         setEmail(data.user.email);
         setUserName(data.user.userName);
         setEmailVerified(data.user.emailVerified);
-        setLoading(false)
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
     updateUserData();
