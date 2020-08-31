@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Flex, Heading, Text } from "rebass";
 
-import AccountBar from './AccountBar'
+import AccountBar from "./AccountBar";
 
 const Header = styled.div`
   display: flex;
@@ -13,6 +13,8 @@ const Header = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
+  width: 100%;
+  box-sizing: border-box;
   padding: 8px;
 `;
 
@@ -23,6 +25,8 @@ const Footer = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
+  width: 100%;
+  box-sizing: border-box;
   padding: 8px;
 `;
 
@@ -39,37 +43,48 @@ const Template = ({ subheading, children }) => {
       window.removeEventListener("resize", resetHeight);
     };
   }, []);
-  
+
   return (
     <Flex
       width={1}
       flexDirection="column"
       justifyContent="space-between"
+      alignItems="center"
       style={{ height: "100%" }}
     >
-      <Header>
+      <Header id="header">
         <AccountBar />
       </Header>
-      <Flex flexDirection="column" alignItems="center">
+      <Flex
+        id="body"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width={[0.95, 0.8, 0.7]}
+        style={{
+          flex: '1 1 auto',
+          overflowY: 'scroll',
+        }}
+      >
         {subheading && (
-          <Link to="/">
-            <Heading color="primary" pb={3}>
-              EasyCopy.io
-            </Heading>
-          </Link>
+          <Fragment>
+            <Link to="/">
+              <Heading color="primary" pb={3}>
+                EasyCopy.io
+              </Heading>
+            </Link>
+            <Flex width={1} justifyContent="center">
+              <Box width={0.8} style={{ textAlign: "center" }}>
+                <Text color="primary" pb={3}>
+                  {subheading}
+                </Text>
+              </Box>
+            </Flex>
+          </Fragment>
         )}
-        <Box width={[0.95, 0.8, 0.7]}>
-          <Flex width={1} justifyContent="center">
-            <Box width={0.8} style={{ textAlign: "center" }}>
-              <Text color="primary" pb={3}>
-                {subheading}
-              </Text>
-            </Box>
-          </Flex>
-          {children}
-        </Box>
+        {children}
       </Flex>
-      <Footer>
+      <Footer id="footer">
         <Link to="/">
           <Text px={1} color="primary">
             Home
@@ -102,7 +117,7 @@ const Template = ({ subheading, children }) => {
 
 Template.propTypes = {
   children: PropTypes.node.isRequired,
-  subheading: PropTypes.string.isRequired
+  subheading: PropTypes.string.isRequired,
 };
 
 export default Template;

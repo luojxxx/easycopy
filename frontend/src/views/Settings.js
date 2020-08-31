@@ -138,12 +138,7 @@ const Settings = ({ accountContext }) => {
         <Heading color="primary" pb={3}>
           Settings
         </Heading>
-        <Flex
-          width={1}
-          flexDirection="column"
-          alignItems="center"
-          style={{ maxHeight: '400px', overflowY: "scroll" }}
-        >
+        <Flex width={1} flexDirection="column" alignItems="center">
           <Box width={0.75} pb={3}>
             <Label htmlFor="user">Email Verification</Label>
             <Heading color="primary" fontSize={3}>
