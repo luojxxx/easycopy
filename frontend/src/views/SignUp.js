@@ -85,7 +85,7 @@ const SignUp = ({ accountContext }) => {
   };
   return (
     <Template>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
         <Flex flexDirection="column" alignItems="center" width={1}>
           <Heading color="primary" pb={3}>
             SignUp
