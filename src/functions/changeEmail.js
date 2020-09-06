@@ -25,7 +25,6 @@ export const changeEmail = async (userId, newEmail) => {
   }
 
   await User.update({
-    email: null,
     emailVerifying: newEmail,
     emailVerified: false,
   }, {
