@@ -23,7 +23,6 @@ const UrlSchema = db.define(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
       references: {
         model: Users,
         key: "userId",
