@@ -12,6 +12,14 @@ const UrlSchema = db.define(
       allowNull: false,
       primaryKey: true,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      default: Date.now,
+    },
   },
   {
     // Other model options go here
