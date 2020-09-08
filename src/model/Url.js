@@ -21,9 +21,17 @@ const UrlSchema = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    content: {
-      type: DataTypes.STRING(contentLimit),
-      allowNull: false,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: Users,
+        key: "userId",
+      },
+    },
+    userName: {
+      type: DataTypes.STRING(userNameLimit),
+      default: "",
     },
     type: {
       type: DataTypes.STRING,
@@ -33,6 +41,13 @@ const UrlSchema = db.define(
         key: "typeName",
       },
     },
+    content: {
+      type: DataTypes.STRING(contentLimit),
+      allowNull: false,
+    },
+    expiredAt: {
+      type: DataTypes.DATE,
+    },
     createdAt: {
       type: DataTypes.DATE,
       default: Date.now,
@@ -40,21 +55,6 @@ const UrlSchema = db.define(
     updatedAt: {
       type: DataTypes.DATE,
       default: Date.now,
-    },
-    expiredAt: {
-      type: DataTypes.DATE,
-    },
-    userName: {
-      type: DataTypes.STRING(userNameLimit),
-      default: "",
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: Users,
-        key: "userId",
-      },
     },
   },
   {
