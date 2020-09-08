@@ -101,4 +101,10 @@ export const DBClear = async () => {
   await User.destroy({
     where: {},
   });
+  await RecaptchaToken.destroy({
+    where: {},
+  });
+  await ResetPasswordToken.destroy({
+    where: {},
+  });
 };
