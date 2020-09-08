@@ -15,7 +15,7 @@ const SendResetPassword = () => {
   const [message, setMessage] = useState("");
   const [showButton, setShowButton] = useState(true);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
-  let threshold = 1;
+  let threshold = 0.5;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +37,6 @@ const SendResetPassword = () => {
           const score = recaptchaResult.data.data.score;
           const recaptchaToken = recaptchaResult.data.recaptchaToken;
 
-          threshold = threshold * 0.5;
           if (score >= threshold) {
             setShowRecaptcha(false);
             const result = await axios({
@@ -50,8 +49,9 @@ const SendResetPassword = () => {
             });
             setMessage("Successfully sent password reset, please check email");
             setShowButton(false);
-            threshold = 1;
+            threshold = 0.5;
           } else {
+            threshold = 0;
             setShowRecaptcha(true);
             const recaptchaContainer = document.getElementById(
               "recaptchaContainer"
@@ -68,7 +68,7 @@ const SendResetPassword = () => {
       }
     }
   };
-  
+
   return (
     <Template>
       <form onSubmit={handleSubmit} style={{ width: "100%" }}>

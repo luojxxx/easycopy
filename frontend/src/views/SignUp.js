@@ -18,8 +18,8 @@ const SignUp = ({ accountContext }) => {
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
   const [showRecaptcha, setShowRecaptcha] = useState(false);
-  let threshold = 1;
-  
+  let threshold = 0.5;
+
   const handleSubmit = async (e) => {
     if (e instanceof Object) {
       e.preventDefault();
@@ -47,7 +47,6 @@ const SignUp = ({ accountContext }) => {
           const score = recaptchaResult.data.data.score;
           const recaptchaToken = recaptchaResult.data.recaptchaToken;
 
-          threshold = threshold * 0.5;
           if (score >= threshold) {
             setShowRecaptcha(false);
             const result = await axios({
@@ -66,8 +65,9 @@ const SignUp = ({ accountContext }) => {
             accountContext.setUserName(data.user.userName);
             accountContext.setEmailVerified(data.user.emailVerified);
             history.push("/");
-            threshold = 1;
+            threshold = 0.5;
           } else {
+            threshold = 0;
             setShowRecaptcha(true);
             const recaptchaContainer = document.getElementById(
               "recaptchaContainer"
@@ -87,7 +87,7 @@ const SignUp = ({ accountContext }) => {
 
   return (
     <Template>
-      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <form onSubmit={handleSubmit} style={{ width: "100%" }}>
         <Flex flexDirection="column" alignItems="center" width={1}>
           <Heading color="primary" pb={3}>
             SignUp

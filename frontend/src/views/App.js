@@ -13,14 +13,14 @@ import {
   recaptchaSiteKeyV3,
   recaptchaSiteKeyV2,
 } from "../constants";
-import { AccountContextConsumer } from '../providers/AccountProvider'
+import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const App = ({ accountContext }) => {
   const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
   const [url, setUrl] = useState("");
-  const [userName, setUserName] = useState(accountContext.userName || '');
+  const [userName, setUserName] = useState(accountContext.userName || "");
   const [content, setContent] = useState("");
   const [type, setType] = useState("text");
   const [date, setDate] = useState("");
@@ -29,7 +29,7 @@ const App = ({ accountContext }) => {
   const [submissionError, setSubmissionError] = useState(false);
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
-  let threshold = 1
+  let threshold = 0.5;
 
   const handleUserNameChange = (e) => {
     const userName = e.target.value.slice(0, userNameLimit);
@@ -78,9 +78,8 @@ const App = ({ accountContext }) => {
           },
         });
         const score = recaptchaResult.data.data.score;
-        const recaptchaToken = recaptchaResult.data.recaptchaToken
+        const recaptchaToken = recaptchaResult.data.recaptchaToken;
 
-        threshold = threshold * 0.5
         if (score >= threshold) {
           setShowRecaptcha(false);
           const userToken = localStorage.getItem("userToken");
@@ -94,14 +93,15 @@ const App = ({ accountContext }) => {
               type: type.toString(10),
             },
             headers: {
-              ...(userToken ? {Authorization: `Bearer ${userToken}`} : {})
+              ...(userToken ? { Authorization: `Bearer ${userToken}` } : {}),
             },
           });
           setSubmissionProcessing(false);
           const url = response.data.url;
           history.push(url);
-          threshold = 1
+          threshold = 0.5;
         } else {
+          threshold = 0;
           setShowRecaptcha(true);
           const recaptchaContainer = document.getElementById(
             "recaptchaContainer"
@@ -148,7 +148,7 @@ const App = ({ accountContext }) => {
       handleGet();
     }
   }, [pathname]);
-  
+
   return (
     <AppDisplay
       pathname={pathname}
@@ -173,8 +173,8 @@ const App = ({ accountContext }) => {
 
 const WrappedApp = () => (
   <AccountContextConsumer>
-    {(accountContext) => (<App accountContext={accountContext} />)}
+    {(accountContext) => <App accountContext={accountContext} />}
   </AccountContextConsumer>
-)
+);
 
 export default WrappedApp;
