@@ -13,7 +13,10 @@ const ChangeEmailTests = () => {
       expect(status).to.be.equal(400)
     });
     it("should error when changing to email already in DB under 'emailVerifying' column", async function () {
-      const { status } = await changeEmail(UserVerified.userId, UserUnverified.email);
+      const { status } = await changeEmail(
+        UserVerified.userId,
+        UserUnverified.emailVerifying
+      );
       expect(status).to.be.equal(400)
     });
     it("should modify User data for new email", async function () {
@@ -21,7 +24,6 @@ const ChangeEmailTests = () => {
       expect(status).to.be.equal(200)
       
       const result = await User.findOne({ where: { userId: UserVerified.userId }})
-      expect(result.email).to.be.equal(null)
       expect(result.emailVerifying).to.be.equal(newEmail)
       expect(result.emailVerified).to.be.equal(false)
     });

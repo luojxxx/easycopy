@@ -10,7 +10,7 @@ const LoginTests = () => {
       expect(result).to.have.property("status").equal(404);
     });
     it("try login with correct email but wrong password", async function () {
-      const result = await login(UserUnverified.email, "wrongPassword");
+      const result = await login(UserUnverified.emailVerifying, "wrongPassword");
       expect(result).to.have.property("status").equal(401);
     });
     it("try login with correct unverified email and correct password", async function () {
