@@ -16,6 +16,7 @@ const SendResetPassword = () => {
   const [showButton, setShowButton] = useState(true);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
   let threshold = 1;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email === "") {
@@ -67,6 +68,7 @@ const SendResetPassword = () => {
       }
     }
   };
+  
   return (
     <Template>
       <form onSubmit={handleSubmit} style={{ width: "100%" }}>

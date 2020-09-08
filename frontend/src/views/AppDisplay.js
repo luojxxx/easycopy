@@ -33,12 +33,15 @@ const AppDisplay = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [displayQRCode, setDisplayQRCode] = useState(false);
+
   const showQRCode = () => {
     setDisplayQRCode(true);
   };
+
   const closeQRCode = () => {
     setDisplayQRCode(false);
   };
+  
   const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (

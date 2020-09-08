@@ -19,6 +19,7 @@ const SignUp = ({ accountContext }) => {
   const [message, setMessage] = useState("");
   const [showRecaptcha, setShowRecaptcha] = useState(false);
   let threshold = 1;
+  
   const handleSubmit = async (e) => {
     if (e instanceof Object) {
       e.preventDefault();
@@ -83,6 +84,7 @@ const SignUp = ({ accountContext }) => {
       }
     }
   };
+
   return (
     <Template>
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>

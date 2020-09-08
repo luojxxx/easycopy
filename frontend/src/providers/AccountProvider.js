@@ -10,6 +10,7 @@ const AccountProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [emailVerified, setEmailVerified] = useState(null);
+
   useEffect(() => {
     const updateUserData = async () => {
       try {
@@ -34,6 +35,7 @@ const AccountProvider = ({ children }) => {
     };
     updateUserData();
   }, [0]);
+  
   return (
     <Provider
       value={{

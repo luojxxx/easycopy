@@ -81,6 +81,7 @@ const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
     }
     return formattedAmount;
   };
+
   const handleSubmit = async event => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -120,6 +121,7 @@ const CheckoutForm = ({ clientSecret, setClientSecret, amount }) => {
     }
     setConfirmationProcessing(false);
   };
+  
   const handleClickBack = () => {
     setClientSecret("");
   };

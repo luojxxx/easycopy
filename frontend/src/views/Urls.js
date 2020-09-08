@@ -19,6 +19,7 @@ const Urls = () => {
   const [urls, setUrls] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
+
   useEffect(() => {
     setLoading(true)
     const getUrls = async () => {
@@ -42,6 +43,7 @@ const Urls = () => {
     };
     getUrls();
   }, [page]);
+
   const handleDelete = async (urlId) => {
     try {
       await axios({
@@ -59,6 +61,7 @@ const Urls = () => {
       console.log(err);
     }
   };
+  
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>

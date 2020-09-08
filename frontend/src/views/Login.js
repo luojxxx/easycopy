@@ -15,6 +15,7 @@ const Login = ({ accountContext }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,6 +38,7 @@ const Login = ({ accountContext }) => {
       setMessage(err.response.data);
     }
   };
+
   return (
     <Template>
       <form onSubmit={handleSubmit} style={{ width: "100%" }}>

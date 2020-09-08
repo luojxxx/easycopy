@@ -14,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === "") {
@@ -44,6 +45,7 @@ const Login = () => {
       }
     }
   };
+  
   return (
     <Template>
       <form onSubmit={handleSubmit}>

@@ -20,6 +20,7 @@ const Settings = ({ accountContext }) => {
   const [deleteAccountPassword, setDeleteAccountPassword] = useState("");
   const [message, setMessage] = useState("");
   const [showSendEmailButton, setShowSendEmailButton] = useState(true);
+
   const handleSendVerifyEmail = async () => {
     setMessage("");
     try {
@@ -40,6 +41,7 @@ const Settings = ({ accountContext }) => {
       setMessage(err.response.data);
     }
   };
+
   const handleChangeEmail = async () => {
     setMessage("");
     if (email === "") {
@@ -64,6 +66,7 @@ const Settings = ({ accountContext }) => {
       }
     }
   };
+
   const handleChangePassword = async () => {
     setMessage("");
     if (password === "") {
@@ -90,6 +93,7 @@ const Settings = ({ accountContext }) => {
       }
     }
   };
+
   const handleChangeUserName = async () => {
     setMessage("");
     try {
@@ -110,6 +114,7 @@ const Settings = ({ accountContext }) => {
       setMessage(err.response.data);
     }
   };
+
   const handleDeleteAcount = async () => {
     setMessage("");
     try {
@@ -132,6 +137,7 @@ const Settings = ({ accountContext }) => {
       setMessage(err.response.data);
     }
   };
+  
   return (
     <Template>
       <Flex flexDirection="column" alignItems="center" width={1}>

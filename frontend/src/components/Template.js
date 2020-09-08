@@ -36,6 +36,7 @@ const Template = ({ subheading, children }) => {
     const container = document.getElementById("appContainer");
     container.style.height = window.innerHeight + "px";
   };
+  
   useEffect(() => {
     window.addEventListener("resize", resetHeight);
     resetHeight();

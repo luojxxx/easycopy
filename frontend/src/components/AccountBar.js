@@ -9,6 +9,7 @@ import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const AccountBar = ({ accountContext }) => {
   const history = useHistory();
+
   const handleSignOut = async () => {
     try {
       const result = await axios({
@@ -28,6 +29,7 @@ const AccountBar = ({ accountContext }) => {
     accountContext.setEmailVerified(null);
     history.push("/");
   };
+  
   return !accountContext.email ? (
     <Fragment>
       <Link to="/signup">

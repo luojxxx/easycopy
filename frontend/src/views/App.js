@@ -30,26 +30,32 @@ const App = ({ accountContext }) => {
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
   let threshold = 1
+
   const handleUserNameChange = (e) => {
     const userName = e.target.value.slice(0, userNameLimit);
     setUserName(userName);
   };
+
   const handleContentChange = (e) => {
     const content = e.target.value.slice(0, contentLimit);
     setContent(content);
   };
+
   const handleTypeChange = (rawType) => {
     const type = acceptedTypes.includes(rawType) ? rawType : "text";
     setType(type);
   };
+
   const handleClear = () => {
     setUserName("");
     setContent("");
   };
+
   const handleBack = () => {
     setZeroContentFlag(false);
     history.push("/");
   };
+
   const handleSubmit = async () => {
     try {
       setNotFoundPage(false);
@@ -114,6 +120,7 @@ const App = ({ accountContext }) => {
       setShowRecaptcha(false);
     }
   };
+
   const handleGet = async () => {
     try {
       const response = await axios({
@@ -135,11 +142,13 @@ const App = ({ accountContext }) => {
       }
     }
   };
+
   useEffect(() => {
     if (pathname !== "/") {
       handleGet();
     }
   }, [pathname]);
+  
   return (
     <AppDisplay
       pathname={pathname}
