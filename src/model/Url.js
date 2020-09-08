@@ -2,6 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 
 import db from './../db'
 import Users from './User'
+import UrlTypes from './UrlTypes'
 import { userNameLimit, contentLimit } from "../constants";
 
 const UrlSchema = db.define(
@@ -27,6 +28,10 @@ const UrlSchema = db.define(
     type: {
       type: DataTypes.STRING,
       allowNull: false,
+      references: {
+        model: UrlTypes,
+        key: "typeName",
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
