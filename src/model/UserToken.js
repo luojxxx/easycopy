@@ -15,6 +15,7 @@ const UserTokenSchema = db.define(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
       references: {
         model: Users,
         key: "userId",
@@ -23,6 +24,7 @@ const UserTokenSchema = db.define(
     userToken: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     createdAt: {
       type: DataTypes.DATE,

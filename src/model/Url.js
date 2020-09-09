@@ -20,9 +20,11 @@ const UrlSchema = db.define(
     urlRaw: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     userId: {
       type: DataTypes.INTEGER,
+      unique: true,
       references: {
         model: Users,
         key: "userId",

@@ -30,10 +30,6 @@ const UserSchema = db.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    subscribed: {
-      type: DataTypes.BOOLEAN,
-      default: false,
-    },
     createdAt: {
       type: DataTypes.DATE,
       default: Date.now,

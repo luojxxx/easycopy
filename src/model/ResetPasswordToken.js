@@ -13,10 +13,13 @@ const ResetPasswordTokenSchema = db.define(
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     resetPasswordToken: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     createdAt: {
       type: DataTypes.DATE,
