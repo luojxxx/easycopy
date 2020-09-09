@@ -44,7 +44,6 @@ const SignUpTests = () => {
         .to.have.property("password")
         .equal(hashString(newPassword));
       expect(newUser).to.have.property("emailVerifying").equal(newEmail);
-      expect(newUser).to.have.property("emailVerified").equal(false);
     });
     it("should create a new email verification token", async function () {
       const { userId } = await signup();

@@ -32,7 +32,6 @@ export const signUp = async (email, password, userName) => {
     email: null,
     password: hashString(password),
     emailVerifying: email,
-    emailVerified: false,
     createdAt: Date.now(),
   });
 
@@ -52,7 +51,7 @@ export const signUp = async (email, password, userName) => {
       userToken: newUserToken.userToken,
       user: {
         email: newUser.emailVerifying,
-        emailVerified: newUser.emailVerified,
+        emailVerified: false,
         userName: newUser.userName,
       },
     },

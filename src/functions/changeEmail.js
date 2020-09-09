@@ -26,7 +26,6 @@ export const changeEmail = async (userId, newEmail) => {
 
   await User.update({
     emailVerifying: newEmail,
-    emailVerified: false,
   }, {
     where: {
       userId: userId

@@ -19,15 +19,11 @@ const UserSchema = db.define(
     email: {
       type: DataTypes.STRING,
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     emailVerifying: {
       type: DataTypes.STRING,
     },
-    emailVerified: {
-      type: DataTypes.BOOLEAN,
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {

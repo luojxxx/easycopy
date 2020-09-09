@@ -52,8 +52,8 @@ export const resetPassword = async (resetPasswordToken, newPassword) => {
       msg: "Successfully reset password!",
       userToken: randomToken,
       user: {
-        email: user.email || user.emailVerifying,
-        emailVerified: user.emailVerified,
+        email: user.emailVerifying || user.email,
+        emailVerified: user.emailVerifying === null,
         userName: user.userName,
       },
     },

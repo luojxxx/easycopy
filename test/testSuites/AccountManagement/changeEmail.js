@@ -25,7 +25,6 @@ const ChangeEmailTests = () => {
       
       const result = await User.findOne({ where: { userId: UserVerified.userId }})
       expect(result.emailVerifying).to.be.equal(newEmail)
-      expect(result.emailVerified).to.be.equal(false)
     });
   });
 };

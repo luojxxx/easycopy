@@ -50,8 +50,8 @@ export const login = async (email, password) => {
     body: {
       userToken: newUserToken.userToken,
       user: {
-        email: user.email || user.emailVerifying,
-        emailVerified: user.emailVerified,
+        email: user.emailVerifying || user.email,
+        emailVerified: user.emailVerifying === null,
         userName: user.userName,
       },
     },

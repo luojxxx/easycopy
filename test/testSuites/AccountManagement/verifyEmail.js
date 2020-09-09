@@ -23,7 +23,6 @@ const VerifyEmailTests = () => {
       });
       expect(result.email).to.be.equal(UserUnverified.emailVerifying);
       expect(result.emailVerifying).to.be.equal(null);
-      expect(result.emailVerified).to.be.equal(true);
     });
   });
 };

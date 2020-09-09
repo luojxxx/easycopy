@@ -14,7 +14,6 @@ export const UserUnverified = {
   email: null,
   password: "luckypassword321",
   emailVerifying: "luo.j2010@gmail.com",
-  emailVerified: false,
 };
 
 export const UserVerified = {
@@ -23,7 +22,6 @@ export const UserVerified = {
   email: "luojx2010@gmail.com",
   password: "luckypassword123",
   emailVerifying: null,
-  emailVerified: true,
 };
 
 export const UrlNoAccount = {

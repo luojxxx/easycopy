@@ -18,16 +18,15 @@ export const verifyEmail = async (verificationToken) => {
       userId: emailVerificationToken.userId
     }
   })
-  if (user.emailVerified) {
+  if (user.emailVerifying === null) {
     return {
       status: 200,
-      body: 'Email already verified',
-    }
+      body: "Email already verified",
+    };
   }
   await User.update({
     email: user.emailVerifying,
     emailVerifying: null,
-    emailVerified: true,
   }, {
     where: {
       userId: user.userId

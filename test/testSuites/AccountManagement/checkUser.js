@@ -15,7 +15,7 @@ const CheckUserTests = () => {
       expect(body)
         .to.have.property("user")
         .to.have.property("emailVerified")
-        .equal(UserVerified.emailVerified);
+        .equal(UserVerified.emailVerifying === null);
         expect(body)
           .to.have.property("user")
           .to.have.property("userName")
