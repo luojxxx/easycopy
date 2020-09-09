@@ -6,21 +6,16 @@ module.exports = {
         allowNull: false,
       }),
 
-      queryInterface.removeIndex("Urls", "Urls_urlRaw"),
-      queryInterface.removeIndex("Urls", "Urls_userId"),
       queryInterface.addIndex("Users", {
         fields: ["email"],
       }),
       queryInterface.addIndex("Users", {
         fields: ["emailVerifying"],
       }),
-
+      
+      queryInterface.removeIndex("Urls", "Urls_urlRaw"),
       queryInterface.addConstraint("Urls", {
         fields: ["urlRaw"],
-        type: "unique",
-      }),
-      queryInterface.addConstraint("Urls", {
-        fields: ["userId"],
         type: "unique",
       }),
       queryInterface.addIndex("Urls", {
@@ -66,7 +61,6 @@ module.exports = {
       queryInterface.removeIndex("Users", "users_email_verifying"),
 
       queryInterface.removeConstraint("Urls", "Urls_urlRaw_uk"),
-      queryInterface.removeConstraint("Urls", "Urls_userId_uk"),
       queryInterface.removeIndex("Urls", "urls_expired_at"),
 
       queryInterface.removeConstraint("UserTokens", "UserTokens_userId_uk"),
