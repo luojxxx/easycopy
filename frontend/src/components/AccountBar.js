@@ -2,13 +2,14 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Text } from "rebass";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { api } from "../constants";
 import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const AccountBar = ({ accountContext }) => {
   const history = useHistory();
+  const location = useLocation();
 
   const handleSignOut = async () => {
     try {
@@ -27,7 +28,9 @@ const AccountBar = ({ accountContext }) => {
     accountContext.setEmail(null);
     accountContext.setUserName(null);
     accountContext.setEmailVerified(null);
-    history.push("/");
+    if (["/urls", "/settings"].includes(location.pathname)) {
+      history.push("/");
+    }
   };
   
   return !accountContext.email ? (

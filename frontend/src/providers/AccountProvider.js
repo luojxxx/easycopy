@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { api } from "../constants";
 
@@ -8,6 +8,7 @@ const { Provider, Consumer } = React.createContext();
 
 const AccountProvider = ({ children }) => {
   const history = useHistory();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -34,7 +35,9 @@ const AccountProvider = ({ children }) => {
         setUserName("");
         setLoading(false);
         localStorage.removeItem("userToken");
-        history.push("/");
+        if (['/urls', '/settings'].includes(location.pathname)) {
+          history.push("/");
+        }
       }
     };
     updateUserData();
