@@ -8,26 +8,7 @@ import helmet from "helmet";
 const Sentry = require("@sentry/node");
 
 import { authentication } from './middleware/authentication'
-import {
-  createUrlRoute,
-  getUrlRoute,
-  getUserUrlsRoute,
-  deleteUserUrlRoute,
-  signUpRoute,
-  loginRoute,
-  checkUserRoute,
-  verifyEmailRoute,
-  sendVerifyEmailRoute,
-  changeEmailRoute,
-  changePasswordRoute,
-  changeUserNameRoute,
-  signOutRoute,
-  sendResetPasswordEmailRoute,
-  resetPasswordRoute,
-  deleteAccountRoute,
-  stripePaymentRoute,
-  verifyRecaptchaRoute,
-} from "./routes";
+import routes from "./routes";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -48,25 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(authentication);
-
-app.post("/create", createUrlRoute);
-app.post("/verifyRecaptcha", verifyRecaptchaRoute);
-app.post("/getuserurls", getUserUrlsRoute);
-app.post("/deleteuserurl", deleteUserUrlRoute);
-app.post("/signup", signUpRoute);
-app.post("/login", loginRoute);
-app.post("/checkuser", checkUserRoute);
-app.get("/verifyemail/*", verifyEmailRoute);
-app.post("/sendverifyemail", sendVerifyEmailRoute);
-app.post("/changeemail", changeEmailRoute);
-app.post("/changepassword", changePasswordRoute);
-app.post("/changeusername", changeUserNameRoute);
-app.post("/signout", signOutRoute);
-app.post("/sendresetpasswordemail", sendResetPasswordEmailRoute);
-app.post("/resetpassword", resetPasswordRoute);
-app.post("/deleteaccount", deleteAccountRoute);
-// app.post("/payment", stripePaymentRoute);
-app.get("/*", getUrlRoute); // Needs to be kept at end to avoid scooping up other get routes
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
