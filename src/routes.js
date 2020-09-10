@@ -1,5 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import Joi from "joi";
 
 import { createUrl } from "./functions/createUrl";
 import { getUrl } from "./functions/getUrl";
@@ -22,6 +23,13 @@ import { stripePayment } from "./functions/stripePayment";
 import { loaderVerify } from "./functions/loaderVerify";
 import RecaptchaToken from "./model/RecaptchaToken";
 
+import {
+  genericInputLimit,
+  contentLimit,
+  userNameLimit,
+  acceptedTypes,
+} from "./constants";
+
 const routes = express.Router();
 
 const consumeRecaptchaToken = async (token) => {
@@ -36,6 +44,16 @@ const consumeRecaptchaToken = async (token) => {
 routes.post(
   "/create",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      recaptchaToken: Joi.string().max(genericInputLimit).required(),
+      content: Joi.string().max(contentLimit).required(),
+      userName: Joi.string().max(userNameLimit).allow(""),
+      type: Joi.any()
+        .valid(...acceptedTypes)
+        .required(),
+    });
+    Joi.assert(req.body, schema);
+
     const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
     if (!tokenStatus) {
       return res.status(401).send("Bad token");
@@ -54,6 +72,11 @@ routes.post(
 routes.post(
   "/verifyRecaptcha",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      token: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const token = req.body.token;
 
     const { status, body } = await verifyRecaptcha(token);
@@ -64,6 +87,11 @@ routes.post(
 routes.post(
   "/getuserurls",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      page: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.query, schema);
+
     const userId = req.userId;
     const page = req.query.page;
 
@@ -75,6 +103,11 @@ routes.post(
 routes.post(
   "/deleteuserurl",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      urlId: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const urlId = req.body.urlId;
 
@@ -86,6 +119,14 @@ routes.post(
 routes.post(
   "/signup",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      recaptchaToken: Joi.string().max(genericInputLimit).required(),
+      email: Joi.string().max(genericInputLimit).email().required(),
+      password: Joi.string().max(genericInputLimit).required(),
+      userName: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
     if (!tokenStatus) {
       return res.status(401).send("Bad token");
@@ -103,6 +144,12 @@ routes.post(
 routes.post(
   "/login",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      email: Joi.string().max(genericInputLimit).email().required(),
+      password: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const email = req.body.email;
     const password = req.body.password;
 
@@ -125,6 +172,10 @@ routes.get(
   "/verifyemail/*",
   asyncHandler(async (req, res, next) => {
     const verificationToken = req.path.replace("/verifyemail/", "");
+    Joi.assert(
+      verificationToken,
+      Joi.string().max(genericInputLimit).required()
+    );
 
     const { status, body } = await verifyEmail(verificationToken);
     if (status === 200) {
@@ -138,6 +189,11 @@ routes.get(
 routes.post(
   "/sendverifyemail",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      email: Joi.string().max(genericInputLimit).email().required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const email = req.body.email;
 
@@ -149,6 +205,11 @@ routes.post(
 routes.post(
   "/changeemail",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      newEmail: Joi.string().max(genericInputLimit).email().required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const newEmail = req.body.newEmail;
 
@@ -160,6 +221,12 @@ routes.post(
 routes.post(
   "/changepassword",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      oldPassword: Joi.string().max(genericInputLimit).required(),
+      newPassword: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
@@ -176,6 +243,11 @@ routes.post(
 routes.post(
   "/changeusername",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      newUserName: Joi.string().max(userNameLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const newUserName = req.body.newUserName;
 
@@ -197,6 +269,12 @@ routes.post(
 routes.post(
   "/sendresetpasswordemail",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      recaptchaToken: Joi.string().max(genericInputLimit).required(),
+      email: Joi.string().max(genericInputLimit).email().required(),
+    });
+    Joi.assert(req.body, schema);
+
     const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
     if (!tokenStatus) {
       return res.status(401).send("Bad token");
@@ -212,6 +290,12 @@ routes.post(
 routes.post(
   "/resetpassword",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      resetPasswordToken: Joi.string().max(genericInputLimit).required(),
+      newPassword: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const resetPasswordToken = req.body.resetPasswordToken;
     const newPassword = req.body.newPassword;
 
@@ -226,6 +310,11 @@ routes.post(
 routes.post(
   "/deleteaccount",
   asyncHandler(async (req, res, next) => {
+    const schema = Joi.object().keys({
+      password: Joi.string().max(genericInputLimit).required(),
+    });
+    Joi.assert(req.body, schema);
+
     const userId = req.userId;
     const password = req.body.password;
 
@@ -239,6 +328,7 @@ routes.get(
   asyncHandler(async (req, res, next) => {
     const path = req.path;
     const url = path.slice(1, path.length);
+    Joi.assert(url, Joi.string().max(genericInputLimit).required());
 
     const { status, body } = await getUrl(url);
     res.status(status).send(body);
@@ -246,7 +336,12 @@ routes.get(
 );
 
 // routes.post("/payment", asyncHandler(async (req, res, next) => {
-//   const amount = ctx.request.body.amount;
+//   const schema = Joi.object().keys({
+//     amount: Joi.number().integer().required(),
+//   });
+//   Joi.assert(req.body, schema);
+
+//   const amount = req.body.amount;
 
 //   const { status, body } = await stripePayment(amount);
 //   res.status(status).send(body);
@@ -257,4 +352,4 @@ routes.get(
 //   res.status(status).send(body);
 // }));
 
-export default routes
+export default routes;
