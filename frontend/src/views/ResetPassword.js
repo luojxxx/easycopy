@@ -9,7 +9,9 @@ import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
-const Login = () => {
+import { AccountContextConsumer } from "../providers/AccountProvider";
+
+const ResetPassword = ({ accountContext }) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,9 +37,9 @@ const Login = () => {
         });
         const { data } = result;
         localStorage.setItem("userToken", data.userToken);
-        localStorage.setItem("userName", data.user.userName);
-        localStorage.setItem("email", data.user.email);
-        localStorage.setItem("emailVerified", data.user.emailVerified);
+        accountContext.setEmail(data.user.email);
+        accountContext.setUserName(data.user.userName);
+        accountContext.setEmailVerified(data.user.emailVerified);
         history.push("/");
       } catch (err) {
         console.log(err);
@@ -82,4 +84,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const WrappedResetPassword = () => (
+  <AccountContextConsumer>
+    {(accountContext) => <ResetPassword accountContext={accountContext} />}
+  </AccountContextConsumer>
+);
+
+export default ResetPassword;
