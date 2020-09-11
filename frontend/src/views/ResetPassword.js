@@ -90,4 +90,4 @@ const WrappedResetPassword = () => (
   </AccountContextConsumer>
 );
 
-export default ResetPassword;
+export default WrappedResetPassword;
