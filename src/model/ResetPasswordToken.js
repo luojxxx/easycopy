@@ -5,7 +5,6 @@ import db from './../db'
 const ResetPasswordTokenSchema = db.define(
   "ResetPasswordToken",
   {
-    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -29,9 +28,6 @@ const ResetPasswordTokenSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-  },
-  {
-    // Other model options go here
   }
 );
 

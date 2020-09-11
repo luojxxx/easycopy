@@ -6,7 +6,6 @@ import Users from './User'
 const UserTokenSchema = db.define(
   "UserToken",
   {
-    // Model attributes are defined here
     userTokenId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -34,9 +33,6 @@ const UserTokenSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-  },
-  {
-    // Other model options go here
   }
 );
 

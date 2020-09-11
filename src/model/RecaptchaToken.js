@@ -5,7 +5,6 @@ import db from './../db'
 const RecaptchaTokenSchema = db.define(
   "RecaptchaToken",
   {
-    // Model attributes are defined here
     recaptchaTokenId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -24,9 +23,6 @@ const RecaptchaTokenSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-  },
-  {
-    // Other model options go here
   }
 );
 

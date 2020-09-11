@@ -6,7 +6,6 @@ import Users from './User'
 const EmailVerificationTokenSchema = db.define(
   "EmailVerificationToken",
   {
-    // Model attributes are defined here
     verificationId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -34,9 +33,6 @@ const EmailVerificationTokenSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-  },
-  {
-    // Other model options go here
   }
 );
 

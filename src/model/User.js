@@ -6,7 +6,6 @@ import { userNameLimit } from '../constants'
 const UserSchema = db.define(
   "User",
   {
-    // Model attributes are defined here
     userId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -34,9 +33,6 @@ const UserSchema = db.define(
       type: DataTypes.DATE,
       default: Date.now,
     },
-  },
-  {
-    // Other model options go here
   }
 );
 
