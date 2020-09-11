@@ -2,119 +2,26 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Joi from "joi";
 
-import { createUrl } from "./functions/createUrl";
-import { getUrl } from "./functions/getUrl";
-import { verifyRecaptcha } from "./functions/verifyRecaptcha";
-import { getUserUrls } from "./functions/getUserUrls";
-import { deleteUserUrl } from "./functions/deleteUserUrl";
-import { signUp } from "./functions/signUp";
-import { login } from "./functions/login";
-import { checkUser } from "./functions/checkUser";
-import { verifyEmail } from "./functions/verifyEmail";
-import { sendVerificationEmail } from "./functions/sendVerificationEmail";
-import { changeEmail } from "./functions/changeEmail";
-import { changePassword } from "./functions/changePassword";
-import { changeUserName } from "./functions/changeUserName";
-import { signOut } from "./functions/signOut";
-import { sendResetPasswordEmail } from "./functions/sendResetPasswordEmail";
-import { resetPassword } from "./functions/resetPassword";
-import { deleteAccount } from "./functions/deleteAccount";
-import { stripePayment } from "./functions/stripePayment";
-import { loaderVerify } from "./functions/loaderVerify";
-import RecaptchaToken from "./model/RecaptchaToken";
+import { signUp } from "../functions/signUp";
+import { login } from "../functions/login";
+import { checkUser } from "../functions/checkUser";
+import { verifyEmail } from "../functions/verifyEmail";
+import { sendVerificationEmail } from "../functions/sendVerificationEmail";
+import { changeEmail } from "../functions/changeEmail";
+import { changePassword } from "../functions/changePassword";
+import { changeUserName } from "../functions/changeUserName";
+import { signOut } from "../functions/signOut";
+import { sendResetPasswordEmail } from "../functions/sendResetPasswordEmail";
+import { resetPassword } from "../functions/resetPassword";
+import { deleteAccount } from "../functions/deleteAccount";
 
 import {
   genericInputLimit,
-  contentLimit,
   userNameLimit,
-  acceptedTypes,
-} from "./constants";
+} from "../constants";
+import { consumeRecaptchaToken } from "../lib";
 
 const routes = express.Router();
-
-const consumeRecaptchaToken = async (token) => {
-  const consumeToken = await RecaptchaToken.destroy({
-    where: {
-      recaptchaToken: token,
-    },
-  });
-  return consumeToken == true;
-};
-
-routes.post(
-  "/create",
-  asyncHandler(async (req, res, next) => {
-    const schema = Joi.object().keys({
-      recaptchaToken: Joi.string().max(genericInputLimit).required(),
-      content: Joi.string().max(contentLimit).required(),
-      userName: Joi.string().max(userNameLimit).allow(""),
-      type: Joi.any()
-        .valid(...acceptedTypes)
-        .required(),
-    });
-    Joi.assert(req.body, schema);
-
-    const tokenStatus = await consumeRecaptchaToken(req.body.recaptchaToken);
-    if (!tokenStatus) {
-      return res.status(401).send("Bad token");
-    }
-
-    const userId = req.userId;
-    const content = req.body.content;
-    const userName = req.body.userName;
-    const type = req.body.type;
-
-    const { status, body } = await createUrl(content, userName, type, userId);
-    res.status(status).send(body);
-  })
-);
-
-routes.post(
-  "/verifyRecaptcha",
-  asyncHandler(async (req, res, next) => {
-    const schema = Joi.object().keys({
-      token: Joi.string().max(genericInputLimit).required(),
-    });
-    Joi.assert(req.body, schema);
-
-    const token = req.body.token;
-
-    const { status, body } = await verifyRecaptcha(token);
-    res.status(status).send(body);
-  })
-);
-
-routes.post(
-  "/getuserurls",
-  asyncHandler(async (req, res, next) => {
-    const schema = Joi.object().keys({
-      page: Joi.string().max(genericInputLimit).required(),
-    });
-    Joi.assert(req.query, schema);
-
-    const userId = req.userId;
-    const page = req.query.page;
-
-    const { status, body } = await getUserUrls(userId, page);
-    res.status(status).send(body);
-  })
-);
-
-routes.post(
-  "/deleteuserurl",
-  asyncHandler(async (req, res, next) => {
-    const schema = Joi.object().keys({
-      urlId: Joi.string().max(genericInputLimit).required(),
-    });
-    Joi.assert(req.body, schema);
-
-    const userId = req.userId;
-    const urlId = req.body.urlId;
-
-    const { status, body } = await deleteUserUrl(userId, urlId);
-    res.status(status).send(body);
-  })
-);
 
 routes.post(
   "/signup",
@@ -322,34 +229,5 @@ routes.post(
     res.status(status).send(body);
   })
 );
-
-routes.get(
-  "/*",
-  asyncHandler(async (req, res, next) => {
-    const path = req.path;
-    const url = path.slice(1, path.length);
-    Joi.assert(url, Joi.string().max(genericInputLimit).required());
-
-    const { status, body } = await getUrl(url);
-    res.status(status).send(body);
-  })
-);
-
-// routes.post("/payment", asyncHandler(async (req, res, next) => {
-//   const schema = Joi.object().keys({
-//     amount: Joi.number().integer().required(),
-//   });
-//   Joi.assert(req.body, schema);
-
-//   const amount = req.body.amount;
-
-//   const { status, body } = await stripePayment(amount);
-//   res.status(status).send(body);
-// }));
-
-// routes.get("/loaderverify", asyncHandler(async (req, res, next) => {
-//   const { status, body } = await loaderVerify();
-//   res.status(status).send(body);
-// }));
 
 export default routes;

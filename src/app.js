@@ -7,8 +7,11 @@ import cors from "cors";
 import helmet from "helmet";
 const Sentry = require("@sentry/node");
 
-import { authentication } from './middleware/authentication'
-import routes from "./routes";
+import { authentication } from "./middleware/authentication";
+import accountManagementRoutes from "./routes/accountManagementRoutes";
+import accountFeatureRoutes from "./routes/accountFeatureRoutes";
+import recaptchaRoutes from "./routes/recaptchaRoutes";
+import urlRoutes from "./routes/urlRoutes";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -29,7 +32,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(authentication);
-app.use('/', routes);
+app.use("/", accountManagementRoutes);
+app.use("/", accountFeatureRoutes);
+app.use("/", recaptchaRoutes);
+app.use("/", urlRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -39,11 +45,11 @@ app.use(function (req, res, next) {
 // error handler
 app.use(Sentry.Handlers.errorHandler());
 app.use(function (err, req, res, next) {
-  console.log(err)
+  console.log(err);
 
   // render the error page
   res.status(500);
-  res.send('Error');
+  res.send("Error");
 });
 
 module.exports = app;

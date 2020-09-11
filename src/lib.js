@@ -2,6 +2,8 @@ require("dotenv").config();
 import crypto from "crypto";
 import CryptoJS from "crypto-js";
 
+import RecaptchaToken from "./model/RecaptchaToken";
+
 export const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -20,4 +22,13 @@ export const decryptString = (str) => {
 
 export const hashString = (str) => {
   return CryptoJS.SHA256(str+process.env.SALT).toString();
+};
+
+export const consumeRecaptchaToken = async (token) => {
+  const consumeToken = await RecaptchaToken.destroy({
+    where: {
+      recaptchaToken: token,
+    },
+  });
+  return consumeToken == true;
 };
