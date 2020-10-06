@@ -26,6 +26,20 @@ const SignUpTests = () => {
       }
     };
 
+    const signupNoUserName = async function () {
+      const result = await signUp(newEmail, newPassword);
+      const { status, body } = result;
+      if (status === 200) {
+        const userToken = body.userToken;
+        const newUserToken = await UserToken.findOne({
+          where: { userToken: userToken },
+        });
+        return newUserToken;
+      } else {
+        return result;
+      }
+    };
+
     it("should create a new user token", async function () {
       const newUserToken = await signup();
       expect(newUserToken).to.be.a("object");
@@ -39,6 +53,18 @@ const SignUpTests = () => {
       });
       expect(newUser).to.be.a("object");
       expect(newUser).to.have.property("userName").equal("MegaBytes");
+      expect(newUser).to.have.property("email").equal(null);
+      expect(newUser)
+        .to.have.property("password")
+        .equal(hashString(newPassword));
+      expect(newUser).to.have.property("emailVerifying").equal(newEmail);
+    });
+    it("should create a new user without username", async function () {
+      const { userId } = await signupNoUserName();
+      const newUser = await User.findOne({
+        where: { userId: userId },
+      });
+      expect(newUser).to.be.a("object");
       expect(newUser).to.have.property("email").equal(null);
       expect(newUser)
         .to.have.property("password")
