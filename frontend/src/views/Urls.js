@@ -91,26 +91,14 @@ const Urls = () => {
                     gridRowEnd: idx + 2,
                   }}
                 >
-                  <Text color="primary">
-                    {dayjs(ele.createdAt).format(dateFormat)}
-                  </Text>
-                </div>
-                <div
-                  style={{
-                    gridColumnStart: 2,
-                    gridColumnEnd: 3,
-                    gridRowStart: idx + 1,
-                    gridRowEnd: idx + 2,
-                  }}
-                >
                   <Link to={ele.url}>
                     <Text color="primary">{ele.url} </Text>
                   </Link>
                 </div>
                 <div
                   style={{
-                    gridColumnStart: 3,
-                    gridColumnEnd: 4,
+                    gridColumnStart: 2,
+                    gridColumnEnd: 3,
                     gridRowStart: idx + 1,
                     gridRowEnd: idx + 2,
                     whiteSpace: "nowrap",
@@ -122,8 +110,8 @@ const Urls = () => {
                 </div>
                 <div
                   style={{
-                    gridColumnStart: 4,
-                    gridColumnEnd: 5,
+                    gridColumnStart: 3,
+                    gridColumnEnd: 4,
                     gridRowStart: idx + 1,
                     gridRowEnd: idx + 2,
                   }}
