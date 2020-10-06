@@ -8,11 +8,13 @@ import { api } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from '../components/Loader'
 
 import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const ResetPassword = ({ accountContext }) => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -25,6 +27,7 @@ const ResetPassword = ({ accountContext }) => {
       setMessage("Passwords don't match");
     } else {
       try {
+        setLoading(true)
         const result = await axios({
           method: "post",
           url: api + "/resetpassword",
@@ -41,8 +44,10 @@ const ResetPassword = ({ accountContext }) => {
         accountContext.setUserName(data.user.userName);
         accountContext.setEmailVerified(data.user.emailVerified);
         history.push("/");
+        setLoading(false)
       } catch (err) {
         console.log(err);
+        setLoading(false)
         setMessage("Reset password error");
       }
     }
@@ -74,9 +79,13 @@ const ResetPassword = ({ accountContext }) => {
               value={confirmPassword}
             />
           </Box>
-          <Button width={0.75} mb={2} type="submit">
-            Submit
-          </Button>
+          {loading ? (
+            <Loader />
+          ) : (
+            <Button width={0.75} mb={2} type="submit">
+              Submit
+            </Button>
+          )}
           <Text color="primary">{message}</Text>
         </Flex>
       </form>

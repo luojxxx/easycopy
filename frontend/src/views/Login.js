@@ -8,17 +8,20 @@ import { api } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
 import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const Login = ({ accountContext }) => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const result = await axios({
         method: "post",
         url: api + "/login",
@@ -33,8 +36,10 @@ const Login = ({ accountContext }) => {
       accountContext.setUserName(data.user.userName);
       accountContext.setEmailVerified(data.user.emailVerified);
       history.push("/urls");
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
       setMessage(err.response.data);
     }
   };
@@ -72,9 +77,13 @@ const Login = ({ accountContext }) => {
               value={password}
             />
           </Box>
-          <Button width={0.75} mb={2} type="submit">
-            Submit
-          </Button>
+          {loading ? (
+            <Loader />
+          ) : (
+            <Button width={0.75} mb={2} type="submit">
+              Submit
+            </Button>
+          )}
           <Text color="primary">{message}</Text>
         </Flex>
       </form>

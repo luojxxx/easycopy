@@ -8,11 +8,13 @@ import { api, recaptchaSiteKeyV3, recaptchaSiteKeyV2 } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from '../components/Loader'
 
 const SendResetPassword = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
   let threshold = 0.5;
@@ -23,6 +25,7 @@ const SendResetPassword = () => {
       setMessage("Email can't be blank");
     } else {
       try {
+        setLoading(true)
         window.grecaptcha.ready(async function () {
           const token = await window.grecaptcha.execute(recaptchaSiteKeyV3, {
             action: "submit",
@@ -49,6 +52,7 @@ const SendResetPassword = () => {
             });
             setMessage("Successfully sent password reset, please check email");
             setShowButton(false);
+            setLoading(false)
             threshold = 0.5;
           } else {
             threshold = 0;
@@ -64,6 +68,7 @@ const SendResetPassword = () => {
         });
       } catch (err) {
         console.log(err);
+        setLoading(false)
         setMessage(err.response.data);
       }
     }
@@ -86,7 +91,8 @@ const SendResetPassword = () => {
               value={email}
             />
           </Box>
-          {showButton && (
+          {loading && (<Loader />)}
+          {showButton && !loading && (
             <Button width={0.75} mb={2} type="submit">
               Submit
             </Button>

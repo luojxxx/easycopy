@@ -8,10 +8,12 @@ import { api, recaptchaSiteKeyV3, recaptchaSiteKeyV2 } from "../constants";
 import Template from "../components/Template";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
 import { AccountContextConsumer } from "../providers/AccountProvider";
 
 const SignUp = ({ accountContext }) => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,6 +35,7 @@ const SignUp = ({ accountContext }) => {
       setMessage("Passwords don't match");
     } else {
       try {
+        setLoading(true);
         window.grecaptcha.ready(async function () {
           const token = await window.grecaptcha.execute(recaptchaSiteKeyV3, {
             action: "submit",
@@ -65,6 +68,7 @@ const SignUp = ({ accountContext }) => {
             accountContext.setUserName(data.user.userName);
             accountContext.setEmailVerified(data.user.emailVerified);
             history.push("/");
+            setLoading(false);
             threshold = 0.5;
           } else {
             threshold = 0;
@@ -80,6 +84,7 @@ const SignUp = ({ accountContext }) => {
         });
       } catch (err) {
         console.log(err);
+        setLoading(false);
         setMessage(err.response.data);
       }
     }
@@ -131,9 +136,13 @@ const SignUp = ({ accountContext }) => {
               value={userName}
             />
           </Box>
-          <Button width={0.75} onClick={handleSubmit} mb={2} type="submit">
-            Submit
-          </Button>
+          {loading ? (
+            <Loader />
+          ) : (
+            <Button width={0.75} onClick={handleSubmit} mb={2} type="submit">
+              Submit
+            </Button>
+          )}
           <Text color="primary">{message}</Text>
           {showRecaptcha && (
             <Flex width={1} justifyContent="center" alignItems="center">
