@@ -13,7 +13,6 @@ const UserSchema = db.define(
     },
     userName: {
       type: DataTypes.STRING(userNameLimit),
-      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
