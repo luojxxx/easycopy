@@ -30,7 +30,7 @@ routes.post(
       recaptchaToken: Joi.string().max(genericInputLimit).required(),
       email: Joi.string().max(genericInputLimit).email().required(),
       password: Joi.string().max(genericInputLimit).required(),
-      userName: Joi.string().max(genericInputLimit).required(),
+      userName: Joi.string().max(genericInputLimit).allow(""),
     });
     Joi.assert(req.body, schema);
 
