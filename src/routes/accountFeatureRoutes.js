@@ -15,7 +15,7 @@ routes.post(
   "/getuserurls",
   asyncHandler(async (req, res, next) => {
     const schema = Joi.object().keys({
-      page: Joi.string().max(genericInputLimit).required(),
+      page: Joi.number().max(genericInputLimit).required(),
     });
     Joi.assert(req.query, schema);
 
@@ -31,7 +31,7 @@ routes.post(
   "/deleteuserurl",
   asyncHandler(async (req, res, next) => {
     const schema = Joi.object().keys({
-      urlId: Joi.string().max(genericInputLimit).required(),
+      urlId: Joi.number().max(genericInputLimit).required(),
     });
     Joi.assert(req.body, schema);
 
