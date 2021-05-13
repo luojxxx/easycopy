@@ -82,7 +82,7 @@ const Urls = () => {
             }}
           >
             {urls.map((ele, idx) => (
-              <Fragment>
+              <Fragment key={ele.url}>
                 <div
                   style={{
                     gridColumnStart: 1,
