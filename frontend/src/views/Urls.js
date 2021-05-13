@@ -127,7 +127,7 @@ const Urls = () => {
               </Fragment>
             ))}
           </div>
-          {total !== 0 && <Pagination total={total} pageSize={pageSize} setPage={setPage} />}
+          {total !== 0 && <Pagination total={total} pageSize={pageSize} setPage={setPage} page={page} />}
         </Flex>
       </Flex>
     </Template>
