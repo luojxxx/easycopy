@@ -52,7 +52,7 @@ const SignUpTests = () => {
         where: { userId: userId },
       });
       expect(newUser).to.be.a("object");
-      expect(newUser).to.have.property("userName").equal("MegaBytes");
+      expect(newUser).to.have.property("userName").equal(newUserName);
       expect(newUser).to.have.property("email").equal(null);
       expect(newUser)
         .to.have.property("password")

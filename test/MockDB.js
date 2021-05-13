@@ -38,9 +38,9 @@ export const UrlAccount = {
   url: "BabelSpaceJavaSort",
   urlRaw: "BabelSpaceJavaSort".toLowerCase(),
   content: "Test Contents",
-  userName: "Verified Test User",
+  userName: UserVerified.userName,
   type: "text",
-  userId: 101,
+  userId: UserVerified.userId,
 };
 
 export const UserVerifiedUserToken = {
