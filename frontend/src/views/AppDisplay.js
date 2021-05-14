@@ -45,7 +45,7 @@ const AppDisplay = ({
   const isCreatePage = pathname === "/";
   const dateDisplay = date === "" ? "" : dayjs(date).format(dateFormat);
   return (
-    <Template subheading="Copy stuff to human readable urls or camera scannable QR codes">
+    <Template subheading="Online clipboard with human readable sharelinks and camera scannable QR codes">
       {!displayQRCode && (
         <Fragment>
           <DateField
