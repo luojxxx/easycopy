@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex, Text } from "rebass";
 
 import theme from "../theme";
 
@@ -15,21 +15,33 @@ const UrlViewContainer = styled(Box)`
   text-align: center;
 `;
 
-const UrlView = ({ url }) => (
-  <UrlViewContainer>
-    <a href={url}>
-      <Flex justifyContent="center" alignItems="center" style={{ height: '100%'}}>
-        <Text color="primary">{url}</Text>
-      </Flex>
-    </a>
-  </UrlViewContainer>
-);
+const UrlView = ({ url }) => {
+  let href;
+  if (!url.includes("http")) {
+    href = "https://" + url;
+  } else {
+    href = url;
+  }
+  return (
+    <UrlViewContainer>
+      <a href={href}>
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
+          <Text color="primary">{url}</Text>
+        </Flex>
+      </a>
+    </UrlViewContainer>
+  );
+};
 
 UrlView.propTypes = {
-  text: PropTypes.string
-}
+  text: PropTypes.string,
+};
 UrlView.defaultProps = {
-  text: ''
-}
+  text: "",
+};
 
 export default UrlView;
