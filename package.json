@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/runtime": "^7.9.2",
     "@sendgrid/mail": "^7.2.1",
-    "@sentry/node": "^5.15.0",
+    "@sentry/node": "^6.13.0",
     "axios": "0.21.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

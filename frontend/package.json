@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@rebass/forms": "^4.0.6",
-    "@sentry/browser": "^5.15.0",
+    "@sentry/browser": "^6.13.0",
     "@stripe/react-stripe-js": "^1.1.0",
     "@stripe/stripe-js": "^1.2.0",
     "@testing-library/jest-dom": "^4.2.4",
