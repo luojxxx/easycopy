@@ -423,3 +423,5 @@ patch:
         patched: '2020-07-05T03:17:12.088Z'
     - '@testing-library/jest-dom > lodash':
         patched: '2020-07-05T03:17:12.088Z'
+    - react-scripts > workbox-webpack-plugin > workbox-build > rollup-plugin-babel > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2021-06-16T19:00:47.271Z'
