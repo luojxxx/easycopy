@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.19.0
+version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-DOTPROP-543489:
@@ -423,3 +423,13 @@ patch:
         patched: '2020-07-05T03:17:12.088Z'
     - '@testing-library/jest-dom > lodash':
         patched: '2020-07-05T03:17:12.088Z'
+    - styled-components > babel-plugin-styled-components > @babel/helper-annotate-as-pure > @babel/types > lodash:
+        patched: '2022-10-01T15:57:01.113Z'
+    - styled-components > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-10-01T15:57:01.113Z'
+    - '@rebass/forms > reflexbox > @emotion/styled > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash':
+        patched: '2022-10-01T15:57:01.113Z'
+    - rebass > reflexbox > @emotion/styled > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2022-10-01T15:57:01.113Z'
+    - react-scripts > workbox-webpack-plugin > workbox-build > rollup-plugin-babel > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2022-10-01T15:57:01.113Z'
